@@ -1,0 +1,146 @@
+menu "Sensor options"
+
+choice
+	prompt "Sensor Dev 0"
+	default SNS0_NONE
+	config SNS0_NONE
+		bool "none"
+	config SNS0_GCORE_GC4653
+		bool "gcore_gc4653"
+	config SNS0_GCORE_GC02M1
+		bool "gcore_gc02m1"
+	config SNS0_GCORE_GC02M1_SLAVE
+		bool "gcore_gc02m1_slave"
+	config SNS0_GCORE_GC1084
+		bool "gcore_gc1084"
+	config SNS0_GCORE_GC1054
+		bool "gcore_gc1054"
+	config SNS0_GCORE_GC2053
+		bool "gcore_gc2053"
+	config SNS0_GCORE_GC2053_1L
+		bool "gcore_gc2053_1l"
+	config SNS0_GCORE_GC2083
+		bool "gcore_gc2083"
+	config SNS0_GCORE_GC2093
+		bool "gcore_gc2093"
+	config SNS0_SONY_IMX307
+		bool "sony_imx307"
+	config SNS0_SONY_IMX327
+		bool "sony_imx327"
+	config SNS0_SONY_IMX335
+		bool "sony_imx335"
+	config SNS0_SONY_IMX662
+		bool "sony_imx662"
+	config SNS0_CISTA_C4390
+		bool "cista_c4390"
+	config SNS0_GCORE_GC4023
+		bool "gcore_gc4023"
+	config SNS0_CISTA_C2395
+		bool "cista_c2395"
+	config SNS0_CISTA_C4395
+		bool "cista_c4395"
+	config SNS0_PIXELPLUS_PR2020
+		bool "pixelplus_pr2020"
+	config SNS0_TECHPOINT_TP9950
+		bool "techpoint_tp9950"
+	config SNS0_TECHPOINT_TP9963
+		bool "techpoint_tp9963"
+	config SNS0_TECHPOINT_TP9963_2CH
+		bool "techpoint_tp9963_2ch"
+	config SNS0_PIXELPLUS_XS9950
+		bool "pixelplus_xs9950"
+	config SNS0_PIXELPLUS_XS9951
+		bool "pixelplus_xs9951"
+	config SNS0_NEXTCHIP_N5
+		bool "nextchip_n5"
+	config SNS0_OV_OS5648
+		bool "ov_os5648"
+
+endchoice
+choice
+	prompt "Sensor Dev 1"
+	depends on !SNS0_NONE
+	default SNS1_NONE
+	config SNS1_NONE
+		bool "none"
+	config SNS1_GCORE_GC4653
+		bool "gcore_gc4653"
+	config SNS1_GCORE_GC02M1
+		bool "gcore_gc02m1"
+	config SNS1_GCORE_GC02M1_SLAVE
+		bool "gcore_gc02m1_slave"
+	config SNS1_GCORE_GC1084
+		bool "gcore_gc1084"
+	config SNS1_GCORE_GC2053
+		bool "gcore_gc2053"
+	config SNS1_GCORE_GC2053_1L
+		bool "gcore_gc2053_1l"
+	config SNS1_GCORE_GC2083
+		bool "gcore_gc2083"
+	config SNS1_GCORE_GC2093
+		bool "gcore_gc2093"
+	config SNS1_SONY_IMX307
+		bool "sony_imx307"
+	config SNS1_SONY_IMX327
+		bool "sony_imx327"
+	config SNS1_SONY_IMX335
+		bool "sony_imx335"
+	config SNS1_SONY_IMX662
+		bool "sony_imx662"
+	config SNS1_GCORE_GC1054
+		bool "gcore_gc1054"
+	config SNS1_CISTA_C4390
+		bool "cista_c4390"
+	config SNS1_GCORE_GC4023
+		bool "gcore_gc4023"
+	config SNS1_CISTA_C2395
+		bool "cista_c2395"
+	config SNS1_CISTA_C4395
+		bool "cista_c4395"
+	config SNS1_PIXELPLUS_PR2020
+		bool "pixelplus_pr2020"
+	config SNS1_TECHPOINT_TP9950
+		bool "techpoint_tp9950"
+	config SNS1_TECHPOINT_TP9963
+		bool "techpoint_tp9963"
+	config SNS1_TECHPOINT_TP9963_2CH
+		bool "techpoint_tp9963_2ch"
+	config SNS1_PIXELPLUS_XS9950
+		bool "pixelplus_xs9950"
+	config SNS1_PIXELPLUS_XS9951
+		bool "pixelplus_xs9951"
+	config SNS1_NEXTCHIP_N5
+		bool "nextchip_n5"
+	config SNS1_OV_OS5648
+		bool "ov_os5648"
+
+endchoice
+choice
+	prompt "Sensor Dev 2"
+	default SNS2_NONE
+	depends on !SNS1_NONE
+	config SNS2_NONE
+		bool "none"
+	config SNS2_PIXELPLUS_PR2020
+		bool "pixelplus_pr2020"
+	config SNS2_TECHPOINT_TP9950
+		bool "techpoint_tp9950"
+	config SNS2_NEXTCHIP_N5
+		bool "nextchip_n5"
+	config SNS2_PIXELPLUS_XS9950
+		bool "pixelplus_xs9950"
+	config SNS2_PIXELPLUS_XS9951
+		bool "pixelplus_xs9951"
+
+endchoice
+
+endmenu
+
+menu "MMF options"
+# SBC Enable
+config SBC
+	bool "Enable SBC"
+		default y
+	help
+	  Say Y if you want to enable SBC.
+endmenu

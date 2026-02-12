@@ -1,0 +1,10 @@
+mixer.c:20:5:AllocateFrameBuffer	128	static
+mixer.c:111:5:GetFrameBufBase	0	static
+mixer.c:120:5:GetFrameBufAllocSize	0	static
+mixer.c:129:12:GetFrameBuffer	0	static
+mixer.c:137:12:find_frame_buffer	0	static
+mixer.c:153:6:clear_frame_buffer	0	static
+mixer.c:157:6:free_frame_buffer	32	static
+mixer.c:359:5:sw_mixer_open	0	static
+mixer.c:364:5:sw_mixer_draw	0	static
+mixer.c:371:6:sw_mixer_close	0	static

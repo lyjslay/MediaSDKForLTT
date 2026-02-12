@@ -1,0 +1,7 @@
+# KEY Enable
+
+config KEY
+	bool "Enable KEY"
+	depends on ADC || GPIO
+	help
+	  Say Y if you want to enable key.

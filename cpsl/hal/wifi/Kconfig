@@ -1,0 +1,41 @@
+menu "Wifi options"
+
+config WIFI
+	bool "Enable WIFI"
+	help
+		Say Y if you want to enable WIFI.
+
+if WIFI
+	choice
+		prompt "Wifi type"
+		default CONFIG_WIFI_RTL8189
+
+
+	config WIFI_RTL8189
+		bool "Enable Wifi RTL8189"
+		help
+			Say Y if you want to enable wifi RTL8189.
+
+	config WIFI_HI3881
+		bool "Enable Wifi HI3881"
+		help
+			Say Y if you want to enable wifi HI3881.
+
+	config WIFI_AP6201BM
+		bool "Enable wifi AP6201BM"
+		help
+			Say Y if you want to enable wifi AP6201BM.
+
+    config WIFI_RTL8188
+		bool "Enable wifi RTL8188"
+		help
+			Say Y if you want to enable wifi RTL8188.
+
+	config WIFI_AIC8800
+		bool "Enable Wifi AIC8800"
+		help
+			Say Y if you want to enable wifi AIC8800.	
+	endchoice
+endif
+
+endmenu

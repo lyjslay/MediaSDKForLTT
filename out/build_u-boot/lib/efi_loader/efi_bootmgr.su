@@ -1,0 +1,2 @@
+efi_bootmgr.c:45:21:try_load_entry	192	static
+efi_bootmgr.c:140:14:efi_bootmgr_load	80	static

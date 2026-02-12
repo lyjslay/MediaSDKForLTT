@@ -1,0 +1,16 @@
+menu "Peripheral options"
+
+source "cpsl/hal/adc/Kconfig"
+source "cpsl/hal/gpio/Kconfig"
+source "cpsl/hal/key/Kconfig"
+source "cpsl/hal/led/Kconfig"
+source "cpsl/hal/gps/Kconfig"
+source "cpsl/hal/pwm/Kconfig"
+source "cpsl/hal/watchdog/Kconfig"
+source "cpsl/tpu/Kconfig"
+source "cpsl/hal/gsensor/Kconfig"
+source "cpsl/hal/screen/Kconfig"
+source "cpsl/hal/touchpad/Kconfig"
+source "cpsl/hal/wifi/Kconfig"
+
+endmenu

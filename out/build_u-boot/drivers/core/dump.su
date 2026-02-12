@@ -1,0 +1,6 @@
+dump.c:13:13:show_devices	80	static
+dump.c:48:6:dm_dump_all	32	static
+dump.c:77:6:dm_dump_uclass	96	static
+dump.c:102:6:dm_dump_driver_compat	64	static
+dump.c:126:6:dm_dump_drivers	96	static
+dump.c:165:6:dm_dump_static_driver_info	48	static

@@ -1,0 +1,1 @@
+cmd_spl/drivers/built-in.o :=  rm -f spl/drivers/built-in.o; aarch64-linux-gnu-ar cDPrsT spl/drivers/built-in.o spl/drivers/gpio/built-in.o spl/drivers/mtd/built-in.o spl/drivers/serial/built-in.o spl/drivers/jpeg/built-in.o spl/drivers/block/built-in.o spl/drivers/soc/built-in.o

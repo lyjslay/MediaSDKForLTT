@@ -1,0 +1,14 @@
+vip_sys.c:8:6:vip_set_base_addr	0	static
+vip_sys.c:13:23:vip_get_isp_clk	0	static
+vip_sys.c:28:6:vip_set_isp_clk	0	static
+vip_sys.c:40:19:vip_get_clk_lp	0	static
+vip_sys.c:48:6:vip_set_clk_lp	0	static
+vip_sys.c:53:21:vip_get_reset	0	static
+vip_sys.c:66:6:vip_set_reset	0	static
+vip_sys.c:85:6:vip_toggle_reset	32	static
+vip_sys.c:98:20:vip_get_intr_status	0	static
+vip_sys.c:106:20:vip_get_intr_mask	0	static
+vip_sys.c:114:6:vip_set_intr_mask	0	static
+vip_sys.c:119:6:vip_isp_clk_reset	32	static
+vip_sys.c:172:6:vip_sys_reg_read	0	static
+vip_sys.c:177:6:vip_sys_reg_write_mask	0	static

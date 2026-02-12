@@ -1,0 +1,61 @@
+include $(SRCTREE)/build/base.mk
+
+CROSS_COMPILE = riscv64-unknown-elf-
+ALIOS_PATH = $(SRCTREE)/platform/alios
+
+HOST_TOOLS := $(SRCTREE)/platform/alios/host-tools/Xuantie-900-gcc-elf-newlib-x86_64-V2.6.1/bin
+AS		= $(HOST_TOOLS)/$(CROSS_COMPILE)as
+LD		= $(HOST_TOOLS)/$(CROSS_COMPILE)ld
+CC		= $(HOST_TOOLS)/$(CROSS_COMPILE)gcc
+CXX		= $(HOST_TOOLS)/$(CROSS_COMPILE)g++
+CPP		= $(CC) -E
+AR		= $(HOST_TOOLS)/$(CROSS_COMPILE)ar
+NM		= $(HOST_TOOLS)/$(CROSS_COMPILE)nm
+STRIP		= $(HOST_TOOLS)/$(CROSS_COMPILE)strip
+OBJCOPY		= $(HOST_TOOLS)/$(CROSS_COMPILE)objcopy
+OBJDUMP		= $(HOST_TOOLS)/$(CROSS_COMPILE)objdump
+
+SEXT := c
+SDIR := $(CURDIR)
+ODIR := $(patsubst $(SRCTREE)/%,$(OBJTREE)/%,$(SDIR)/alios)
+SRCS := $(wildcard src/*.$(SEXT))
+OBJS := $(addprefix $(ODIR)/,$(SRCS:.c=.o))
+DEPS := $(addprefix $(ODIR)/,$(SRCS:.c=.d))
+
+TARGET_DIR	:= $(CURDIR)/lib_alios
+TARGET_A	:= $(TARGET_DIR)/libcvi_hal_gpio.a
+
+INCS		+= -I$(CURDIR)/include
+INCS		+= -I$(ALIOS_PATH)/solutions/yoc/yoc_sdk/include
+
+CFLAGS      = -DCONFIG_KERNEL_RHINO -DCONFIG_CPU_C906 -D__CV181X__ -DCONFIG_CSI_V2
+CFLAGS      += $(INCS) $(KBUILD_DEFINES)
+CFLAGS		+= -Wno-unused-parameter -Wno-unused-function -Wno-error
+CFLAGS		+= -c -MP -MMD -Os -Wno-main -march=rv64imafdcxtheadc -mabi=lp64d \
+			   -mcmodel=medany -mtune=c906 -c -g -ffunction-sections -fdata-sections -Wall -Werror
+.PHONY : clean all install
+all : $(TARGET_A) $(TARGET_SO)
+
+$(ODIR)/%.o : $(SDIR)/%.$(SEXT)
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(TARGET_DIR) :
+	mkdir -p $@
+
+$(TARGET_A) : $(OBJS) | $(TARGET_DIR)
+	$(AR) $(ARFLAGS) $@ $^
+
+$(TARGET_SO) : $(OBJS) | $(TARGET_DIR)
+	$(CC) $(LDFLAGS_SO) -o $@ $^
+
+clean:
+	rm -f $(OBJS) $(DEPS) $(TARGET_A) $(TARGET_SO)
+
+$(INSTALL_PATH)/lib :
+	mkdir -p $@
+
+install: $(TARGET_A) $(TARGET_SO) | $(INSTALL_PATH)/lib
+	cp $^ $(ALIOS_PATH)/solutions/yoc/yoc_sdk/lib
+
+-include $(DEPS)

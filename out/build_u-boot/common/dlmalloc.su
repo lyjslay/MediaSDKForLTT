@@ -1,0 +1,14 @@
+dlmalloc.c:598:7:sbrk	48	static
+dlmalloc.c:618:6:mem_malloc_init	0	static
+dlmalloc.c:2210:5:malloc_trim	48	static
+dlmalloc.c:1556:6:free	0	static
+dlmalloc.c:1284:9:malloc	96	static
+dlmalloc.c:2108:9:calloc	64	static
+dlmalloc.c:1694:9:realloc	80	static
+dlmalloc.c:1924:9:memalign	64	static
+dlmalloc.c:2077:9:valloc	0	static
+dlmalloc.c:2092:9:pvalloc	0	static
+dlmalloc.c:2175:6:cfree	0	static
+dlmalloc.c:2279:8:malloc_usable_size	0	static
+dlmalloc.c:2408:5:mallopt	0	static
+dlmalloc.c:2433:5:initf_malloc	0	static

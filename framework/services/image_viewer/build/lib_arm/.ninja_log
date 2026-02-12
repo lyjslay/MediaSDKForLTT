@@ -1,0 +1,9 @@
+# ninja log v5
+0	283	1770878651654571978	CMakeFiles/cvi_image_viewer.dir/src/cvi_image_viewer.cpp.o	1e7d8ef29518f63c
+0	290	1770878651662572047	CMakeFiles/cvi_image_viewer_static.dir/src/cvi_image_viewer.cpp.o	b05627d1c94913cd
+1	301	1770878651670572117	CMakeFiles/cvi_image_viewer.dir/src/image_viewer.cpp.o	5189c37b0d64045e
+0	305	1770878651674572153	CMakeFiles/cvi_image_viewer_static.dir/src/image_viewer.cpp.o	6d0564e6efcc0664
+305	318	1770878651690572292	libcvi_image_viewer.a	b0450ba1602dba4d
+301	347	1770878651714572502	libcvi_image_viewer.so.1.0.2	7a30552decc76963
+347	356	1770878651714572502	libcvi_image_viewer.so	e9708c25f74c2f41
+2	16	0	CMakeFiles/install.util	ac01cb0736ebfe98

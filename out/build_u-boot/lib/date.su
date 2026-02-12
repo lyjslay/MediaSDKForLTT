@@ -1,0 +1,3 @@
+date.c:28:5:rtc_calc_weekday	0	static
+date.c:79:15:rtc_mktime	0	static
+date.c:99:10:mktime64	64	static

@@ -1,0 +1,25 @@
+/dts-v1/;
+#include "cv181x_base_arm.dtsi"
+#include "cv181x_asic_bga.dtsi"
+#include "cv181x_asic_spinor.dtsi"
+#include "cv181x_default_memmap.dtsi"
+
+/ {
+	i2c4: i2c@04040000 {
+			compatible = "snps,designware-i2c";
+			clocks = <&clk CV181X_CLK_I2C>;
+			reg = <0x0 0x04040000 0x0 0x1000>;
+			clock-frequency = <400000>;
+			resets = <&rst RST_I2C4>;
+			reset-names = "i2c4";
+			gt9xx: gt9xx@5d {
+				compatible = "goodix,gt9xx";
+				reg = <0x5d>;
+				status = "okay";
+			};
+		};
+};
+
+&wifisd {
+	status = "okay";
+};

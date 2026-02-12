@@ -1,0 +1,49 @@
+From 7cdc23eaef3dc6277d82a35711caf95622843c29 Mon Sep 17 00:00:00 2001
+From: l00499173 <dongyang.liu@hisilicon.com>
+Date: Thu, 21 Jan 2021 10:43:56 +0800
+Subject: [PATCH] Description: [host] portable for 64bit of wal_csi_set_config
+
+TicketNo: DTS202101130I6FF7P1100
+Issue: format '%d' expects argument of type 'int',
+but argument 6 has type long unsigned int
+Team: HISI_SWP_DTV
+Feature or Bugfix: Bugfix
+Test Result: OK
+Related Commit: No
+Controlled Dir: No
+PrivateCode(Yes/No): No
+Release Verify: NA
+Binary Source:  NA
+AR/Design/TestCase Update: NA
+
+Change-Id: I29e175bebc3b2817b945731887a7196cf5509fd5
+Signed-off-by: y00303705 <liangliang.yang@hisilicon.com>
+Signed-off-by: c00421846 <chenjiaxing8@hisilicon.com>
+Signed-off-by: c00330246 <chenshuhong@hisilicon.com>
+Signed-off-by: h00378055 <huangjunqiang2@hisilicon.com>
+Signed-off-by: j00501148 <jiaolizhi@hisilicon.com>
+Signed-off-by: k00452952 <mike.kong@hisilicon.com>
+Signed-off-by: l00325895 <liushanping@hisilicon.com>
+Signed-off-by: m00272131 <mashubin@hisilicon.com>
+Signed-off-by: q00429317 <kevin.qian@hisilicon.com>
+Signed-off-by: s00481801 <shichongfu@hisilicon.com>
+Signed-off-by: w00292991 <wanqingbo1@huawei.com>
+Signed-off-by: y00335365 <yukexiong@hisilicon.com>
+Signed-off-by: z00427537 <zhengbolu@hisilicon.com>
+Signed-off-by: z00321807 <andrew.zhouliang@hisilicon.com>
+Signed-off-by: l00499173 <dongyang.liu@hisilicon.com>
+---
+
+diff --git a/driver/wal/wal_event.c b/driver/wal/wal_event.c
+index 50f80a9..4f7f70b 100755
+--- a/driver/wal/wal_event.c
++++ b/driver/wal/wal_event.c
+@@ -1131,7 +1131,7 @@
+ 
+     oal_net_device_stru *netdev = oal_get_netdev_by_name(ifname);
+     if (netdev == HI_NULL) {
+-        oam_warning_buf(0, OAM_SF_CSI, "{wal_csi_set_config::ifname [%s] len [%d]is not found.}",
++        oam_warning_buf(0, OAM_SF_CSI, "{wal_csi_set_config::ifname [%s] len [%zu]is not found.}",
+                         (hi_char *)ifname, strlen(ifname));
+         return HI_ERR_CODE_PTR_NULL;
+     }

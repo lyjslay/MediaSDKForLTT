@@ -1,0 +1,2 @@
+efi_dt_fixup.c:52:6:efi_carve_out_dt_rsv	112	static
+efi_dt_fixup.c:109:1:efi_dt_fixup	784	static

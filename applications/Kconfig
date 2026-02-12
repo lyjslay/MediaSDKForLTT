@@ -1,0 +1,128 @@
+menu "Application options"
+
+menu "Video Md Configuration"
+
+config VIDEO_MD
+	bool "Video Md"
+	help
+		Say Y if you want to enable Video Md.
+endmenu
+
+menu "Reset Mode After AHD Hotplug"
+    config RESET_MODE_AHD_HOTPLUG
+	bool "Reset Mode After AHD Hotplug"
+	help
+		Say Y if you want to enable Reset Mode After AHD Hotplug.
+endmenu
+
+menu "ISP IRCUT Configuration"
+config ISP_IR_CUT
+	bool "isp ir_cut"
+	help
+		Say Y if you want to enable push isp expinfo.
+endmenu
+
+choice
+	prompt "Application type"
+	default CONFIG_APP_DASHCAM
+
+config APP_DASHCAM
+	bool "Dashcam Application"
+	help
+	  Say Y if you want to enable Dashcam Application.
+
+if APP_DASHCAM
+
+choice
+	prompt "DashCam type"
+	default REARVIEW
+config CARRECORDER
+	bool "CarRecorder"
+config REARVIEW
+	bool "RearView"
+config NONESCREEN
+	bool "NoneScreen"
+endchoice
+
+choice
+	prompt "NetProtocol type"
+	default NETPROTOCOL_CJSON
+config NETPROTOCOL_XML
+	bool "NetProtocol_Xml"
+config NETPROTOCOL_CGI
+	bool "NetProtocol_Cgi"
+config NETPROTOCOL_CJSON
+	bool "NetProtocol_cJson"
+endchoice
+
+if (CARRECORDER || REARVIEW)
+menu "UI Configuration"
+
+if CARRECORDER
+choice
+	prompt "UI Packet"
+	default CARRECORDER_TURNKEY
+config CARRECORDER_TURNKEY
+	bool "CarRecorder turnkey"
+endchoice
+endif
+
+if REARVIEW
+choice
+	prompt "UI Packet"
+	default REARVIEW_TURNKEY
+config REARVIEW_TURNKEY
+    bool "RearView turnkey"
+endchoice
+endif
+
+config UI_RESPATH
+	string "Ui res path"
+	  help
+	  	Ui res path.
+
+config UI_WIDTH
+	int "Ui width"
+	help
+	  Ui Width.
+
+config UI_HEIGHT
+	int "Ui height"
+	  help
+		Ui Height.
+
+config FB_DUAL_BUFFER
+	bool "FB dual buffer mode"
+	help
+	  Say Y if you want to enable dual buffer mode.
+
+choice
+	prompt "FB pixdepth"
+	default FB_PIX_DEPTH_16
+	config FB_PIX_DEPTH_16
+		bool "FB_PIX_DEPTH_16"
+	config FB_PIX_DEPTH_32
+		bool "FB_PIX_DEPTH_32"
+endchoice
+
+choice
+	prompt "FB pixformat"
+	default FB_ARGB4444
+	config FB_ARGB4444
+		bool "FB_ARGB4444"
+		depends on FB_PIX_DEPTH_16
+	config FB_ARGB1555
+		bool "FB_ARGB1555"
+		depends on FB_PIX_DEPTH_16
+	config FB_ARGB8888
+		bool "FB_ARGB8888"
+		depends on FB_PIX_DEPTH_32
+endchoice
+
+endmenu
+endif
+
+endif
+endchoice
+
+endmenu

@@ -1,0 +1,7 @@
+#
+# Kbuild for WATCHDOG
+#
+
+ifeq (${CONFIG_WATCHDOG}, y)
+    KBUILD_DEFINES += -DCONFIG_WATCHDOG_ON
+endif

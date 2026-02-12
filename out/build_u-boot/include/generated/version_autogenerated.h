@@ -1,0 +1,6 @@
+#define PLAIN_VERSION "2021.10"
+#define U_BOOT_VERSION "U-Boot " PLAIN_VERSION
+#define U_BOOT_VERSION_NUM 2021
+#define U_BOOT_VERSION_NUM_PATCH 10
+#define CC_VERSION_STRING "aarch64-linux-gnu-gcc (Linaro GCC 6.3-2017.05) 6.3.1 20170404"
+#define LD_VERSION_STRING "GNU ld (Linaro_Binutils-2017.05) 2.27.0.20161019"

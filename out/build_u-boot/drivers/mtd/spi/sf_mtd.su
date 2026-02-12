@@ -1,0 +1,2 @@
+sf_mtd.c:15:5:spi_flash_mtd_register	0	static
+sf_mtd.c:20:6:spi_flash_mtd_unregister	0	static

@@ -1,0 +1,122 @@
+include $(SRCTREE)/build/base.mk
+
+CROSS_COMPILE = riscv64-unknown-elf-
+ALIOS_PATH = $(SRCTREE)/platform/alios
+
+HOST_TOOLS := $(SRCTREE)/platform/alios/host-tools/Xuantie-900-gcc-elf-newlib-x86_64-V2.6.1/bin
+AS		= $(HOST_TOOLS)/$(CROSS_COMPILE)as
+LD		= $(HOST_TOOLS)/$(CROSS_COMPILE)ld
+CC		= $(HOST_TOOLS)/$(CROSS_COMPILE)gcc
+CXX		= $(HOST_TOOLS)/$(CROSS_COMPILE)g++
+CPP		= $(CC) -E
+AR		= $(HOST_TOOLS)/$(CROSS_COMPILE)ar
+NM		= $(HOST_TOOLS)/$(CROSS_COMPILE)nm
+STRIP		= $(HOST_TOOLS)/$(CROSS_COMPILE)strip
+OBJCOPY		= $(HOST_TOOLS)/$(CROSS_COMPILE)objcopy
+OBJDUMP		= $(HOST_TOOLS)/$(CROSS_COMPILE)objdump
+
+sensor-y += sensor_i2c
+sensor-$(CONFIG_SNS0_GCORE_GC4653)               += gcore_gc4653
+sensor-$(CONFIG_SNS0_GCORE_GC02M1)               += gcore_gc02m1
+sensor-$(CONFIG_SNS0_GCORE_GC02M1_SLAVE)         += gcore_gc02m1_slave
+sensor-$(CONFIG_SNS0_GCORE_GC1084)               += gcore_gc1084
+sensor-$(CONFIG_SNS0_GCORE_GC1054)               += gcore_gc1054
+sensor-$(CONFIG_SNS0_GCORE_GC2053)               += gcore_gc2053
+sensor-$(CONFIG_SNS0_GCORE_GC2053_1L)            += gcore_gc2053_1L
+sensor-$(CONFIG_SNS0_GCORE_GC2083)               += gcore_gc2083
+sensor-$(CONFIG_SNS0_GCORE_GC2093)               += gcore_gc2093
+sensor-$(CONFIG_SNS0_SONY_IMX307)                += sony_imx307
+sensor-$(CONFIG_SNS0_SONY_IMX327)                += sony_imx327
+sensor-$(CONFIG_SNS0_SONY_IMX335)                += sony_imx335
+sensor-$(CONFIG_SNS0_SONY_IMX662)                += sony_imx662
+sensor-$(CONFIG_SNS0_CISTA_C4390)                += cista_c4390
+sensor-$(CONFIG_SNS0_GCORE_GC4023)               += gcore_gc4023
+sensor-$(CONFIG_SNS0_CISTA_C2395)                += cista_c2395
+sensor-$(CONFIG_SNS0_CISTA_C4395)                += cista_c4395
+sensor-$(CONFIG_SNS0_PIXELPLUS_PR2020)           += pixelplus_pr2020
+sensor-$(CONFIG_SNS0_TECHPOINT_TP9950)           += techpoint_tp9950
+sensor-$(CONFIG_SNS0_TECHPOINT_TP9963)           += techpoint_tp9963
+sensor-$(CONFIG_SNS0_TECHPOINT_TP9963_2CH)       += techpoint_tp9963
+sensor-$(CONFIG_SNS0_PIXELPLUS_XS9950)           += pixelplus_xs9950
+sensor-$(CONFIG_SNS0_PIXELPLUS_XS9951)           += pixelplus_xs9951
+sensor-$(CONFIG_SNS0_NEXTCHIP_N5)          	     += nextchip_n5
+sensor-$(CONFIG_SNS0_OV_OS5648)          	     += ov_os5648
+
+sensor-$(CONFIG_SNS1_GCORE_GC4653)               += gcore_gc4653
+sensor-$(CONFIG_SNS1_GCORE_GC02M1)               += gcore_gc02m1
+sensor-$(CONFIG_SNS1_GCORE_GC02M1_SLAVE)         += gcore_gc02m1_slave
+sensor-$(CONFIG_SNS1_GCORE_GC1084)               += gcore_gc1084
+sensor-$(CONFIG_SNS1_GCORE_GC1054)               += gcore_gc1054
+sensor-$(CONFIG_SNS1_GCORE_GC2053)               += gcore_gc2053
+sensor-$(CONFIG_SNS1_GCORE_GC2053_1L)            += gcore_gc2053_1L
+sensor-$(CONFIG_SNS1_GCORE_GC2083)               += gcore_gc2083
+sensor-$(CONFIG_SNS1_GCORE_GC2093)               += gcore_gc2093
+sensor-$(CONFIG_SNS1_SONY_IMX307)                += sony_imx307
+sensor-$(CONFIG_SNS1_SONY_IMX327)                += sony_imx327
+sensor-$(CONFIG_SNS1_SONY_IMX335)                += sony_imx335
+sensor-$(CONFIG_SNS1_SONY_IMX662)                += sony_imx662
+sensor-$(CONFIG_SNS1_CISTA_C4390)                += cista_c4390
+sensor-$(CONFIG_SNS1_GCORE_GC4023)               += gcore_gc4023
+sensor-$(CONFIG_SNS1_CISTA_C2395)                += cista_c2395
+sensor-$(CONFIG_SNS1_CISTA_C4395)                += cista_c4395
+sensor-$(CONFIG_SNS1_PIXELPLUS_PR2020)           += pixelplus_pr2020
+sensor-$(CONFIG_SNS1_TECHPOINT_TP9950)           += techpoint_tp9950
+sensor-$(CONFIG_SNS1_TECHPOINT_TP9963)           += techpoint_tp9963
+sensor-$(CONFIG_SNS1_TECHPOINT_TP9963_2CH)       += techpoint_tp9963
+sensor-$(CONFIG_SNS1_PIXELPLUS_XS9950)           += pixelplus_xs9950
+sensor-$(CONFIG_SNS1_PIXELPLUS_XS9951)           += pixelplus_xs9951
+sensor-$(CONFIG_SNS1_NEXTCHIP_N5)          	     += nextchip_n5
+sensor-$(CONFIG_SNS1_OV_OS5648)          	     += ov_os5648
+
+sensor-$(CONFIG_SNS2_PIXELPLUS_PR2020)           += pixelplus_pr2020
+sensor-$(CONFIG_SNS2_TECHPOINT_TP9950)           += techpoint_tp9950
+sensor-$(CONFIG_SNS2_TECHPOINT_TP9963)           += techpoint_tp9963
+sensor-$(CONFIG_SNS2_PIXELPLUS_XS9950)           += pixelplus_xs9950
+sensor-$(CONFIG_SNS2_PIXELPLUS_XS9951)           += pixelplus_xs9951
+sensor-$(CONFIG_SNS2_NEXTCHIP_N5)          	     += nextchip_n5
+
+sensor-y += sensor_cfg
+
+SEXT := c
+SDIR := $(CURDIR)
+ODIR := $(patsubst $(SRCTREE)/%,$(OBJTREE)/%,$(SDIR)/alios)
+SRCS := $(foreach dir,$(sensor-y),$(wildcard $(dir)/*.$(SEXT)))
+OBJS := $(addprefix $(ODIR)/,$(SRCS:.c=.o))
+DEPS := $(addprefix $(ODIR)/,$(SRCS:.c=.d))
+# $(info SDIR = $(SDIR))
+# $(info ODIR = $(ODIR))
+# $(info SRCS = $(SRCS))
+# $(info OBJS = $(OBJS))
+
+TARGET_DIR	:= $(CURDIR)/lib_alios
+TARGET_A	:= $(TARGET_DIR)/libcvi_sensor.a
+
+INCS		= -I$(SRCTREE)/cpsl/mmf/include
+INCS		+= -I$(SRCTREE)/cpsl/mmf/include/isp/$(CHIP_TYPE)/
+INCS		+= -I$(CURDIR)/sensor_i2c
+INCS		+= -I$(ALIOS_PATH)/solutions/yoc/yoc_sdk/include
+CFLAGS      = -DCONFIG_KERNEL_RHINO -DCONFIG_CPU_C906 -D__CV181X__ -DCONFIG_CSI_V2
+CFLAGS      += $(INCS) $(KBUILD_DEFINES)
+CFLAGS		+= -Wno-unused-parameter -Wno-unused-function -Wno-error
+CFLAGS		+= -c -MP -MMD -Os -Wno-main -march=rv64imafdcxtheadc -mabi=lp64d \
+			   -mcmodel=medany -mtune=c906 -c -g -ffunction-sections -fdata-sections -Wall -Werror
+.PHONY : clean all install
+all : $(TARGET_A)
+
+$(ODIR)/%.o : $(SDIR)/%.$(SEXT)
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(TARGET_DIR) :
+	mkdir -p $@
+
+$(TARGET_A) : $(OBJS) | $(TARGET_DIR)
+	$(AR) $(ARFLAGS) $@ $^
+
+clean:
+	rm -f $(OBJS) $(DEPS) $(TARGET_A)
+
+install: $(TARGET_A)
+	cp $^ $(ALIOS_PATH)/solutions/yoc/yoc_sdk/lib
+
+-include $(DEPS)

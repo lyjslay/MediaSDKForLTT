@@ -1,0 +1,36 @@
+menu "Gsensor options"
+
+config GSENSOR
+	bool "Enable GSENSOR"
+	help
+		Say Y if you want to enable GSENSOR.
+
+if GSENSOR
+
+	choice
+		prompt "Gsensor type"
+		default CONFIG_GSENSOR_DA280
+		default CONFIG_GSENSOR_DA380
+		default CONFIG_GSENSOR_SC7A20E
+
+
+	config GSENSOR_DA280
+		bool "Enable GSENSOR DA280"
+		help
+			Say Y if you want to enable gsensor DA280.
+
+	config GSENSOR_DA380
+		bool "Enable GSENSOR DA380"
+		help
+			Say Y if you want to enable gsensor DA380.
+
+	config GSENSOR_SC7A20E
+		bool "Enable GSENSOR sc7a20e"
+		help
+			Say Y if you want to enable gsensor sc7a20e.
+
+endchoice
+
+endif
+
+endmenu

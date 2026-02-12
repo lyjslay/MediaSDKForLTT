@@ -1,0 +1,4 @@
+cvi_mipi.c:85:5:mipi_tx_set_combo_dev_cfg	352	static
+cvi_mipi.c:188:5:mipi_tx_set_cmd	0	static
+cvi_mipi.c:209:5:mipi_tx_get_cmd	32	static
+cvi_mipi.c:237:6:mipi_tx_set_mode	0	static

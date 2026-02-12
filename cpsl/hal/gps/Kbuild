@@ -1,0 +1,7 @@
+#
+# Kbuild for gps
+#
+
+ifeq (${CONFIG_GPS}, y)
+    KBUILD_DEFINES += -DCONFIG_GPS_ON
+endif

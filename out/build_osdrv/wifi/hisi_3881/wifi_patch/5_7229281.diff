@@ -1,0 +1,134 @@
+From 72292810cec6091f054c9664d08d705178aebe26 Mon Sep 17 00:00:00 2001
+From: l00499173 <dongyang.liu@hisilicon.com>
+Date: Wed, 13 Jan 2021 17:52:46 +0800
+Subject: [PATCH] Description: [host] portable for 64bit of oal_print_nlogs
+
+TicketNo: DTS202101130I6FF7P1100
+Issue: cast from pointer to integer of different size
+Team: HISI_SWP_DTV
+Feature or Bugfix: Bugfix
+Test Result: OK
+Related Commit: No
+Controlled Dir: No
+PrivateCode(Yes/No): No
+Release Verify: NA
+Binary Source:  NA
+AR/Design/TestCase Update: NA
+
+Change-Id: I0ff16cf22024599edf35560de053ffdb452d0d12
+Signed-off-by: y00303705 <liangliang.yang@hisilicon.com>
+Signed-off-by: c00421846 <chenjiaxing8@hisilicon.com>
+Signed-off-by: c00330246 <chenshuhong@hisilicon.com>
+Signed-off-by: h00378055 <huangjunqiang2@hisilicon.com>
+Signed-off-by: j00501148 <jiaolizhi@hisilicon.com>
+Signed-off-by: k00452952 <mike.kong@hisilicon.com>
+Signed-off-by: l00325895 <liushanping@hisilicon.com>
+Signed-off-by: m00272131 <mashubin@hisilicon.com>
+Signed-off-by: q00429317 <kevin.qian@hisilicon.com>
+Signed-off-by: s00481801 <shichongfu@hisilicon.com>
+Signed-off-by: w00292991 <wanqingbo1@huawei.com>
+Signed-off-by: y00335365 <yukexiong@hisilicon.com>
+Signed-off-by: z00427537 <zhengbolu@hisilicon.com>
+Signed-off-by: z00321807 <andrew.zhouliang@hisilicon.com>
+Signed-off-by: l00499173 <dongyang.liu@hisilicon.com>
+---
+
+diff --git a/driver/oam/oam_ext_if.h b/driver/oam/oam_ext_if.h
+index 94e416e..619cf54 100755
+--- a/driver/oam/oam_ext_if.h
++++ b/driver/oam/oam_ext_if.h
+@@ -38,17 +38,17 @@
+         (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_INFO, 0, (fmt), 0, 0, 0, 0)
+ #define oam_info_log1(_uc_vap_id, _en_feature_id, fmt, p1) \
+     oal_print_nlogs(hi_strrchr(__FILE__, '/'), __FUNCTION__, (hi_u16)__LINE__, OAL_RET_ADDR, \
+-        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_INFO, 1, (fmt), (hi_u32)(p1), 0, 0, 0)
++        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_INFO, 1, (fmt), (size_t)(p1), 0, 0, 0)
+ #define oam_info_log2(_uc_vap_id, _en_feature_id, fmt, p1, p2) \
+     oal_print_nlogs(hi_strrchr(__FILE__, '/'), __FUNCTION__, (hi_u16)__LINE__, OAL_RET_ADDR, \
+-        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_INFO, 2, (fmt), (hi_u32)(p1), (hi_u32)(p2), 0, 0)
++        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_INFO, 2, (fmt), (size_t)(p1), (size_t)(p2), 0, 0)
+ #define oam_info_log3(_uc_vap_id, _en_feature_id, fmt, p1, p2, p3) \
+     oal_print_nlogs(hi_strrchr(__FILE__, '/'), __FUNCTION__, (hi_u16)__LINE__, OAL_RET_ADDR, \
+-        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_INFO, 3, (fmt), (hi_u32)(p1), (hi_u32)(p2), (hi_u32)(p3), 0)
++        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_INFO, 3, (fmt), (size_t)(p1), (size_t)(p2), (size_t)(p3), 0)
+ #define oam_info_log4(_uc_vap_id, _en_feature_id, fmt, p1, p2, p3, p4) \
+     oal_print_nlogs(hi_strrchr(__FILE__, '/'), __FUNCTION__, (hi_u16)__LINE__, OAL_RET_ADDR, \
+-        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_INFO, 4, (fmt), (hi_u32)(p1), (hi_u32)(p2), (hi_u32)(p3), \
+-            (hi_u32)(p4))
++        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_INFO, 4, (fmt), (size_t)(p1), (size_t)(p2), (size_t)(p3), \
++        (size_t)(p4))
+ 
+ #define oam_info_buf(_uc_vap_id, _en_feature_id, fmt, buffer, size)         \
+     oam_print_info(fmt, buffer, size)
+@@ -59,17 +59,17 @@
+         (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_WARNING, 0, (fmt), 0, 0, 0, 0)
+ #define oam_warning_log1(_uc_vap_id, _en_feature_id, fmt, p1)               \
+     oal_print_nlogs(hi_strrchr(__FILE__, '/'), __FUNCTION__, (hi_u16)__LINE__, OAL_RET_ADDR, \
+-        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_WARNING, 1, (fmt), (hi_u32)(p1), 0, 0, 0)
++        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_WARNING, 1, (fmt), (size_t)(p1), 0, 0, 0)
+ #define oam_warning_log2(_uc_vap_id, _en_feature_id, fmt, p1, p2)           \
+     oal_print_nlogs(hi_strrchr(__FILE__, '/'), __FUNCTION__, (hi_u16)__LINE__, OAL_RET_ADDR, \
+-        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_WARNING, 2, (fmt), (hi_u32)(p1), (hi_u32)(p2), 0, 0)
++        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_WARNING, 2, (fmt), (size_t)(p1), (size_t)(p2), 0, 0)
+ #define oam_warning_log3(_uc_vap_id, _en_feature_id, fmt, p1, p2, p3)       \
+     oal_print_nlogs(hi_strrchr(__FILE__, '/'), __FUNCTION__, (hi_u16)__LINE__, OAL_RET_ADDR, \
+-        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_WARNING, 3, (fmt), (hi_u32)(p1), (hi_u32)(p2), (hi_u32)(p3), 0)
++        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_WARNING, 3, (fmt), (size_t)(p1), (size_t)(p2), (size_t)(p3), 0)
+ #define oam_warning_log4(_uc_vap_id, _en_feature_id, fmt, p1, p2, p3, p4)   \
+     oal_print_nlogs(hi_strrchr(__FILE__, '/'), __FUNCTION__, (hi_u16)__LINE__, OAL_RET_ADDR, \
+-        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_WARNING, 4, (fmt), (hi_u32)(p1), (hi_u32)(p2), (hi_u32)(p3), \
+-            (hi_u32)(p4))
++        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_WARNING, 4, (fmt), (size_t)(p1), (size_t)(p2), (size_t)(p3), \
++        (size_t)(p4))
+ #define oam_warning_buf(_uc_vap_id, _en_feature_id, fmt, buffer, size)      \
+     oam_print_warn(fmt, buffer, size);
+ 
+@@ -78,17 +78,17 @@
+         (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_ERROR, 0, (fmt), 0, 0, 0, 0)
+ #define oam_error_log1(_uc_vap_id, _en_feature_id, fmt, p1)                 \
+     oal_print_nlogs(hi_strrchr(__FILE__, '/'), __FUNCTION__, (hi_u16)__LINE__, OAL_RET_ADDR, \
+-        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_ERROR, 1, (fmt), (hi_u32)(p1), 0, 0, 0)
++        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_ERROR, 1, (fmt), (size_t)(p1), 0, 0, 0)
+ #define oam_error_log2(_uc_vap_id, _en_feature_id, fmt, p1, p2)             \
+     oal_print_nlogs(hi_strrchr(__FILE__, '/'), __FUNCTION__, (hi_u16)__LINE__, OAL_RET_ADDR, \
+-        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_ERROR, 2, (fmt), (hi_u32)(p1), (hi_u32)(p2), 0, 0)
++        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_ERROR, 2, (fmt), (size_t)(p1), (size_t)(p2), 0, 0)
+ #define oam_error_log3(_uc_vap_id, _en_feature_id, fmt, p1, p2, p3)         \
+     oal_print_nlogs(hi_strrchr(__FILE__, '/'), __FUNCTION__, (hi_u16)__LINE__, OAL_RET_ADDR, \
+-        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_ERROR, 3, (fmt), (hi_u32)(p1), (hi_u32)(p2), (hi_u32)(p3), 0)
++        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_ERROR, 3, (fmt), (size_t)(p1), (size_t)(p2), (size_t)(p3), 0)
+ #define oam_error_log4(_uc_vap_id, _en_feature_id, fmt, p1, p2, p3, p4)     \
+     oal_print_nlogs(hi_strrchr(__FILE__, '/'), __FUNCTION__, (hi_u16)__LINE__, OAL_RET_ADDR, \
+-        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_ERROR, 4, (fmt), (hi_u32)(p1), (hi_u32)(p2), (hi_u32)(p3), \
+-            (hi_u32)(p4))
++        (_uc_vap_id), (_en_feature_id), OAM_LOG_LEVEL_ERROR, 4, (fmt), (size_t)(p1), (size_t)(p2), (size_t)(p3), \
++        (size_t)(p4))
+ #define oam_error_buf(_uc_vap_id, _en_feature_id, fmt, buffer, size)        \
+     oam_print_err(fmt, buffer, size);
+ 
+diff --git a/driver/oam/oam_log.c b/driver/oam/oam_log.c
+index 0bb5e44..237b816 100644
+--- a/driver/oam/oam_log.c
++++ b/driver/oam/oam_log.c
+@@ -43,7 +43,7 @@
+         hi_u8          clog_level,
+         hi_u8          uc_param_cnt,
+         hi_char*       fmt,
+-        hi_u32 p1, hi_u32 p2, hi_u32 p3, hi_u32 p4)
++        size_t p1, size_t p2, size_t p3, size_t p4)
+ {
+     hi_char buffer[OAM_PRINT_FORMAT_LENGTH] = {0};
+     hi_char* level = NULL;
+diff --git a/driver/oam/oam_log.h b/driver/oam/oam_log.h
+index 192ce19..7927e40 100644
+--- a/driver/oam/oam_log.h
++++ b/driver/oam/oam_log.h
+@@ -32,7 +32,7 @@
+         hi_u8          clog_level,
+         hi_u8          uc_param_cnt,
+         hi_char*       fmt,
+-        hi_u32 p1, hi_u32 p2, hi_u32 p3, hi_u32 p4);
++        size_t p1, size_t p2, size_t p3, size_t p4);
+ 
+ #ifdef __cplusplus
+ #if __cplusplus

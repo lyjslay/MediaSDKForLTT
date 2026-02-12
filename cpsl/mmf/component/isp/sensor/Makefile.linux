@@ -1,0 +1,50 @@
+include $(SRCTREE)/build/base.mk
+
+sensor-y += sensor_cfg
+
+SEXT := c
+SDIR := $(CURDIR)
+ODIR := $(patsubst $(SRCTREE)/%,$(OBJTREE)/%,$(SDIR)/linux)
+SRCS := $(foreach dir,$(sensor-y),$(wildcard $(dir)/*.$(SEXT)))
+OBJS := $(addprefix $(ODIR)/,$(SRCS:.c=.o))
+DEPS := $(addprefix $(ODIR)/,$(SRCS:.c=.d))
+# $(info SDIR = $(SDIR))
+# $(info ODIR = $(ODIR))
+# $(info SRCS = $(SRCS))
+# $(info OBJS = $(OBJS))
+
+TARGET_DIR	:= $(CURDIR)/lib_linux
+TARGET_A	:= $(TARGET_DIR)/libsensor_cfg.a
+TARGET_SO	:= $(TARGET_DIR)/libsensor_cfg.so
+
+INCS        += -I$(CURDIR)
+
+CFLAGS      += $(INCS)
+CFLAGS      += -fPIC
+CFLAGS		+= -Wno-unused-parameter -Wno-unused-function -Wno-error
+.PHONY : clean all install
+all : $(TARGET_A) $(TARGET_SO)
+
+$(ODIR)/%.o : $(SDIR)/%.$(SEXT)
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(TARGET_DIR) :
+	mkdir -p $@
+
+$(TARGET_A) : $(OBJS) | $(TARGET_DIR)
+	$(AR) $(ARFLAGS) $@ $^
+
+$(TARGET_SO) : $(OBJS) | $(TARGET_DIR)
+	$(CC) $(LDFLAGS_SO) -o $@ $^
+
+clean:
+	rm -f $(OBJS) $(DEPS) $(TARGET_A) $(TARGET_SO)
+
+$(INSTALL_PATH)/lib :
+	mkdir -p $@
+
+install: $(TARGET_A) $(TARGET_SO) | $(INSTALL_PATH)/lib
+	cp $^ $(INSTALL_PATH)/lib
+
+-include $(DEPS)

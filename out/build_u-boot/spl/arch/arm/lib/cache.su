@@ -1,0 +1,11 @@
+cache.c:40:13:enable_caches	0	static
+cache.c:45:13:invalidate_dcache_range	0	static
+cache.c:49:13:flush_dcache_range	0	static
+cache.c:22:13:flush_cache	0	static
+cache.c:31:13:flush_dcache_all	0	static
+cache.c:54:5:check_cache_range	0	static
+cache.c:81:6:noncached_set_region	0	static
+cache.c:90:5:noncached_init	16	static
+cache.c:111:13:noncached_alloc	0	static
+cache.c:141:12:arm_reserve_mmu	32	static
+cache.c:136:5:arch_reserve_mmu	0	static

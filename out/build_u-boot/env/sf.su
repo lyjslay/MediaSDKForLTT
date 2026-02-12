@@ -1,0 +1,4 @@
+sf.c:434:12:env_sf_init	0	static
+sf.c:47:12:setup_flash_device	48	static
+sf.c:75:12:env_sf_save	65600	static
+sf.c:161:12:env_sf_load	64	static

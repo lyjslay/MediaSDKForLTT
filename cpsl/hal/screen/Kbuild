@@ -1,0 +1,7 @@
+#
+# Kbuild for screen
+#
+
+ifeq (${CONFIG_SCREEN}, y)
+    KBUILD_DEFINES += -DCONFIG_SCREEN_ON
+endif

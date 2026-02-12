@@ -1,0 +1,7 @@
+zbar/qrcode/zbar_libzbar_la-bch15_5.lo: zbar/qrcode/bch15_5.c \
+ /data/yuanyuan/cardv/externals/host-tools/gcc/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/include/stdc-predef.h \
+ zbar/qrcode/bch15_5.h
+
+/data/yuanyuan/cardv/externals/host-tools/gcc/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/include/stdc-predef.h:
+
+zbar/qrcode/bch15_5.h:

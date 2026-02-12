@@ -1,0 +1,167 @@
+#
+# For a description of the syntax of this configuration file,
+# see Documentation/kbuild/kconfig-language.txt.
+#
+mainmenu "CViTek MediaSDK Configuration"
+menu "CViTek BSP Configuration"
+
+choice
+	prompt "Arch Type"
+	default RISCV
+	config RISCV
+		bool "riscv"
+	config ARM
+		bool "arm"
+endchoice
+
+menu "Compile-time checks and compiler options"
+
+choice
+	prompt "C library"
+	default TOOLCHAIN_GLIBC_RISCV64
+
+config TOOLCHAIN_GLIBC_RISCV64
+	bool "glibc library for user mode application on riscv64"
+	help
+	  glibc library for riscv64(RISCV64).
+
+config TOOLCHAIN_MUSL_RISCV64
+	bool "musl library for user mode application on riscv64"
+	help
+	  musl library for riscv64(RISCV64).
+	  select on compiler option through menuconfig
+	  default value is false.
+
+config TOOLCHAIN_GLIBC_ARM
+	bool "glibc library for user mode application on arm"
+	help
+	  glibc library for arm(arm32).
+
+endchoice
+
+config CROSS_COMPILE
+	string
+	default "riscv64-unknown-linux-gnu-" if TOOLCHAIN_GLIBC_RISCV64
+	default "riscv64-unknown-linux-musl-" if TOOLCHAIN_MUSL_RISCV64
+	default "arm-linux-gnueabihf-" if TOOLCHAIN_GLIBC_ARM
+	help
+	  Cross compile toolchain prefix for middleware.
+	  This will modify by TOOLCHAN_XLIBC
+
+config CROSS_COMPILE_KERNEL
+	string
+	default "riscv64-unknown-linux-gnu-" if TOOLCHAIN_GLIBC_RISCV64
+	default "riscv64-unknown-linux-musl-" if TOOLCHAIN_MUSL_RISCV64
+	default "arm-linux-gnueabihf-" if TOOLCHAIN_GLIBC_ARM
+	help
+	  Cross compile toolchain prefix for linux kernel.
+	  You don't need to set this unless you want the configured kernel build
+	  directory.
+
+config CROSS_COMPILE_UBOOT
+	string
+	default "riscv64-unknown-linux-gnu-" if TOOLCHAIN_GLIBC_RISCV64
+	default "riscv64-unknown-linux-musl-" if TOOLCHAIN_MUSL_RISCV64
+	default "aarch64-linux-gnu-" if TOOLCHAIN_GLIBC_ARM
+	help
+	  Cross compile toolchain prefix for linux kernel.
+	  You don't need to set this unless you want the configured kernel build
+	  directory.
+
+config STATIC
+	bool "Build static binary (no shared libs)"
+	default n
+	help
+	If you want to build a static binary, which does not use
+	or require any shared libraries, enable this option.
+	Static binaries are larger, but do not require functioning
+	dynamic libraries to be present, which is important if used
+	as a system rescue tool.
+
+choice
+	prompt "Compiler optimization level"
+	default CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
+
+config CC_OPTIMIZE_FOR_PERFORMANCE
+	bool "Optimize for performance"
+	help
+	  This is the default optimization level for the kernel, building
+	  with the "-O2" compiler flag for best performance and most
+	  helpful compile-time warnings.
+
+config CC_OPTIMIZE_FOR_SIZE
+	bool "Optimize for size"
+	help
+	  Enabling this option will pass "-Os" instead of "-O2" to
+	  your compiler resulting in a smaller kernel.
+
+	  If unsure, say N.
+
+endchoice
+
+config DEBUG_INFO
+	bool "Compile the application with debug info"
+	help
+          If you say Y here the resulting application binary will include
+	  debugging info resulting in a larger application binary.
+	  This adds debug symbols to the application (gcc -g), and
+	  is needed if you want to debug your application with gdb.
+	  Say Y here only if you plan to debug the application.
+
+	  If unsure, say N.
+
+config DEBUG_INFO_REDUCED
+	bool "Reduce debugging information"
+	depends on DEBUG_INFO
+	help
+	  If you say Y here gcc is instructed to generate less debugging
+	  information for structure types. This means that tools that
+	  need full debugging information (like gdb or systemtap) won't
+	  be happy. But if you merely need debugging information to
+	  resolve line numbers there is no loss. Advantage is that
+	  build directory object sizes shrink dramatically over a full
+	  DEBUG_INFO build and compile times are reduced too.
+	  Only works with newer gcc versions.
+
+config DEBUG_INFO_SPLIT
+	bool "Produce split debuginfo in .dwo files"
+	depends on DEBUG_INFO
+	help
+	  Generate debug info into separate .dwo files. This significantly
+	  reduces the build directory size for builds with DEBUG_INFO,
+	  because it stores the information only once on disk in .dwo
+	  files instead of multiple times in object files and executables.
+	  In addition the debug information is also compressed.
+
+	  Requires recent gcc (4.7+) and recent gdb/binutils.
+	  Any tool that packages or reads debug information would need
+	  to know about the .dwo files and include them.
+	  Incompatible with older versions of ccache.
+
+config DEBUG_INFO_DWARF4
+	bool "Generate dwarf4 debuginfo"
+	depends on DEBUG_INFO
+	help
+	  Generate dwarf4 debug info. This requires recent versions
+	  of gcc and gdb. It makes the debug information larger.
+	  But it significantly improves the success of resolving
+	  variables in gdb on optimized code.
+
+
+endmenu
+
+endmenu
+
+source "build/boards/Kconfig"
+source "platform/Kconfig"
+source "cpsl/mmf/Kconfig"
+source "cpsl/hal/Kconfig"
+source "framework/components/Kconfig"
+source "framework/services/Kconfig"
+source "applications/Kconfig"
+
+config ENABLE_ISP_PQ_TOOL
+	bool "Enable ISP PQ Tool"
+	select SERVICES_RTSP
+	help
+	  Say Y if you want to enable ISP PQ Tool.

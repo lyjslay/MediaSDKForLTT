@@ -1,0 +1,135 @@
+
+
+static void set_rtc_register_for_power(void)
+{
+	printf("set_rtc_register_for_power\n");
+ 	mmio_write_32(0x050250AC, 0x2);
+	mmio_write_32(0x050260D0, 0x3);
+	mmio_write_32(0x03001098, 0x0);
+	mmio_write_32(0x0300109C, 0x0);
+	mmio_write_32(0x03001090, 0x0);
+	mmio_write_32(0x03001094, 0x0);
+	mmio_write_32(0x05027084, 0x0);
+	mmio_write_32(0x05027088, 0x0);
+	mmio_write_32(0x0502708C, 0x0);
+	mmio_write_32(0x05027090, 0x0);
+	mmio_write_32(0x050260BC, 0x1700);
+	mmio_write_32(0x05026128, 0x0);
+	mmio_write_32(0x0502606c, 0x0);
+
+	mmio_write_32(0x50250AC, 0x3);
+	mmio_write_32(0x5025098, 0x10024000);
+	mmio_write_32(0x5025028, 0x20328c00);
+	mmio_write_32(0x5025084, 0x30002);
+	mmio_write_32(0x5025080, 0x000f000b);
+	mmio_write_32(0x5025028, 0xe0328c00);
+
+	mmio_write_32(0x05026490, 0x1);
+	mmio_write_32(0x0502648C, 0x1);
+	mmio_write_32(0x0502648C, 0x0);
+}
+
+int cvi_board_init(void)
+{
+	// PINMUX_CONFIG(CAM_MCLK0, CAM_MCLK0);
+
+	// PINMUX_CONFIG(IIC3_SCL, IIC3_SCL);
+	// PINMUX_CONFIG(IIC3_SDA, IIC3_SDA);
+	set_rtc_register_for_power();
+
+	/*touch panel*/
+	// PINMUX_CONFIG(VIVO_D1, XGPIOB_20);
+	// PINMUX_CONFIG(VIVO_D0, XGPIOB_21);
+	PINMUX_CONFIG(SPK_EN, XGPIOA_15);
+	PINMUX_CONFIG(AUX0, XGPIOA_30);
+	PINMUX_CONFIG(UART0_RX, XGPIOA_17);
+	PINMUX_CONFIG(UART0_TX, XGPIOA_16);
+	// PINMUX_CONFIG(JTAG_CPU_TMS, XGPIOA_19);
+	// PINMUX_CONFIG(JTAG_CPU_TRST, XGPIOA_20);
+	// PINMUX_CONFIG(VIVO_D1, IIC4_SCL);
+	// PINMUX_CONFIG(VIVO_D0, IIC4_SDA);
+
+	//#########SENSOR_PWR_EN
+	// PINMUX_CONFIG(CAM_PD0, XGPIOA_1);
+	//#########WIFI
+	pinmux_config(PINMUX_SDIO1);
+	PINMUX_CONFIG(SD0_PWR_EN, XGPIOA_14);
+	mmio_write_32(0x05027058, 0x44);
+	mmio_write_32(0x0502705C, 0x44);
+	mmio_write_32(0x05027060, 0x44);
+	mmio_write_32(0x05027064, 0x44);
+	mmio_write_32(0x05027068, 0x44);
+
+	// mmio_write_32(0x30020a8, 0x30109);
+
+    // mmio_write_32(0x03009804, (mmio_read_32(0x03009804)) | 0x1);
+	// mmio_write_32(0x03009808, (mmio_read_32(0x03009808) & (~0x1f)) | 0x1);
+	// mmio_write_32(0x03009800, 0x0905);
+	// mdelay(1);
+	// mmio_write_32(0x0300907c, (mmio_read_32(0x0300907c) & (~0x1f00)) | 0x500);
+	// mmio_write_32(0x03009078, 0xf00);
+	// mmio_write_32(0x03009074, 0x606);
+	// mmio_write_32(0x03009070, 0x606);
+	//########AHD
+	// PINMUX_CONFIG(ADC3,IIC4_SCL);
+	// PINMUX_CONFIG(ADC2,IIC4_SDA);
+
+	// PINMUX_CONFIG(USB_VBUS_EN, XGPIOB_5);
+	// PINMUX_CONFIG(PAD_MIPIRX5N, XGPIOC_0);
+
+	//########panel
+	PINMUX_CONFIG(PWR_WAKEUP0, PWR_GPIO_6);
+	pinmux_config(PINMUX_DSI);
+	PINMUX_CONFIG(PWR_GPIO0, PWM_8);
+
+	//######## mipi-dsi
+	PINMUX_CONFIG(PAD_MIPI_TXM0, XGPIOC_12);
+	PINMUX_CONFIG(PAD_MIPI_TXP0, XGPIOC_13);
+	PINMUX_CONFIG(PAD_MIPI_TXM1, XGPIOC_14);
+	PINMUX_CONFIG(PAD_MIPI_TXP1, XGPIOC_15);
+	PINMUX_CONFIG(PAD_MIPI_TXM2, XGPIOC_16);
+	PINMUX_CONFIG(PAD_MIPI_TXP2, XGPIOC_17);
+	PINMUX_CONFIG(PAD_MIPI_TXM3, XGPIOC_20);
+	PINMUX_CONFIG(PAD_MIPI_TXP3, XGPIOC_21);
+	PINMUX_CONFIG(PAD_MIPI_TXM4, XGPIOC_18);
+	PINMUX_CONFIG(PAD_MIPI_TXP4, XGPIOC_19);
+	//######## i80-dsi
+	// PINMUX_CONFIG(PAD_MIPI_TXM4, VO_D_24);
+	// PINMUX_CONFIG(PAD_MIPI_TXP4, VO_D_25);
+	// PINMUX_CONFIG(PAD_MIPI_TXM3, VO_D_26);
+	// PINMUX_CONFIG(PAD_MIPI_TXP3, VO_D_27);
+	// PINMUX_CONFIG(PAD_MIPI_TXM2, VO_D_0);
+	// PINMUX_CONFIG(PAD_MIPI_TXP2, VO_CLK0);
+	// PINMUX_CONFIG(PAD_MIPI_TXM1, VO_D_2);
+	// PINMUX_CONFIG(PAD_MIPI_TXP1, VO_D_1);
+	// PINMUX_CONFIG(PAD_MIPI_TXM0, VO_D_4);
+	// PINMUX_CONFIG(PAD_MIPI_TXP0, VO_D_3);
+	// PINMUX_CONFIG(PAD_MIPIRX5P, VO_D_11);
+	// PINMUX_CONFIG(CAM_PD1, XGPIOA_4);
+
+	//######## G_sensor
+	PINMUX_CONFIG(IIC2_SCL, IIC2_SCL);
+	PINMUX_CONFIG(IIC2_SDA, IIC2_SDA);
+
+    //######## usb
+	PINMUX_CONFIG(USB_VBUS_DET, XGPIOB_6);
+
+	//######## spk_en
+	// PINMUX_CONFIG(SPK_EN, XGPIOA_15);
+
+	//mcu
+	PINMUX_CONFIG(IIC0_SDA, UART1_RX);
+	PINMUX_CONFIG(IIC0_SCL, UART1_TX);
+
+	mmio_write_32(0x03009804, 0x1);
+	mmio_write_32(0x03009808, 0x1);
+	mmio_write_32(0x03009800, 0x0905);
+	mmio_write_32(0x0300907c, 0x500);
+	mmio_write_32(0x03009078, 0xf00);
+	mmio_write_32(0x03009074, 0x606);
+	mmio_write_32(0x03009070, 0x606);
+	PINMUX_CONFIG(PAD_ETH_TXP, UART3_RX);
+	PINMUX_CONFIG(PAD_ETH_RXP, UART3_TX);
+
+	return 0;
+}

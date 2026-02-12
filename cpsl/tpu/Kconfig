@@ -1,0 +1,11 @@
+#
+# For a description of the syntax of this configuration file,
+# see Documentation/kbuild/kconfig-language.txt.
+#
+#comment "Device Configuration"
+
+config TPU
+	bool "Enable TPU"
+	help
+	  Say Y if you want to enable TPU.
+

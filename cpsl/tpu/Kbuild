@@ -1,0 +1,7 @@
+#
+# Kbuild for TPU
+#
+
+ifeq (${CONFIG_TPU}, y)
+    KBUILD_DEFINES += -DCONFIG_TPU_ON
+endif

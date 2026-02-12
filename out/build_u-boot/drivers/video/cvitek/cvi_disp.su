@@ -1,0 +1,3 @@
+cvi_disp.c:30:12:cvi_vo_bind	0	static
+cvi_disp.c:39:12:cvi_vo_ofdata_to_platdata	48	static
+cvi_disp.c:63:12:cvi_vo_probe	48	static

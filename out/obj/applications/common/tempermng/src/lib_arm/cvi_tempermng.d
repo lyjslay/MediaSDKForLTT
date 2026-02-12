@@ -1,0 +1,13 @@
+/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/obj/applications/common/tempermng/src/lib_arm/cvi_tempermng.o: \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/applications/common/tempermng/src/cvi_tempermng.c \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/common/log/include/cvi_log.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/common/log/include/zf_log.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_sys.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_debug.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_common.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_type.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_defines.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_cv181x_defines.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_comm_sys.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_comm_video.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/applications/common/tempermng/include/cvi_tempermng.h

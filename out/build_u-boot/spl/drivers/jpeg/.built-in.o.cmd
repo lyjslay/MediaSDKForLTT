@@ -1,0 +1,1 @@
+cmd_spl/drivers/jpeg/built-in.o :=  rm -f spl/drivers/jpeg/built-in.o; aarch64-linux-gnu-ar cDPrsT spl/drivers/jpeg/built-in.o spl/drivers/jpeg/mm.o spl/drivers/jpeg/jdi.o spl/drivers/jpeg/jpuapifunc.o spl/drivers/jpeg/jpeg.o spl/drivers/jpeg/jpuhelper.o spl/drivers/jpeg/jdi_osal.o spl/drivers/jpeg/jpuapi.o spl/drivers/jpeg/jpurun.o spl/drivers/jpeg/mixer.o

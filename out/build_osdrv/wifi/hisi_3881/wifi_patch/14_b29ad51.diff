@@ -1,0 +1,64 @@
+From b29ad51bbc385045f3855ba1a9ef9fb68a77474f Mon Sep 17 00:00:00 2001
+From: l00499173 <dongyang.liu@hisilicon.com>
+Date: Sat, 30 Jan 2021 14:06:02 +0800
+Subject: [PATCH] Description: [host] portable for 64bit of hcc_sort_key_frame
+
+TicketNo: DTS202101130I6FF7P1100
+Issue: Kernel panic - not syncing: stack-protector:
+Kernel stack is corrupted in:
+hcc_sort_key_frame+0x1b8/0x1dc [hi3881]
+Team: HISI_SWP_DTV
+Feature or Bugfix: Bugfix
+Test Result: OK
+Related Commit: No
+Controlled Dir: No
+PrivateCode(Yes/No): No
+Release Verify: NA
+Binary Source:  NA
+AR/Design/TestCase Update: NA
+
+Change-Id: Id8a1b0f3fa0e2849329773c469a19b149b2c54e8
+Signed-off-by: y00303705 <liangliang.yang@hisilicon.com>
+Signed-off-by: c00421846 <chenjiaxing8@hisilicon.com>
+Signed-off-by: c00330246 <chenshuhong@hisilicon.com>
+Signed-off-by: h00378055 <huangjunqiang2@hisilicon.com>
+Signed-off-by: j00501148 <jiaolizhi@hisilicon.com>
+Signed-off-by: k00452952 <mike.kong@hisilicon.com>
+Signed-off-by: l00325895 <liushanping@hisilicon.com>
+Signed-off-by: m00272131 <mashubin@hisilicon.com>
+Signed-off-by: q00429317 <kevin.qian@hisilicon.com>
+Signed-off-by: s00481801 <shichongfu@hisilicon.com>
+Signed-off-by: w00292991 <wanqingbo1@huawei.com>
+Signed-off-by: y00335365 <yukexiong@hisilicon.com>
+Signed-off-by: z00427537 <zhengbolu@hisilicon.com>
+Signed-off-by: z00321807 <andrew.zhouliang@hisilicon.com>
+Signed-off-by: l00499173 <dongyang.liu@hisilicon.com>
+---
+
+diff --git a/driver/hcc/hcc_hmac.c b/driver/hcc/hcc_hmac.c
+index eb8a8b7..1a91b66 100755
+--- a/driver/hcc/hcc_hmac.c
++++ b/driver/hcc/hcc_hmac.c
+@@ -278,11 +278,11 @@
+ hi_void hcc_sort_key_frame(hcc_trans_queue_stru* hcc_queue, oal_netbuf_stru *netbuf)
+ {
+     oal_netbuf_head_stru *head;
+-    hi_u32 flags;
++    unsigned long flags;
+     oal_netbuf_stru* netbuf_tmp = HI_NULL;
+     hi_u8 is_insert = HI_FALSE;
+     head = &hcc_queue->data_queue;
+-    oal_spin_lock_irq_save((oal_spin_lock_stru *)&head->lock, (unsigned long *)&flags);
++    oal_spin_lock_irq_save((oal_spin_lock_stru *)&head->lock, &flags);
+     for (netbuf_tmp = head->next; netbuf_tmp != (oal_netbuf_stru *)head; netbuf_tmp = netbuf_tmp->next) {
+         dmac_tx_ctl_stru *dmac_tx_ctrl = HI_NULL;
+         hi_u8* hcc_hdr = (hi_u8*)oal_netbuf_data(netbuf_tmp);
+@@ -297,7 +297,7 @@
+             break;
+         }
+     }
+-    oal_spin_unlock_irq_restore((oal_spin_lock_stru *)&head->lock, (unsigned long *)&flags);
++    oal_spin_unlock_irq_restore((oal_spin_lock_stru *)&head->lock, &flags);
+ 
+     if (!is_insert) {
+         oal_netbuf_list_tail(head, netbuf);

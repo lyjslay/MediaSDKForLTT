@@ -1,0 +1,12 @@
+interrupts_64.c:16:5:interrupt_init	0	static
+interrupts_64.c:23:6:enable_interrupts	0	static
+interrupts_64.c:28:5:disable_interrupts	0	static
+interrupts_64.c:49:6:show_regs	64	static
+interrupts_64.c:69:6:do_bad_sync	32	static
+interrupts_64.c:81:6:do_bad_irq	32	static
+interrupts_64.c:93:6:do_bad_fiq	32	static
+interrupts_64.c:105:6:do_bad_error	32	static
+interrupts_64.c:117:6:do_sync	32	static
+interrupts_64.c:129:6:do_irq	32	static
+interrupts_64.c:141:6:do_fiq	32	static
+interrupts_64.c:156:13:do_error	32	static

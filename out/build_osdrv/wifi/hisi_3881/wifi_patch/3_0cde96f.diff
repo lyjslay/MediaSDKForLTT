@@ -1,0 +1,109 @@
+From 0cde96f5658113cebeac6bf9fd788e4123cd370e Mon Sep 17 00:00:00 2001
+From: l00499173 <dongyang.liu@hisilicon.com>
+Date: Wed, 13 Jan 2021 16:49:53 +0800
+Subject: [PATCH] Description: [host] portable for 64bit of DEVICE_ATTR
+
+TicketNo: DTS202101130I6FF7P1100
+Issue: initialization from incompatible pointer type
+Team: HISI_SWP_DTV
+Feature or Bugfix: Bugfix
+Test Result: OK
+Related Commit: No
+Controlled Dir: No
+PrivateCode(Yes/No): No
+Release Verify: NA
+Binary Source:  NA
+AR/Design/TestCase Update: NA
+
+Change-Id: Ie2b57c1166907bedb50d7519916ba47504a54407
+Signed-off-by: y00303705 <liangliang.yang@hisilicon.com>
+Signed-off-by: c00421846 <chenjiaxing8@hisilicon.com>
+Signed-off-by: c00330246 <chenshuhong@hisilicon.com>
+Signed-off-by: h00378055 <huangjunqiang2@hisilicon.com>
+Signed-off-by: j00501148 <jiaolizhi@hisilicon.com>
+Signed-off-by: k00452952 <mike.kong@hisilicon.com>
+Signed-off-by: l00325895 <liushanping@hisilicon.com>
+Signed-off-by: m00272131 <mashubin@hisilicon.com>
+Signed-off-by: q00429317 <kevin.qian@hisilicon.com>
+Signed-off-by: s00481801 <shichongfu@hisilicon.com>
+Signed-off-by: w00292991 <wanqingbo1@huawei.com>
+Signed-off-by: y00335365 <yukexiong@hisilicon.com>
+Signed-off-by: z00427537 <zhengbolu@hisilicon.com>
+Signed-off-by: z00321807 <andrew.zhouliang@hisilicon.com>
+Signed-off-by: l00499173 <dongyang.liu@hisilicon.com>
+---
+
+diff --git a/components/liteos/wpa_supplicant/src/drivers/driver_hisi_common.h b/components/liteos/wpa_supplicant/src/drivers/driver_hisi_common.h
+index 337ddb8..3af3928 100644
+--- a/components/liteos/wpa_supplicant/src/drivers/driver_hisi_common.h
++++ b/components/liteos/wpa_supplicant/src/drivers/driver_hisi_common.h
+@@ -38,8 +38,6 @@
+ *******************************************************************************/
+ typedef signed long long int64;
+ typedef unsigned long long uint64;
+-typedef unsigned int size_t;
+-typedef signed int ssize_t;
+ typedef unsigned long ulong;
+ typedef signed long slong;
+ /*****************************************************************************
+diff --git a/driver/wal/wal_hipriv.c b/driver/wal/wal_hipriv.c
+index 6ba1d11..d0e3408 100755
+--- a/driver/wal/wal_hipriv.c
++++ b/driver/wal/wal_hipriv.c
+@@ -50,9 +50,9 @@
+ static oal_proc_dir_entry_stru *g_proc_entry = HI_NULL;
+ struct kobject *g_gp_sys_kobject = HI_NULL;
+ #ifdef _PRE_CONFIG_CONN_HISI_SYSFS_SUPPORT
+-static hi_ssize_t  wal_hipriv_sys_write(oal_device_stru *dev, oal_device_attribute_stru *attr,
+-    const char *buf, hi_size_t count);
+-static hi_ssize_t  wal_hipriv_sys_read(oal_device_stru *dev, oal_device_attribute_stru *attr, char *buf);
++static ssize_t wal_hipriv_sys_write(oal_device_stru *dev, oal_device_attribute_stru *attr,
++    const char *buf, size_t count);
++static ssize_t wal_hipriv_sys_read(oal_device_stru *dev, oal_device_attribute_stru *attr, char *buf);
+ static DEVICE_ATTR(hipriv, (S_IRUGO|S_IWUSR), wal_hipriv_sys_read, wal_hipriv_sys_write);
+ 
+ static struct attribute *g_hipriv_sysfs_entries[] = {
+@@ -6716,13 +6716,13 @@
+     修改内容   : 新生成函数
+ 
+ *****************************************************************************/
+-static hi_ssize_t  wal_hipriv_sys_write(oal_device_stru *dev, oal_device_attribute_stru *attr,
+-    const char *pc_buffer, hi_size_t count)
++static ssize_t wal_hipriv_sys_write(oal_device_stru *dev, oal_device_attribute_stru *attr,
++    const char *pc_buffer, size_t count)
+ {
+     hi_u32 len = (hi_u32)count;
+ 
+     if (len > WAL_HIPRIV_CMD_MAX_LEN) {
+-        oam_warning_log1(0, OAM_SF_ANY, "{wal_hipriv_sys_write::len>WAL_HIPRIV_CMD_MAX_LEN, len [%d]!}\r\n", len);
++        oam_warning_log1(0, OAM_SF_ANY, "{wal_hipriv_sys_write::len>WAL_HIPRIV_CMD_MAX_LEN, len [%u]!}\r\n", len);
+         return -OAL_EINVAL;
+     }
+ 
+@@ -6730,7 +6730,7 @@
+         oam_warning_log0(0, OAM_SF_ANY, "{wal_hipriv_proc_write::parse cmd return err code!}\r\n");
+     }
+ 
+-    return (hi_s32)len;
++    return (ssize_t)len;
+ }
+ 
+ /*****************************************************************************
+@@ -6744,7 +6744,7 @@
+ 
+ *****************************************************************************/
+ #define SYS_READ_MAX_STRING_LEN (4096 - 40)   /* 当前命令字符长度20字节内，预留40保证不会超出 */
+-static hi_ssize_t  wal_hipriv_sys_read(oal_device_stru *dev, oal_device_attribute_stru *attr, char *pc_buffer)
++static ssize_t wal_hipriv_sys_read(oal_device_stru *dev, oal_device_attribute_stru *attr, char *pc_buffer)
+ {
+     hi_u32              cmd_idx;
+     hi_u32              buff_index = 0;
+@@ -6759,7 +6759,7 @@
+             break;
+         }
+     }
+-    return buff_index;
++    return (ssize_t)buff_index;
+ }
+ 
+ #endif

@@ -1,0 +1,47 @@
+From 4626d838a7689b251517ca28d974f6efc58215ca Mon Sep 17 00:00:00 2001
+From: l00499173 <dongyang.liu@hisilicon.com>
+Date: Tue, 26 Jan 2021 15:34:22 +0800
+Subject: [PATCH] Description: [host] Not calling sdio_rescan
+
+TicketNo: DTS202101260GBMNBP1G00
+Issue: Not calling sdio_rescan for SD3403
+Team: HISI_SWP_DTV
+Feature or Bugfix: Bugfix
+Test Result: OK
+Related Commit: No
+Controlled Dir: No
+PrivateCode(Yes/No): No
+Release Verify: NA
+Binary Source:  NA
+AR/Design/TestCase Update: NA
+
+Change-Id: If88ba77500fff086b32e6d1b7ea62ab9d901694c
+Signed-off-by: y00303705 <liangliang.yang@hisilicon.com>
+Signed-off-by: c00421846 <chenjiaxing8@hisilicon.com>
+Signed-off-by: c00330246 <chenshuhong@hisilicon.com>
+Signed-off-by: h00378055 <huangjunqiang2@hisilicon.com>
+Signed-off-by: j00501148 <jiaolizhi@hisilicon.com>
+Signed-off-by: k00452952 <mike.kong@hisilicon.com>
+Signed-off-by: l00325895 <liushanping@hisilicon.com>
+Signed-off-by: m00272131 <mashubin@hisilicon.com>
+Signed-off-by: q00429317 <kevin.qian@hisilicon.com>
+Signed-off-by: s00481801 <shichongfu@hisilicon.com>
+Signed-off-by: w00292991 <wanqingbo1@huawei.com>
+Signed-off-by: y00335365 <yukexiong@hisilicon.com>
+Signed-off-by: z00427537 <zhengbolu@hisilicon.com>
+Signed-off-by: z00321807 <andrew.zhouliang@hisilicon.com>
+Signed-off-by: l00499173 <dongyang.liu@hisilicon.com>
+---
+
+diff --git a/driver/oal/oal_sdio_host.c b/driver/oal/oal_sdio_host.c
+index cad6078..3fcbfd4 100644
+--- a/driver/oal/oal_sdio_host.c
++++ b/driver/oal/oal_sdio_host.c
+@@ -2318,6 +2318,7 @@
+ 
+ #if defined(HISI_WIFI_PLATFORM_HI3559V200) || defined(HISI_WIFI_PLATFORM_HI3556V200)
+     sdio_card_detect_change(2);
++#elif defined(HISI_WIFI_PLATFORM_SD3403V100)
+ #else
+     sdio_card_detect_change(1);
+ #endif

@@ -1,0 +1,13 @@
+include $(SRCTREE)/cpsl/hal/adc/Kbuild
+include $(SRCTREE)/cpsl/hal/gpio/Kbuild
+include $(SRCTREE)/cpsl/hal/key/Kbuild
+include $(SRCTREE)/cpsl/hal/led/Kbuild
+include $(SRCTREE)/cpsl/hal/gps/Kbuild
+include $(SRCTREE)/cpsl/hal/gsensor/Kbuild
+include $(SRCTREE)/cpsl/hal/pwm/Kbuild
+include $(SRCTREE)/cpsl/hal/watchdog/Kbuild
+include $(SRCTREE)/cpsl/tpu/Kbuild
+include $(SRCTREE)/cpsl/hal/screen/Kbuild
+include $(SRCTREE)/cpsl/hal/touchpad/Kbuild
+include $(SRCTREE)/cpsl/hal/wifi/Kbuild
+

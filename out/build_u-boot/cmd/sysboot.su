@@ -1,0 +1,4 @@
+sysboot.c:58:12:do_sysboot	80	static
+sysboot.c:39:12:do_get_any	16	static
+sysboot.c:25:12:do_get_fat	16	static
+sysboot.c:11:12:do_get_ext2	16	static

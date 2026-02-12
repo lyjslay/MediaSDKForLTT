@@ -1,0 +1,7 @@
+#
+# Kbuild for gsensor
+#
+
+ifeq (${CONFIG_GSENSOR}, y)
+    KBUILD_DEFINES += -DCONFIG_GSENSOR_ON
+endif

@@ -1,0 +1,1 @@
+cmd_/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_osdrv/tp/Module.symvers := sed 's/ko$$/o/' /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_osdrv/tp/modules.order | scripts/mod/modpost   -E  -o /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_osdrv/tp/Module.symvers -e -i Module.symvers   -T -

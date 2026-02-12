@@ -1,0 +1,7 @@
+#
+# Kbuild for gpio
+#
+
+ifeq (${CONFIG_GPIO}, y)
+    KBUILD_DEFINES += -DCONFIG_GPIO_ON
+endif

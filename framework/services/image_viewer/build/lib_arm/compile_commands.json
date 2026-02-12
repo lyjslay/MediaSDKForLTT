@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/build/lib_arm",
+  "command": "/media/cvitek/yijun.liu01/host-tools/gcc/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-g++ -D__CV181X__ -I../../include -I../../../../../framework/mapi/include -I../../../../../cpsl/mmf/include -I../../../../../cpsl/common/log/include -I../../../../../framework/components/demuxer/include -I../../../../../framework/components/thumbnail_extractor/include     -Werror=all -fsigned-char -fdiagnostics-color=always -Wno-stringop-truncation -fPIC -O3 -DNDEBUG -std=gnu++1z -o CMakeFiles/cvi_image_viewer_static.dir/src/cvi_image_viewer.cpp.o -c /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/src/cvi_image_viewer.cpp",
+  "file": "/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/src/cvi_image_viewer.cpp"
+},
+{
+  "directory": "/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/build/lib_arm",
+  "command": "/media/cvitek/yijun.liu01/host-tools/gcc/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-g++ -D__CV181X__ -I../../include -I../../../../../framework/mapi/include -I../../../../../cpsl/mmf/include -I../../../../../cpsl/common/log/include -I../../../../../framework/components/demuxer/include -I../../../../../framework/components/thumbnail_extractor/include     -Werror=all -fsigned-char -fdiagnostics-color=always -Wno-stringop-truncation -fPIC -O3 -DNDEBUG -std=gnu++1z -o CMakeFiles/cvi_image_viewer_static.dir/src/image_viewer.cpp.o -c /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/src/image_viewer.cpp",
+  "file": "/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/src/image_viewer.cpp"
+},
+{
+  "directory": "/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/build/lib_arm",
+  "command": "/media/cvitek/yijun.liu01/host-tools/gcc/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-g++ -D__CV181X__ -Dcvi_image_viewer_EXPORTS -I../../include -I../../../../../framework/mapi/include -I../../../../../cpsl/mmf/include -I../../../../../cpsl/common/log/include -I../../../../../framework/components/demuxer/include -I../../../../../framework/components/thumbnail_extractor/include     -Werror=all -fsigned-char -fdiagnostics-color=always -Wno-stringop-truncation -fPIC -O3 -DNDEBUG -fPIC -std=gnu++1z -o CMakeFiles/cvi_image_viewer.dir/src/cvi_image_viewer.cpp.o -c /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/src/cvi_image_viewer.cpp",
+  "file": "/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/src/cvi_image_viewer.cpp"
+},
+{
+  "directory": "/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/build/lib_arm",
+  "command": "/media/cvitek/yijun.liu01/host-tools/gcc/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-g++ -D__CV181X__ -Dcvi_image_viewer_EXPORTS -I../../include -I../../../../../framework/mapi/include -I../../../../../cpsl/mmf/include -I../../../../../cpsl/common/log/include -I../../../../../framework/components/demuxer/include -I../../../../../framework/components/thumbnail_extractor/include     -Werror=all -fsigned-char -fdiagnostics-color=always -Wno-stringop-truncation -fPIC -O3 -DNDEBUG -fPIC -std=gnu++1z -o CMakeFiles/cvi_image_viewer.dir/src/image_viewer.cpp.o -c /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/src/image_viewer.cpp",
+  "file": "/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/src/image_viewer.cpp"
+}
+]

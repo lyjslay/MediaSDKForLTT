@@ -1,0 +1,7 @@
+#
+# Kbuild for adc
+#
+
+ifeq (${CONFIG_ADC}, y)
+    KBUILD_DEFINES += -DCONFIG_ADC_ON
+endif

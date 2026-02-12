@@ -1,0 +1,7 @@
+cvi_hal_gpio.c:72:5:CVI_GPIO_Export	112	static
+cvi_hal_gpio.c:134:5:CVI_GPIO_Unexport	16	static
+cvi_hal_gpio.c:142:5:CVI_GPIO_Direction_Input	16	static
+cvi_hal_gpio.c:154:5:CVI_GPIO_Direction_Output	16	static
+cvi_hal_gpio.c:177:5:CVI_GPIO_Set_Value	16	static
+cvi_hal_gpio.c:209:5:CVI_GPIO_Get_Value	32	static
+cvi_hal_gpio.c:221:5:CVI_GPIO_Poll	16	static

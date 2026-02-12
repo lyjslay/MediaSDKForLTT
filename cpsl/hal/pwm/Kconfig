@@ -1,0 +1,6 @@
+# PWM Enable
+
+config PWM
+	bool "Enable PWM"
+	help
+	  Say Y if you want to enable PWM.

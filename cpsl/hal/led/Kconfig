@@ -1,0 +1,6 @@
+# LED Enable
+
+config LED
+	bool "Enable LED"
+	help
+	  Say Y if you want to enable LED.

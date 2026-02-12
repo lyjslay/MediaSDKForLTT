@@ -1,0 +1,74 @@
+menu "Components options"
+
+
+config COMPONENTS_MEMORY_ALLOCATOR
+	bool "MemoryAllocator Component"
+	help
+	  Say Y if you want to enable MemoryAllocator Component.
+
+config COMPONENTS_RINGBUFFER
+	bool "Ringbuffer Component"
+	select COMPONENTS_MEMORY_ALLOCATOR
+	help
+	  Say Y if you want to enable Ringbuffer Component.
+
+config COMPONENTS_DEMUXER
+	bool "Demuxer Component"
+	help
+	  Say Y if you want to enable Demuxer Component.
+
+config COMPONENTS_MUXER
+	bool "Muxer Component"
+	help
+	  Say Y if you want to enable Muxer Component.
+
+config FLUSH_MOOV_STREAM
+	bool "Flush Moov Stream"
+	depends on COMPONENTS_MUXER
+	help
+		Say Y if you want to enable Flush Moov Stream.
+
+config COMPONENTS_PLAYER
+	bool "Player Component"
+	select COMPONENTS_DEMUXER
+	select COMPONENTS_MEMORY_ALLOCATOR
+	select COMPONENTS_THUMBNAIL_EXTRACTOR
+	help
+	  Say Y if you want to enable Player Component.
+
+config COMPONENTS_FILE_RECOVER
+	bool "File_recover Component"
+	help
+	  Say Y if you want to enable File_recover Component.
+
+config COMPONENTS_THUMBNAIL_EXTRACTOR
+	bool "Thumbnail_Extractor Component"
+	help
+	  Say Y if you want to enable Thumbnail_Extractor Component.
+
+config COMPONENTS_RECORDER
+	bool "Record Component"
+	select COMPONENTS_MUXER
+	select COMPONENTS_RINGBUFFER
+	help
+	  Say Y if you want to enable Recorder Component.
+
+config COMPONENTS_EVENT_REC_FILE_COPY_FROM_NORM
+	bool "Event Record File"
+    depends on COMPONENTS_RECORDER
+	help
+	  Say Y if you want to enable event record file copy from normal record.
+
+config COMPONENTS_ONVIF
+	bool "Onvif Component"
+	default n
+	help
+	  Say Y if you want to enable Onvif Component.
+
+config COMPONENTS_PERF
+	bool "Perf Component"
+	default n
+	help
+	  Say Y if you want to enable perf Component.
+
+endmenu

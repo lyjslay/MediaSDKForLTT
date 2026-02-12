@@ -1,0 +1,12 @@
+<physical_partition type="spinand">
+    <partition label="fip" size_in_kb="2560" readonly="false" file="fip.bin"/>
+    <partition label="2nd" size_in_kb="2560" readonly="false" file="yoc.bin"/>
+    <partition label="BOOT" size_in_kb="8192" file="boot.spinand"/>
+    <partition label="PARAM" size_in_kb="128" readonly="false" file="app_cfg.bin"/>
+    <partition label="PARAM_BAK" size_in_kb="128" readonly="false" file="app_cfg_def.bin"/>
+    <partition label="ENV" size_in_kb="128" file="" />
+    <partition label="ENV_BAK" size_in_kb="128" file="" />
+    <partition label="MISC" size_in_kb="128" file="logo.jpg" />
+    <partition label="ROOTFS" size_in_kb="63488" file="rootfs.spinand" />
+    <partition label="SYSTEM" size_in_kb="53632" mountpoint="/mnt/system" file="system.spinand" type="ubifs" />
+</physical_partition>

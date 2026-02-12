@@ -1,0 +1,6 @@
+menu.c:165:5:menu_default_choice	0	static
+menu.c:237:5:menu_default_set	64	static
+menu.c:269:5:menu_get_choice	592	static
+menu.c:298:5:menu_item_add	80	static
+menu.c:363:14:menu_create	80	static
+menu.c:407:5:menu_destroy	48	static

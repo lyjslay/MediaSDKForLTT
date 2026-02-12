@@ -1,0 +1,7 @@
+#
+# Kbuild for pwm
+#
+
+ifeq (${CONFIG_PWM}, y)
+    KBUILD_DEFINES += -DCONFIG_PWM_ON
+endif

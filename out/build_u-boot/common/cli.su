@@ -1,0 +1,8 @@
+cli.c:33:5:run_command	0	static
+cli.c:60:5:run_command_repeatable	16	static
+cli.c:85:5:run_command_list	48	static
+cli.c:133:5:do_run	48	static
+cli.c:157:6:cli_process_fdt	32	static
+cli.c:184:6:cli_secure_boot_cmd	32	static
+cli.c:226:6:cli_loop	16	static
+cli.c:240:6:cli_init	0	static

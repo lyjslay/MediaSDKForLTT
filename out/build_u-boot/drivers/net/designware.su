@@ -1,0 +1,15 @@
+designware.c:757:12:designware_eth_bind	0	static
+designware.c:735:5:designware_eth_free_pkt	32	static
+designware.c:62:12:dw_mdio_write	48	static
+designware.c:35:12:dw_mdio_read	48	static
+designware.c:728:5:designware_eth_recv	48	static
+designware.c:721:5:designware_eth_send	112	static
+designware.c:742:6:designware_eth_stop	16	static
+designware.c:125:12:dw_mdio_reset	48	static
+designware.c:773:5:designware_eth_probe	48	static
+designware.c:910:5:designware_eth_of_to_plat	48	static
+designware.c:886:12:designware_eth_remove	32	static
+designware.c:749:5:designware_eth_write_hwaddr	32	static
+designware.c:368:5:designware_eth_init	80	static
+designware.c:436:5:designware_eth_enable	0	static
+designware.c:705:12:designware_eth_start	32	static

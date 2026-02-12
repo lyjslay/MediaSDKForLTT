@@ -1,0 +1,6 @@
+# GPS Enable
+
+config GPS
+	bool "Enable GPS"
+	help
+	  Say Y if you want to enable GPS.

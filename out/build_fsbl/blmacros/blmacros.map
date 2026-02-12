@@ -1,0 +1,43 @@
+
+Discarded input sections
+
+ .group         0x0000000000000000        0x8 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .text          0x0000000000000000        0x0 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .data          0x0000000000000000        0x0 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .bss           0x0000000000000000        0x0 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .rodata.build_message
+                0x0000000000000000       0x1a /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .rodata.version_string
+                0x0000000000000000       0x16 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .debug_info    0x0000000000000000       0x87 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .debug_abbrev  0x0000000000000000       0x46 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .debug_aranges
+                0x0000000000000000       0x20 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .debug_macro   0x0000000000000000       0x11 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .debug_macro   0x0000000000000000      0x73c /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .debug_line    0x0000000000000000       0x2c /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .debug_str     0x0000000000000000     0x2031 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .comment       0x0000000000000000       0x2e /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+
+.text           0x0000000000000000        0x4
+                0x0000000000000000        0x4 LONG 0xdeadbeef
+ *(*)
+ .iplt          0x0000000000000004        0x0 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .rela.iplt     0x0000000000000004        0x0 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+ .igot.plt      0x0000000000000004        0x0 /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+                0x0000000080000000                DEF_DRAM_BASE = 0x80000000
+                0x0000000080000000                DEF_MONITOR_RUNADDR = 0x80000000
+                0x0000000080030000                DEF_BL32_RUNADDR = 0x80030000
+                0x0000000084400000                DEF_BLCP_2ND_RUNADDR = 0x84400000
+LOAD /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/build_message.o
+OUTPUT(/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_fsbl/blmacros/blmacros.elf elf64-littleaarch64)

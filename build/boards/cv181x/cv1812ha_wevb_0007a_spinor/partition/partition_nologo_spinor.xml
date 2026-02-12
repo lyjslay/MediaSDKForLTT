@@ -1,0 +1,9 @@
+<physical_partition type="spinor">
+    <partition label="fip" size_in_kb="1024" readonly="false" file="fip.bin"/>
+    <partition label="BOOT" size_in_kb="2048" readonly="false" file="boot.spinor"/>
+    <partition label="PARAM" size_in_kb="64" readonly="false" file="app_cfg.bin"/>
+    <partition label="PARAM_BAK" size_in_kb="64" readonly="false" file="app_cfg_def.bin"/>
+    <partition label="ENV" size_in_kb="64" file="" />
+    <partition label="ENV_BAK" size_in_kb="64" file="" />
+    <partition label="ROOTFS" size_in_kb="12288" readonly="false" file="rootfs.spinor" />
+</physical_partition>

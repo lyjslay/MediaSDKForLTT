@@ -1,0 +1,4 @@
+pxe.c:225:12:do_pxe	48	static
+pxe.c:170:1:do_pxe_boot	64	static
+pxe.c:27:12:do_get_tftp	48	static
+pxe.c:117:1:do_pxe_get	96	static

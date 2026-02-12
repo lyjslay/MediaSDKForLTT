@@ -1,0 +1,2 @@
+cvi_hal_pwm.c:15:5:CVI_PWM_Init	64	static
+cvi_hal_pwm.c:43:5:CVI_PWM_Deinit	64	static

@@ -1,0 +1,3 @@
+helloworld.c:86:6:print_load_options	32	static
+helloworld.c:104:14:print_device_path	48	static
+helloworld.c:138:21:efi_main	128	static

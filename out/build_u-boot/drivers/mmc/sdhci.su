@@ -1,0 +1,14 @@
+sdhci.c:558:12:sdhci_card_busy	48	static
+sdhci.c:374:12:sdhci_execute_tuning	32	static
+sdhci.c:804:12:sdhci_deferred_probe	16	static
+sdhci.c:818:12:sdhci_get_cd	32	static
+sdhci.c:497:13:sdhci_set_power.isra.2	0	static
+sdhci.c:32:13:sdhci_reset	48	static
+sdhci.c:228:12:sdhci_send_command	112	static
+sdhci.c:391:5:sdhci_set_clock	48	static
+sdhci.c:670:12:sdhci_set_ios	48	static
+sdhci.c:527:6:sdhci_set_uhs_timing	0	static
+sdhci.c:579:13:sdhci_set_voltage	48	static
+sdhci.c:797:5:sdhci_probe	32	static
+sdhci.c:869:5:sdhci_setup_cfg	64	static
+sdhci.c:1027:5:sdhci_bind	0	static

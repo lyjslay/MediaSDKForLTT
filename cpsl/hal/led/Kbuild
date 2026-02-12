@@ -1,0 +1,7 @@
+#
+# Kbuild for led
+#
+
+ifeq (${CONFIG_LED}, y)
+    KBUILD_DEFINES += -DCONFIG_LED_ON
+endif

@@ -1,0 +1,7 @@
+cvi_i80_sw.c:20:14:_MAKECOLOR	0	static
+cvi_i80_sw.c:54:6:i80_package_frame	128	static
+cvi_i80_sw.c:174:5:i80_set_combo_dev_cfg	64	static
+cvi_i80_sw.c:217:6:i80_set_sw_mode	0	static
+cvi_i80_sw.c:225:5:i80_set_cmd	16	static
+cvi_i80_sw.c:234:5:i80_set_run	16	static
+cvi_i80_sw.c:243:6:i80_sclr_intr_clr	16	static

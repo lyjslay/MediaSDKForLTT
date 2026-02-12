@@ -1,0 +1,3 @@
+spl.c:54:13:switch_to_el1	0	static
+spl.c:45:13:board_init_f	0	static
+spl.c:67:17:jump_to_image_linux	16	static

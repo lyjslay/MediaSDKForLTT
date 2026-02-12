@@ -1,0 +1,48 @@
+From 98aef843d8fa50a9b82c026ee4aa9b1b33155318 Mon Sep 17 00:00:00 2001
+From: l00499173 <dongyang.liu@hisilicon.com>
+Date: Thu, 28 Jan 2021 16:11:42 +0800
+Subject: [PATCH] Description: [host] portable for 64bit of oal_queue_enqueue
+
+TicketNo: DTS202101130I6FF7P1100
+Issue: fix addr truncated in case of 64bit os
+Team: HISI_SWP_DTV
+Feature or Bugfix: Bugfix
+Test Result: OK
+Related Commit: No
+Controlled Dir: No
+PrivateCode(Yes/No): No
+Release Verify: NA
+Binary Source:  NA
+AR/Design/TestCase Update: NA
+
+Change-Id: Ifabf001f779e23291f3d20a035a839acec48ba8b
+Signed-off-by: y00303705 <liangliang.yang@hisilicon.com>
+Signed-off-by: c00421846 <chenjiaxing8@hisilicon.com>
+Signed-off-by: c00330246 <chenshuhong@hisilicon.com>
+Signed-off-by: h00378055 <huangjunqiang2@hisilicon.com>
+Signed-off-by: j00501148 <jiaolizhi@hisilicon.com>
+Signed-off-by: k00452952 <mike.kong@hisilicon.com>
+Signed-off-by: l00325895 <liushanping@hisilicon.com>
+Signed-off-by: m00272131 <mashubin@hisilicon.com>
+Signed-off-by: q00429317 <kevin.qian@hisilicon.com>
+Signed-off-by: s00481801 <shichongfu@hisilicon.com>
+Signed-off-by: w00292991 <wanqingbo1@huawei.com>
+Signed-off-by: y00335365 <yukexiong@hisilicon.com>
+Signed-off-by: z00427537 <zhengbolu@hisilicon.com>
+Signed-off-by: z00321807 <andrew.zhouliang@hisilicon.com>
+Signed-off-by: l00499173 <dongyang.liu@hisilicon.com>
+---
+
+diff --git a/driver/oal/oal_queue.h b/driver/oal/oal_queue.h
+index 06863a0..07dd418 100755
+--- a/driver/oal/oal_queue.h
++++ b/driver/oal/oal_queue.h
+@@ -116,7 +116,7 @@
+ 
+     hi_u8 tail_index = queue->tail_index;
+     /* 将元素的地址保存在队列中 */
+-    queue->pul_buf[tail_index++] = (hi_u32)(uintptr_t)element;
++    queue->pul_buf[tail_index++] = (uintptr_t)element;
+     queue->tail_index = ((tail_index >= queue->max_elements) ? 0 : tail_index);
+     queue->element_cnt++;
+ 

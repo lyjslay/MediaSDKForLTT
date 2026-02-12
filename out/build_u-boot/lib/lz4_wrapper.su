@@ -1,0 +1,2 @@
+lz4_wrapper.c:22:13:LZ4_copy8	0	static
+lz4_wrapper.c:40:5:ulz4fn	304	static

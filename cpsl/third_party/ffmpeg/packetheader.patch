@@ -1,0 +1,116 @@
+From a4633ed06da24f5d4d6215c99062ab4a96a6f221 Mon Sep 17 00:00:00 2001
+From: "yuanyuan.zhao" <yuanyuan.zhao@cvitek.com>
+Date: Sat, 18 Jun 2022 17:29:56 +0800
+Subject: [PATCH] add packet head in mov write
+
+Change-Id: Ib6eaf134ae2ce3b76640c94f37df161fa9424891
+---
+ libavformat/movenc.c | 35 ++++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
+
+diff --git a/libavformat/movenc.c b/libavformat/movenc.c
+index 333466e9ec..511e7f5df6 100644
+--- a/libavformat/movenc.c
++++ b/libavformat/movenc.c
+@@ -118,6 +118,9 @@ static const AVClass flavor ## _muxer_class = {\
+     .version    = LIBAVUTIL_VERSION_INT,\
+ };
+ 
++#define CVI_MUXER_EXT_DATA_LEN 0
++
++
+ static int get_moov_size(AVFormatContext *s);
+ 
+ static int utf8len(const uint8_t *b)
+@@ -181,7 +184,7 @@ static int mov_write_stco_tag(AVIOContext *pb, MOVTrack *track)
+     for (i = 0; i < track->entry; i++) {
+         if (!track->cluster[i].chunkNum)
+             continue;
+-        if (mode64 == 1)
++		if (mode64 == 1)
+             avio_wb64(pb, track->cluster[i].pos + track->data_offset);
+         else
+             avio_wb32(pb, track->cluster[i].pos + track->data_offset);
+@@ -201,14 +204,15 @@ static int mov_write_stsz_tag(AVIOContext *pb, MOVTrack *track)
+     avio_wb32(pb, 0); /* version & flags */
+ 
+     for (i = 0; i < track->entry; i++) {
+-        tst = track->cluster[i].size / track->cluster[i].entries;
++		tst = track->cluster[i].size / track->cluster[i].entries;
+         if (oldtst != -1 && tst != oldtst)
+             equalChunks = 0;
+         oldtst = tst;
+         entries += track->cluster[i].entries;
+     }
+     if (equalChunks && track->entry) {
+-        int sSize = track->entry ? track->cluster[0].size / track->cluster[0].entries : 0;
++		int sSize = 0;
++		sSize = track->entry ? track->cluster[0].size / track->cluster[0].entries : 0;
+         sSize = FFMAX(1, sSize); // adpcm mono case could make sSize == 0
+         avio_wb32(pb, sSize); // sample size
+         avio_wb32(pb, entries); // sample count
+@@ -217,8 +221,7 @@ static int mov_write_stsz_tag(AVIOContext *pb, MOVTrack *track)
+         avio_wb32(pb, entries); // sample count
+         for (i = 0; i < track->entry; i++) {
+             for (j = 0; j < track->cluster[i].entries; j++) {
+-                avio_wb32(pb, track->cluster[i].size /
+-                          track->cluster[i].entries);
++				avio_wb32(pb, track->cluster[i].size / track->cluster[i].entries);
+             }
+         }
+     }
+@@ -5457,6 +5460,7 @@ int ff_mov_write_packet(AVFormatContext *s, AVPacket *pkt)
+     int prft_size;
+     uint8_t *reformatted_data = NULL;
+ 
++
+     ret = check_pkt(s, pkt);
+     if (ret < 0)
+         return ret;
+@@ -5633,7 +5637,12 @@ int ff_mov_write_packet(AVFormatContext *s, AVPacket *pkt)
+                 goto err;
+             }
+         } else {
+-            avio_write(pb, pkt->data, size);
++			if(trk->par->codec_type == AVMEDIA_TYPE_AUDIO || trk->par->codec_type == AVMEDIA_TYPE_SUBTITLE){
++				avio_write(pb, pkt->data - CVI_MUXER_EXT_DATA_LEN, size + CVI_MUXER_EXT_DATA_LEN);
++				trk->data_offset = CVI_MUXER_EXT_DATA_LEN;
++			}else {
++				avio_write(pb, pkt->data, size);
++			}
+         }
+     }
+ 
+@@ -5647,10 +5656,15 @@ int ff_mov_write_packet(AVFormatContext *s, AVPacket *pkt)
+         trk->cluster_capacity = new_capacity;
+     }
+ 
+-    trk->cluster[trk->entry].pos              = avio_tell(pb) - size;
++	if(trk->par->codec_type == AVMEDIA_TYPE_AUDIO || trk->par->codec_type == AVMEDIA_TYPE_SUBTITLE){
++        trk->cluster[trk->entry].pos              = avio_tell(pb) - size - CVI_MUXER_EXT_DATA_LEN;
++	    trk->cluster[trk->entry].size             = size;
++    }else{
++        trk->cluster[trk->entry].pos              = avio_tell(pb) - size;
++	    trk->cluster[trk->entry].size             = size;
++    }
+     trk->cluster[trk->entry].samples_in_chunk = samples_in_chunk;
+     trk->cluster[trk->entry].chunkNum         = 0;
+-    trk->cluster[trk->entry].size             = size;
+     trk->cluster[trk->entry].entries          = samples_in_chunk;
+     trk->cluster[trk->entry].dts              = pkt->dts;
+     trk->cluster[trk->entry].pts              = pkt->pts;
+@@ -5762,7 +5776,10 @@ int ff_mov_write_packet(AVFormatContext *s, AVPacket *pkt)
+ 
+     trk->entry++;
+     trk->sample_count += samples_in_chunk;
+-    mov->mdat_size    += size;
++    if(trk->par->codec_type == AVMEDIA_TYPE_AUDIO || trk->par->codec_type == AVMEDIA_TYPE_SUBTITLE)
++	    mov->mdat_size    += size + CVI_MUXER_EXT_DATA_LEN;
++    else
++	    mov->mdat_size    += size;
+     update_size(pb, 28);
+ 
+     if (trk->hint_track >= 0 && trk->hint_track < mov->nb_streams)
+-- 
+2.17.1
+

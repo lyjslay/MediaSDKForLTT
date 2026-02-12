@@ -1,0 +1,348 @@
+From fe399e33940ed164362821c3eb83c65899c71d97 Mon Sep 17 00:00:00 2001
+From: l00499173 <dongyang.liu@hisilicon.com>
+Date: Sat, 16 Jan 2021 11:07:37 +0800
+Subject: [PATCH] Description: [host] unused-result error while compile with arm-himix410-linux
+
+TicketNo: DTS202101140QWR2MP0K00
+Issue: unused-result error while compile with arm-himix410-linux
+Team: HISI_SWP_DTV
+Feature or Bugfix: Bugfix
+Test Result: OK
+Related Commit: No
+Controlled Dir: No
+PrivateCode(Yes/No): No
+Release Verify: NA
+Binary Source:  NA
+AR/Design/TestCase Update: NA
+
+Change-Id: I1d319031abe43ea4961aa18e575167727e405672
+Signed-off-by: y00303705 <liangliang.yang@hisilicon.com>
+Signed-off-by: c00421846 <chenjiaxing8@hisilicon.com>
+Signed-off-by: c00330246 <chenshuhong@hisilicon.com>
+Signed-off-by: h00378055 <huangjunqiang2@hisilicon.com>
+Signed-off-by: j00501148 <jiaolizhi@hisilicon.com>
+Signed-off-by: k00452952 <mike.kong@hisilicon.com>
+Signed-off-by: l00325895 <liushanping@hisilicon.com>
+Signed-off-by: m00272131 <mashubin@hisilicon.com>
+Signed-off-by: q00429317 <kevin.qian@hisilicon.com>
+Signed-off-by: s00481801 <shichongfu@hisilicon.com>
+Signed-off-by: w00292991 <wanqingbo1@huawei.com>
+Signed-off-by: y00335365 <yukexiong@hisilicon.com>
+Signed-off-by: z00427537 <zhengbolu@hisilicon.com>
+Signed-off-by: z00321807 <andrew.zhouliang@hisilicon.com>
+Signed-off-by: l00499173 <dongyang.liu@hisilicon.com>
+---
+
+diff --git a/app/demo_linux/interface/src/sta/wlan_sm.c b/app/demo_linux/interface/src/sta/wlan_sm.c
+index d765164..b59301b 100755
+--- a/app/demo_linux/interface/src/sta/wlan_sm.c
++++ b/app/demo_linux/interface/src/sta/wlan_sm.c
+@@ -993,7 +993,7 @@
+         free(wbuf);
+         return HI_FAILURE;
+     }
+-    if (system(wbuf) != 0) {
++    if (system(wbuf) == -1) {
+         dbg_print(("WiFi: system failure\n"));
+     }
+     free(wbuf);
+diff --git a/app/demo_linux/sample_app/ap/sample_ap.c b/app/demo_linux/sample_app/ap/sample_ap.c
+index b2a5220..bcb0cb2 100755
+--- a/app/demo_linux/sample_app/ap/sample_ap.c
++++ b/app/demo_linux/sample_app/ap/sample_ap.c
+@@ -159,39 +159,39 @@
+ void sdio_pin_mux_init(void)
+ {
+ #if defined(HISI_WIFI_PLATFORM_HI3559V200) || defined(HISI_WIFI_PLATFORM_HI3556V200)
+-    system("himm 0x112F0008 0x681");
+-    system("himm 0x112F0010 0x581");
+-    system("himm 0x112F0014 0x581");
+-    system("himm 0x112F0018 0x581");
+-    system("himm 0x112F000C 0x581");
+-    system("himm 0x112F001C 0x581");
++    system_check("himm 0x112F0008 0x681");
++    system_check("himm 0x112F0010 0x581");
++    system_check("himm 0x112F0014 0x581");
++    system_check("himm 0x112F0018 0x581");
++    system_check("himm 0x112F000C 0x581");
++    system_check("himm 0x112F001C 0x581");
+ #elif defined(HISI_WIFI_PLATFORM_HI3516) || defined(HISI_WIFI_PLATFORM_HI3516EV300)
+-    system("himm 0x100C0060 0x1D54");
+-    system("himm 0x100C006C 0x1174");
+-    system("himm 0x100C0068 0x1174");
+-    system("himm 0x100C0074 0x1174");
+-    system("himm 0x100C0064 0x1174");
+-    system("himm 0x100C0070 0x1174");
++    system_check("himm 0x100C0060 0x1D54");
++    system_check("himm 0x100C006C 0x1174");
++    system_check("himm 0x100C0068 0x1174");
++    system_check("himm 0x100C0074 0x1174");
++    system_check("himm 0x100C0064 0x1174");
++    system_check("himm 0x100C0070 0x1174");
+ #else
+-    system("himm 0x112C0048 0x1D54");
+-    system("himm 0x112C004c 0x1134");
+-    system("himm 0x112C0060 0x1134");
+-    system("himm 0x112C0064 0x1134");
+-    system("himm 0x112C0058 0x1134");
+-    system("himm 0x112C005c 0x1134");
++    system_check("himm 0x112C0048 0x1D54");
++    system_check("himm 0x112C004c 0x1134");
++    system_check("himm 0x112C0060 0x1134");
++    system_check("himm 0x112C0064 0x1134");
++    system_check("himm 0x112C0058 0x1134");
++    system_check("himm 0x112C005c 0x1134");
+ #endif
+ }
+ 
+ hi_void board_gpio_pin_power_off_init(void)
+ {
+ #if defined(HISI_WIFI_PLATFORM_HI3559V200) || defined(HISI_WIFI_PLATFORM_HI3556V200)
+-    system("himm 0x112F00B8 0x0601");
+-    system("himm 0x120DB400 0x08");
++    system_check("himm 0x112F00B8 0x0601");
++    system_check("himm 0x120DB400 0x08");
+ #elif defined(HISI_WIFI_PLATFORM_HI3516) || defined(HISI_WIFI_PLATFORM_HI3516EV300)
+-    system("himm 0x120F0000 0x00100164");
++    system_check("himm 0x120F0000 0x00100164");
+ #else
+-    system("himm 0x112C0074 0x1000");
+-    system("himm 0x120B6400 0x10");
++    system_check("himm 0x112C0074 0x1000");
++    system_check("himm 0x120B6400 0x10");
+ #endif
+ }
+ 
+@@ -199,21 +199,21 @@
+ {
+ #if defined(HISI_WIFI_PLATFORM_HI3559V200) || defined(HISI_WIFI_PLATFORM_HI3556V200)
+     if (level) {
+-        system("himm 0x120DB3FC 0x08");
++        system_check("himm 0x120DB3FC 0x08");
+     } else {
+-        system("himm 0x120DB3FC 0x00");
++        system_check("himm 0x120DB3FC 0x00");
+     }
+ #elif defined(HISI_WIFI_PLATFORM_HI3516) || defined(HISI_WIFI_PLATFORM_HI3516EV300)
+     if (level) {
+-        system("himm 0x120F0000 0x00100164");
++        system_check("himm 0x120F0000 0x00100164");
+     } else {
+-        system("himm 0x120F0000 0x00100160");
++        system_check("himm 0x120F0000 0x00100160");
+     }
+ #else
+     if (level) {
+-        system("himm 0x120B6040 0x10");
++        system_check("himm 0x120B6040 0x10");
+     } else {
+-        system("himm 0x120B6040 0x00");
++        system_check("himm 0x120B6040 0x00");
+     }
+ #endif
+ }
+@@ -391,15 +391,16 @@
+         return -1;
+     }
+ 
+-    asprintf(&wbuf, "start           192.168.49.20\n"
+-                    "end             192.168.49.254\n"
+-                    "interface       %s\n"
+-                    "opt     dns     192.168.49.1\n"
+-                    "option  subnet  255.255.255.0\n"
+-                    "opt     router  192.168.49.1\n"
+-                    "option  domain  local\n"
+-                    "option  lease   864000\n",
+-        ifname);
++    if (asprintf(&wbuf, "start           192.168.49.20\n"
++                        "end             192.168.49.254\n"
++                        "interface       %s\n"
++                        "opt     dns     192.168.49.1\n"
++                        "option  subnet  255.255.255.0\n"
++                        "opt     router  192.168.49.1\n"
++                        "option  domain  local\n"
++                        "option  lease   864000\n", ifname) == -1) {
++        printf("asprintf error\n");
++    }
+ 
+     if (write(fd, wbuf, strlen(wbuf)) < 0) {
+         printf("SAMPLE_AP: Cann't write configuration to '%s'\n", config_file);
+@@ -460,7 +461,7 @@
+         printf("SAMPLE_AP: wlan_ap_stop_udhcpd sprintf_s err!\n");
+         return;
+     }
+-    system(cmd);
++    system_check(cmd);
+ }
+ static hi_void set_lo_ipaddr(hi_void)
+ {
+@@ -474,7 +475,7 @@
+         printf("SAMPLE_AP: set lo ipaddr sprintf_s err!\n");
+         return;
+     }
+-    system(cmd);
++    system_check(cmd);
+ }
+ static hi_void wlan_power(hi_s32 sig)
+ {
+diff --git a/app/demo_linux/sample_app/common/sample_common.c b/app/demo_linux/sample_app/common/sample_common.c
+index 862441c..1c40d90 100755
+--- a/app/demo_linux/sample_app/common/sample_common.c
++++ b/app/demo_linux/sample_app/common/sample_common.c
+@@ -147,3 +147,12 @@
+     return HI_SUCCESS;
+ }
+ 
++hi_void system_check(const char *cmd)
++{
++    if (cmd == HI_NULL) {
++        return;
++    }
++    if (system(cmd) == -1) {
++        printf("system %s error!\n", cmd);
++    }
++}
+\ No newline at end of file
+diff --git a/app/demo_linux/sample_app/common/sample_common.h b/app/demo_linux/sample_app/common/sample_common.h
+index bcb781b..ff242be 100755
+--- a/app/demo_linux/sample_app/common/sample_common.h
++++ b/app/demo_linux/sample_app/common/sample_common.h
+@@ -46,5 +46,7 @@
+ 
+ hi_s32 wlan_register_cmd(wlan_cmd_entry_stru *cmd_tbl, hi_u32 num);
+ 
++hi_void system_check(const char *cmd);
++
+ #endif
+ 
+diff --git a/app/demo_linux/sample_app/sta/sample_sta.c b/app/demo_linux/sample_app/sta/sample_sta.c
+index f849952..b2468f0 100755
+--- a/app/demo_linux/sample_app/sta/sample_sta.c
++++ b/app/demo_linux/sample_app/sta/sample_sta.c
+@@ -220,39 +220,39 @@
+ void sdio_pin_mux_init(void)
+ {
+ #if defined(HISI_WIFI_PLATFORM_HI3559V200) || defined(HISI_WIFI_PLATFORM_HI3556V200)
+-    system("himm 0x112F0008 0x681");
+-    system("himm 0x112F0010 0x581");
+-    system("himm 0x112F0014 0x581");
+-    system("himm 0x112F0018 0x581");
+-    system("himm 0x112F000C 0x581");
+-    system("himm 0x112F001C 0x581");
++    system_check("himm 0x112F0008 0x681");
++    system_check("himm 0x112F0010 0x581");
++    system_check("himm 0x112F0014 0x581");
++    system_check("himm 0x112F0018 0x581");
++    system_check("himm 0x112F000C 0x581");
++    system_check("himm 0x112F001C 0x581");
+ #elif defined(HISI_WIFI_PLATFORM_HI3516) || defined(HISI_WIFI_PLATFORM_HI3516EV300)
+-    system("himm 0x100C0060 0x1D54");
+-    system("himm 0x100C006C 0x1174");
+-    system("himm 0x100C0068 0x1174");
+-    system("himm 0x100C0074 0x1174");
+-    system("himm 0x100C0064 0x1174");
+-    system("himm 0x100C0070 0x1174");
++    system_check("himm 0x100C0060 0x1D54");
++    system_check("himm 0x100C006C 0x1174");
++    system_check("himm 0x100C0068 0x1174");
++    system_check("himm 0x100C0074 0x1174");
++    system_check("himm 0x100C0064 0x1174");
++    system_check("himm 0x100C0070 0x1174");
+ #else
+-    system("himm 0x112C0048 0x1D54");
+-    system("himm 0x112C004c 0x1134");
+-    system("himm 0x112C0060 0x1134");
+-    system("himm 0x112C0064 0x1134");
+-    system("himm 0x112C0058 0x1134");
+-    system("himm 0x112C005c 0x1134");
++    system_check("himm 0x112C0048 0x1D54");
++    system_check("himm 0x112C004c 0x1134");
++    system_check("himm 0x112C0060 0x1134");
++    system_check("himm 0x112C0064 0x1134");
++    system_check("himm 0x112C0058 0x1134");
++    system_check("himm 0x112C005c 0x1134");
+ #endif
+ }
+ 
+ hi_void board_gpio_pin_power_off_init(void)
+ {
+ #if defined(HISI_WIFI_PLATFORM_HI3559V200) || defined(HISI_WIFI_PLATFORM_HI3556V200)
+-    system("himm 0x112F00B8 0x0601");
+-    system("himm 0x120DB400 0x08");
++    system_check("himm 0x112F00B8 0x0601");
++    system_check("himm 0x120DB400 0x08");
+ #elif defined(HISI_WIFI_PLATFORM_HI3516) || defined(HISI_WIFI_PLATFORM_HI3516EV300)
+-    system("himm 0x120F0000 0x00100164");
++    system_check("himm 0x120F0000 0x00100164");
+ #else
+-    system("himm 0x112C0074 0x1000");
+-    system("himm 0x120B6400 0x10");
++    system_check("himm 0x112C0074 0x1000");
++    system_check("himm 0x120B6400 0x10");
+ #endif
+ }
+ 
+@@ -260,21 +260,21 @@
+ {
+ #if defined(HISI_WIFI_PLATFORM_HI3559V200) || defined(HISI_WIFI_PLATFORM_HI3556V200)
+     if (level) {
+-        system("himm 0x120DB3FC 0x08");
++        system_check("himm 0x120DB3FC 0x08");
+     } else {
+-        system("himm 0x120DB3FC 0x00");
++        system_check("himm 0x120DB3FC 0x00");
+     }
+ #elif defined(HISI_WIFI_PLATFORM_HI3516) || defined(HISI_WIFI_PLATFORM_HI3516EV300)
+     if (level) {
+-        system("himm 0x120F0000 0x00100164");
++        system_check("himm 0x120F0000 0x00100164");
+     } else {
+-        system("himm 0x120F0000 0x00100160");
++        system_check("himm 0x120F0000 0x00100160");
+     }
+ #else
+     if (level) {
+-        system("himm 0x120B6040 0x10");
++        system_check("himm 0x120B6040 0x10");
+     } else {
+-        system("himm 0x120B6040 0x00");
++        system_check("himm 0x120B6040 0x00");
+     }
+ #endif
+ }
+@@ -1260,7 +1260,7 @@
+     if (ret == -1) {
+         printf("SAMPLE_STA: file=%s,line=%d,func=%s\n", __FILE__, __LINE__, __FUNCTION__);
+     }
+-    ret = system(cmd);
++    system_check(cmd);
+ }
+ 
+ hi_void wlan_kill_process(hi_char *process)
+@@ -1275,7 +1275,7 @@
+     if (ret == -1) {
+         printf("SAMPLE_STA: file=%s,line=%d,func=%s\n", __FILE__, __LINE__, __FUNCTION__);
+     }
+-    ret = system(cmd);
++    system_check(cmd);
+ }
+ 
+ static hi_void wlan_power(hi_s32 sig)
+@@ -1432,7 +1432,7 @@
+         printf("SAMPLE_STA: set lo ipaddr sprintf_s err!\n");
+         return;
+     }
+-    system(cmd);
++    system_check(cmd);
+ }
+ 
+ void wlan_wakeup_device_fail_sig_handler(int sig)
+@@ -1457,7 +1457,7 @@
+         /* second, wirte pid to sys */
+         if (g_wait_enable_event) {
+             g_wait_enable_event = 0;
+-            system(cmd_buf);
++            system_check(cmd_buf);
+         }
+         /* wakeup device fail process.... */
+         if (g_wkup_fail_event) {

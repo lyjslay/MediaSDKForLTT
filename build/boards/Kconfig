@@ -1,0 +1,165 @@
+menu "CViTek Board Configuration"
+choice
+	prompt "Chip Type"
+	default CV1811H
+	config CV1810C
+		bool "cv1810c"
+	config CV1811C
+		bool "cv1811c"
+	config CV1812CP
+		bool "cv1812cp"
+	config CV1811H
+		bool "cv1811h"
+	config CV1812H
+		bool "cv1812h"
+	config CV1811HA
+		bool "cv1811ha"
+	config CV1812HA
+		bool "cv1812ha"
+	config CV1801C
+	    bool "cv1801c"
+	config CV180ZB
+	    bool "cv180zb"
+	config CV1801B
+	    bool "cv1801b"
+	config CV1800B
+	    bool "cv1800b"
+	config CV1800C
+	    bool "cv1800c"
+endchoice
+
+choice
+	prompt "Board type"
+	default WEVB_0007A
+	config WEVB_0007A
+		bool "wevb_0007a"
+	config WEVB_0006A
+		bool "wevb_0006a"
+	config WDMB_0006A
+		bool "wdmb_0006a"
+	config WEVB_0008A
+		bool "wevb_0008a"
+	config WEVB_0009A
+	    bool "wevb_0009a"
+endchoice
+
+choice
+	prompt "Arch define"
+	default 64BIT
+	config 64BIT
+		bool "64bit"
+	config 32BIT
+		bool "32bit"
+endchoice
+
+choice
+	prompt "DDR size"
+	default DDR_128M
+	config DDR_64M
+		bool "64M"
+	config DDR_128M
+		bool "128M"
+	config DDR_256M
+		bool "256M"
+	config DDR_512M
+		bool "512M"
+endchoice
+
+choice
+	prompt "DDR Config"
+	default CONFIG_DDR_CFG_ddr3_1866_x16
+
+config CONFIG_DDR_CFG_ddr3_1866_x16
+	bool "sel ddr date rate to 1866"
+	help
+	sel ddr date rate to 1866.
+
+config CONFIG_DDR_CFG_ddr3_2133_x16
+	bool "sel ddr date rate to 2133"
+	help
+	sel ddr date rate to 2133.
+
+config CONFIG_DDR_CFG_ddr2_1333_x16
+	bool "sel ddr date rate to 1333"
+	help
+	sel ddr date rate to 1333.
+
+config CONFIG_DDR_CFG_ddr_auto_x16
+	bool "sel ddr date rate auto"
+	help
+	sel ddr date rate to auto.
+
+endchoice
+
+config DDR_CFG
+	string
+	default "ddr3_1866_x16" if CONFIG_DDR_CFG_ddr3_1866_x16
+	default "ddr3_2133_x16" if CONFIG_DDR_CFG_ddr3_2133_x16
+	default "ddr2_1333_x16" if CONFIG_DDR_CFG_ddr2_1333_x16
+	default "ddr_auto_x16" if CONFIG_DDR_CFG_ddr_auto_x16
+	help
+	  set ddr date rate
+
+menu "Storage type"
+
+choice
+	prompt "Storage Config"
+	config SPINAND
+		bool "spinand"
+	config SPINOR
+		bool "spinor"
+	config EMMC
+		bool "emmc"
+endchoice
+
+menu "Nand flase setting"
+	depends on SPINAND
+	config NANDFLASH_BLOCKSIZE
+		int "nand flash block size"
+		default 131072
+		help
+		  set nand flash block size.
+
+	config NANDFLASH_PAGESIZE
+		int "nand flase page size"
+		default 2048
+		help
+		  set nand flase page size.
+endmenu
+
+endmenu
+
+config ENABLE_OD
+	bool "Enable OD clk"
+	help
+		Say Y if you want to enable OD.
+
+if ENABLE_OD
+choice
+	prompt "OD Config"
+	default OD_CLK_SEL
+
+config OD_CLK_SEL
+	bool "Set OD clk"
+	help
+		Say Y if you want to enable all OD.
+
+config VC_CLK_OVERDRIVE
+	bool "Set VC OD clk"
+	help
+		Say Y if you want to enable VC OD.
+endchoice
+endif
+
+config BOARD_DEBUG
+	bool "Set board debug"
+	default n
+	help
+		Say Y if you want to debug.
+
+config BRANCH_NAME
+	string "Set branch name"
+	  help
+	  	set branch name.
+
+endmenu

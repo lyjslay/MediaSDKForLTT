@@ -1,0 +1,15 @@
+mmc.c:1095:12:do_mmcops	64	static
+mmc.c:641:12:do_mmc_list	16	static
+mmc.c:21:13:print_mmcinfo	656	static
+mmc.c:988:12:do_mmc_setdsr	48	static
+mmc.c:126:20:__init_mmc_device.isra.1	48	static
+mmc.c:717:12:do_mmc_hwpartition	176	static
+mmc.c:521:12:do_mmc_rescan	16	static
+mmc.c:617:12:do_mmc_fuse_rstn	32	static
+mmc.c:562:12:do_mmc_dev	48	static
+mmc.c:542:12:do_mmc_part	32	static
+mmc.c:482:12:do_mmc_erase	48	static
+mmc.c:442:12:do_mmc_write	64	static
+mmc.c:1041:12:do_mmc_boot_wp	32	static
+mmc.c:340:12:do_mmc_read	64	static
+mmc.c:161:12:do_mmcinfo	32	static

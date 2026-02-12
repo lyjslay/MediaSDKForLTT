@@ -1,0 +1,48 @@
+From f270dd0b8c28edcd4656eb45f7f10292df7f6d50 Mon Sep 17 00:00:00 2001
+From: l00499173 <dongyang.liu@hisilicon.com>
+Date: Wed, 13 Jan 2021 16:32:59 +0800
+Subject: [PATCH] Description: [host] portable for 64bit of hi_offset_of_member
+
+TicketNo: DTS202101130I6FF7P1100
+Issue: cast from pointer to integer of different size
+Team: HISI_SWP_DTV
+Feature or Bugfix: Bugfix
+Test Result: OK
+Related Commit: No
+Controlled Dir: No
+PrivateCode(Yes/No): No
+Release Verify: NA
+Binary Source:  NA
+AR/Design/TestCase Update: NA
+
+Change-Id: I0fd0cf945ca0cb47811df77bf0072b9c31e2b9b0
+Signed-off-by: y00303705 <liangliang.yang@hisilicon.com>
+Signed-off-by: c00421846 <chenjiaxing8@hisilicon.com>
+Signed-off-by: c00330246 <chenshuhong@hisilicon.com>
+Signed-off-by: h00378055 <huangjunqiang2@hisilicon.com>
+Signed-off-by: j00501148 <jiaolizhi@hisilicon.com>
+Signed-off-by: k00452952 <mike.kong@hisilicon.com>
+Signed-off-by: l00325895 <liushanping@hisilicon.com>
+Signed-off-by: m00272131 <mashubin@hisilicon.com>
+Signed-off-by: q00429317 <kevin.qian@hisilicon.com>
+Signed-off-by: s00481801 <shichongfu@hisilicon.com>
+Signed-off-by: w00292991 <wanqingbo1@huawei.com>
+Signed-off-by: y00335365 <yukexiong@hisilicon.com>
+Signed-off-by: z00427537 <zhengbolu@hisilicon.com>
+Signed-off-by: z00321807 <andrew.zhouliang@hisilicon.com>
+Signed-off-by: l00499173 <dongyang.liu@hisilicon.com>
+---
+
+diff --git a/driver/include/hi_types_base.h b/driver/include/hi_types_base.h
+index 9b7a85a..e3fce96 100644
+--- a/driver/include/hi_types_base.h
++++ b/driver/include/hi_types_base.h
+@@ -520,7 +520,7 @@
+ #ifdef HAVE_PCLINT_CHECK
+ #define hi_offset_of_member(type, member)   0
+ #else
+-#define hi_offset_of_member(type, member)   ((hi_u32)(&((type *)0)->member))
++#define hi_offset_of_member(type, member)   ((size_t)(&((type *)0)->member))
+ #endif
+ #define BITS_PER_BYTE   8
+ #define HEXADECIMAL     16

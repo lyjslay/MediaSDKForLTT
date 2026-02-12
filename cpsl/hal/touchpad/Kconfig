@@ -1,0 +1,23 @@
+menu "Touchpad options"
+
+config TOUCHPAD
+	bool "Enable TOUCHPAD"
+	help
+		Say Y if you want to enable TOUCHPAD.
+
+if TOUCHPAD
+
+	choice
+		prompt "TOUCHPAD type"
+		default CONFIG_TOUCHPAD_GT9XX
+
+	config TOUCHPAD_GT9XX
+		bool "Enable TOUCHPAD GT9XX"
+		help
+			Say Y if you want to enable touchpad GT9XX.
+
+endchoice
+
+endif
+
+endmenu

@@ -1,0 +1,91 @@
+From 3d84dc8771a1b32788aeef4e040c47343067a0c0 Mon Sep 17 00:00:00 2001
+From: l00499173 <dongyang.liu@hisilicon.com>
+Date: Thu, 28 Jan 2021 20:24:03 +0800
+Subject: [PATCH] Description: [host] portable for 64bit of wal_set_msg_response_by_addr
+
+TicketNo: DTS202101130I6FF7P1100
+Issue: hi_u32 addr change to uintptr_t addr
+Team: HISI_SWP_DTV
+Feature or Bugfix: Bugfix
+Test Result: OK
+Related Commit: No
+Controlled Dir: No
+PrivateCode(Yes/No): No
+Release Verify: NA
+Binary Source:  NA
+AR/Design/TestCase Update: NA
+
+Change-Id: I1c86c13b3c9948cc26fe4c67265af7458e7f8109
+Signed-off-by: y00303705 <liangliang.yang@hisilicon.com>
+Signed-off-by: c00421846 <chenjiaxing8@hisilicon.com>
+Signed-off-by: c00330246 <chenshuhong@hisilicon.com>
+Signed-off-by: h00378055 <huangjunqiang2@hisilicon.com>
+Signed-off-by: j00501148 <jiaolizhi@hisilicon.com>
+Signed-off-by: k00452952 <mike.kong@hisilicon.com>
+Signed-off-by: l00325895 <liushanping@hisilicon.com>
+Signed-off-by: m00272131 <mashubin@hisilicon.com>
+Signed-off-by: q00429317 <kevin.qian@hisilicon.com>
+Signed-off-by: s00481801 <shichongfu@hisilicon.com>
+Signed-off-by: w00292991 <wanqingbo1@huawei.com>
+Signed-off-by: y00335365 <yukexiong@hisilicon.com>
+Signed-off-by: z00427537 <zhengbolu@hisilicon.com>
+Signed-off-by: z00321807 <andrew.zhouliang@hisilicon.com>
+Signed-off-by: l00499173 <dongyang.liu@hisilicon.com>
+---
+
+diff --git a/driver/mac/hmac/hmac_event.c b/driver/mac/hmac/hmac_event.c
+index fec01d7..73ac38e 100755
+--- a/driver/mac/hmac/hmac_event.c
++++ b/driver/mac/hmac/hmac_event.c
+@@ -655,7 +655,7 @@
+     return HI_SUCCESS;
+ }
+ 
+-hi_u32 wal_set_msg_response(hi_u32 request_address, hi_u8 rsp_toal_len, const hi_u8 *rsp_msg)
++hi_u32 wal_set_msg_response(uintptr_t request_address, hi_u8 rsp_toal_len, const hi_u8 *rsp_msg)
+ {
+     hi_u8 *rsp_msg_tmp = HI_NULL;
+ 
+@@ -710,7 +710,7 @@
+     frw_event_hdr_stru *event_hdr = &(event->event_hdr);
+     wal_msg_stru       *msg       = (wal_msg_stru *)(frw_get_event_payload(event_mem) + sizeof(wal_msg_rep_hdr));
+     mac_vap_stru       *mac_vap   = mac_vap_get_vap_stru(event_hdr->vap_id);
+-    hi_u32              request_address = ((wal_msg_rep_hdr*)event->auc_event_data)->request_address;
++    uintptr_t request_address = ((wal_msg_rep_hdr *)event->auc_event_data)->request_address;
+ 
+     if (oal_unlikely(mac_vap == HI_NULL)) {
+         oam_warning_log0(event_hdr->vap_id, OAM_SF_ANY, "{wal_config_process_pkt::hmac_get_vap_by_id return err code}");
+diff --git a/driver/wal/wal_event_msg.c b/driver/wal/wal_event_msg.c
+index 7be5a3d..1c6df9d 100755
+--- a/driver/wal/wal_event_msg.c
++++ b/driver/wal/wal_event_msg.c
+@@ -163,7 +163,7 @@
+     修改内容   : 新生成函数
+ 
+ *****************************************************************************/
+-hi_u32  wal_set_msg_response_by_addr(hi_u32 addr, hi_u8 *resp_mem, hi_u32 resp_ret, hi_u32 rsp_len)
++hi_u32  wal_set_msg_response_by_addr(uintptr_t addr, hi_u8 *resp_mem, hi_u32 resp_ret, hi_u32 rsp_len)
+ {
+     hi_u32                ret = HI_FAIL;
+     hi_list              *pos = HI_NULL;
+@@ -177,7 +177,7 @@
+ #endif
+     hi_list_for_each_safe(pos, entry_temp, (&g_wal_wid_msg_queue.head)) {
+         request = (wal_msg_request_stru *)hi_list_entry(pos, wal_msg_request_stru, entry);
+-        if (request->request_address == (hi_u32)addr) {
++        if (request->request_address == addr) {
+             /* address match */
+             if (oal_unlikely(request->resp_mem != NULL)) {
+                 oam_error_log0(0, OAM_SF_ANY,
+diff --git a/driver/wal/wal_event_msg.h b/driver/wal/wal_event_msg.h
+index ec58318..e549e96 100755
+--- a/driver/wal/wal_event_msg.h
++++ b/driver/wal/wal_event_msg.h
+@@ -145,6 +145,6 @@
+ hi_u32 wal_check_and_release_msg_resp(wal_msg_stru *rsp_msg);
+ hi_void wal_msg_queue_init(hi_void);
+ hi_void wal_cfg_msg_task_sched(hi_void);
+-hi_u32 wal_set_msg_response_by_addr(hi_u32 addr, hi_u8 *resp_mem, hi_u32 resp_ret, hi_u32 rsp_len);
++hi_u32 wal_set_msg_response_by_addr(uintptr_t addr, hi_u8 *resp_mem, hi_u32 resp_ret, hi_u32 rsp_len);
+ 
+ #endif /* end of wal_event_msg.h */

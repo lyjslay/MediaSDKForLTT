@@ -1,0 +1,17 @@
+.cv1811ha_wevb_0007a_spinor.dtb.pre.o: \
+ arch/arm/dts/.cv1811ha_wevb_0007a_spinor.dtb.pre.tmp \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/include/linux/kconfig.h \
+ include/generated/autoconf.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/arch/arm/dts/cv181x_base_arm.dtsi \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/arch/arm/dts/include/dt-bindings/interrupt-controller/arm-gic.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/arch/arm/dts/include/dt-bindings/interrupt-controller/irq.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/arch/arm/dts/include/dt-bindings/gpio/gpio.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/arch/arm/dts/include/dt-bindings/reset/cv181x-resets.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/arch/arm/dts/include/dt-bindings/clock/cv181x-clock.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/arch/arm/dts/include/dt-bindings/thermal/thermal.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/arch/arm/dts/include/dt-bindings/dma/cv181x-dmamap.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/include/cvi_board_memmap.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/arch/arm/dts/cv181x_base.dtsi \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/arch/arm/dts/cv181x_asic_bga.dtsi \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/arch/arm/dts/cv181x_asic_spinor.dtsi \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/platform/u-boot-2021.10/arch/arm/dts/cv181x_default_memmap.dtsi

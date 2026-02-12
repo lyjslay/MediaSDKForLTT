@@ -1,0 +1,115 @@
+menu "Services options"
+
+config SERVICES_AUDIO
+	bool "Audio Rec Service"
+	help
+		 Say Y if you want to enable Audio Rec Service
+
+config SERVICES_SUBVIDEO
+	bool "Rec/Rtsp Subvideo Service"
+	help
+		 Say Y if you want to enable Subvideo Rec/Rtsp Service
+
+config SERVICES_IMAGE_VIEWER
+	bool "Image_viewer Rec Service"
+	help
+		 Say Y if you want to enable Image_viewer Rec Service
+
+config SERVICES_LIVEVIEW
+	bool "Liveview Rec Service"
+	help
+		 Say Y if you want to enable Liveview Rec Service
+
+config SERVICES_PLAYER
+	bool "Player Rec Service"
+	help
+		 Say Y if you want to enable Player Rec Service
+
+if SERVICES_PLAYER
+	config Player_Subvideo
+		bool "Enable Player Subvideo"
+		help
+			Say Y if you want to enable Player Subvideo.
+endif
+
+config SERVICES_RECORD
+	bool "Record Rec Service"
+	help
+		 Say Y if you want to enable Record Rec Service
+
+config SERVICES_PHOTO
+	bool "Photo Service"
+	help
+		 Say Y if you want to enable Photo Service
+
+config SERVICES_RTSP
+	bool "RTSP Rec Service"
+	help
+		 Say Y if you want to enable RTSP Rec Service
+
+config ENABLE_SNAP
+	bool "Snap Service"
+	help
+		 Say Y if you want to enable Snap Service
+
+config SERVICES_STORAGE
+	bool "Storage Rec Service"
+	help
+		 Say Y if you want to enable Storage Rec Service
+
+config SERVICES_SPEECH
+	bool "Speech Service"
+	help
+		Say Y if you want to enable Service_Speech.
+
+if SERVICES_SPEECH
+	choice
+		prompt "Model type"
+		default CONFIG_SPEECH_CARDV
+
+
+	config SPEECH_CARDV
+		bool "Enable Speech Cardv"
+		help
+			Say Y if you want to enable Model Cardv.
+	endchoice
+endif
+
+config SERVICES_ADAS
+	bool "ADAS Service"
+	help
+		Say Y if you want to enable Service_ADAS.
+
+if SERVICES_ADAS
+
+	config ADAS_LABEL_CAR
+		bool "Enabel ADAS CAR Label"
+		help
+		  Say Y if you want to enable ADAS CAR Label.
+
+	config ADAS_LABEL_LANE
+	bool "Enabel ADAS LANE Label"
+	help
+		Say Y if you want to enable ADAS LANE Label.
+
+	config ADAS_LABEL_OSD
+	depends on !(ADAS_LABEL_CAR || ADAS_LABEL_LANE)
+		bool "Enabel ADAS Label via OSD"
+		help
+		  Say Y if you want to enable ADAS Label via OSD.
+
+endif
+
+config SERVICES_QRCODE
+	bool "Decoding QRCode Service"
+	help
+		Say Y if you want to enable decoding QRCode
+choice
+	prompt "Dec QRCode Lib"
+	default ZBAR
+	depends on SERVICES_QRCODE
+	config ZBAR
+		bool "Zbar"
+endchoice
+
+endmenu

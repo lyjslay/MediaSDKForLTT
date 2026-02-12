@@ -1,0 +1,13 @@
+nvedit.c:229:12:_do_env_set.isra.0.constprop	128	static
+nvedit.c:85:5:env_get_id	0	static
+nvedit.c:309:5:env_set	48	static
+nvedit.c:330:5:env_set_ulong	32	static
+nvedit.c:345:5:env_set_hex	64	static
+nvedit.c:819:5:env_match	48	static
+nvedit.c:712:5:env_get_f	80	static
+nvedit.c:671:7:env_get	80	static
+nvedit.c:353:7:env_get_hex	48	static
+nvedit.c:368:5:eth_env_get_enetaddr	32	static
+nvedit.c:374:5:eth_env_set_enetaddr	64	static
+nvedit.c:697:7:from_env	32	static
+nvedit.c:761:7:env_get_ulong	32	static

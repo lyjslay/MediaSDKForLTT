@@ -1,0 +1,6 @@
+# GPIO Enable
+
+config GPIO
+	bool "Enable GPIO"
+	help
+	  Say Y if you want to enable GPIO.

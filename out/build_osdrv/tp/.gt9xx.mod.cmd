@@ -1,0 +1,1 @@
+cmd_/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_osdrv/tp/gt9xx.mod := { echo  /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_osdrv/tp/gt9xx.o;  echo; } > /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_osdrv/tp/gt9xx.mod

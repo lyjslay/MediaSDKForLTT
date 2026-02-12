@@ -1,0 +1,87 @@
+From 5d47e667075fc2615294a50235ddeabe75571ea5 Mon Sep 17 00:00:00 2001
+From: l00499173 <dongyang.liu@hisilicon.com>
+Date: Wed, 13 Jan 2021 15:31:16 +0800
+Subject: [PATCH] Description: [host] portable for 64bit of oal_kthread_create
+
+TicketNo: DTS202101130I6FF7P1100
+Issue: Cast to pointer from integer of different size.
+Team: HISI_SWP_DTV
+Feature or Bugfix: Bugfix
+Test Result: OK
+Related Commit: No
+Controlled Dir: No
+PrivateCode(Yes/No): No
+Release Verify: NA
+Binary Source:  NA
+AR/Design/TestCase Update: NA
+
+Change-Id: Id10140e3c4fb1764a4cb51d6750415ef9451bb48
+Signed-off-by: y00303705 <liangliang.yang@hisilicon.com>
+Signed-off-by: c00421846 <chenjiaxing8@hisilicon.com>
+Signed-off-by: c00330246 <chenshuhong@hisilicon.com>
+Signed-off-by: h00378055 <huangjunqiang2@hisilicon.com>
+Signed-off-by: j00501148 <jiaolizhi@hisilicon.com>
+Signed-off-by: k00452952 <mike.kong@hisilicon.com>
+Signed-off-by: l00325895 <liushanping@hisilicon.com>
+Signed-off-by: m00272131 <mashubin@hisilicon.com>
+Signed-off-by: q00429317 <kevin.qian@hisilicon.com>
+Signed-off-by: s00481801 <shichongfu@hisilicon.com>
+Signed-off-by: w00292991 <wanqingbo1@huawei.com>
+Signed-off-by: y00335365 <yukexiong@hisilicon.com>
+Signed-off-by: z00427537 <zhengbolu@hisilicon.com>
+Signed-off-by: z00321807 <andrew.zhouliang@hisilicon.com>
+Signed-off-by: l00499173 <dongyang.liu@hisilicon.com>
+---
+
+diff --git a/driver/frw/frw_task.c b/driver/frw/frw_task.c
+index c102b3a..9178d79 100644
+--- a/driver/frw/frw_task.c
++++ b/driver/frw/frw_task.c
+@@ -266,21 +266,14 @@
+ 
+ hi_u32 frw_task_init()
+ {
+-    oal_kthread_stru   *kthread = HI_NULL;
+-    oal_kthread_param_stru st_thread_param = {0};
+-
+     memset_s(&g_ast_event_task, sizeof(g_ast_event_task), 0, sizeof(g_ast_event_task));
+-
+     hi_wait_queue_init_head(&g_ast_event_task.frw_wq);
+ 
+-    memset_s(&st_thread_param, sizeof(oal_kthread_param_stru), 0, sizeof(oal_kthread_param_stru));
+-    st_thread_param.l_cpuid      = 0;
++    oal_kthread_param_stru st_thread_param = {0};
+     st_thread_param.l_policy     = OAL_SCHED_RR;
+     st_thread_param.l_prio       = FRW_TASK_PRIO;
+     st_thread_param.ul_stacksize = FRW_TASK_SIZE;
+-
+-    kthread = oal_kthread_create(g_frw_thread_name, frw_task_thread,
+-        (hi_void *)(st_thread_param.l_cpuid), &st_thread_param);
++    oal_kthread_stru *kthread = oal_kthread_create(g_frw_thread_name, frw_task_thread, HI_NULL, &st_thread_param);
+     if (IS_ERR_OR_NULL(kthread)) {
+         return HI_FAIL;
+     }
+diff --git a/driver/hcc/hcc_task.c b/driver/hcc/hcc_task.c
+index 6113b98..74a39fc 100644
+--- a/driver/hcc/hcc_task.c
++++ b/driver/hcc/hcc_task.c
+@@ -285,18 +285,13 @@
+ 
+ hi_u32 hcc_task_init(hcc_handler_stru *hcc_handler)
+ {
+-    oal_kthread_param_stru thread_param = {0};
+-
+     memset_s(&g_hcc_task, sizeof(hcc_task_stru), 0, sizeof(hcc_task_stru));
+-
+     hi_wait_queue_init_head(&g_hcc_task.hcc_wq);
+ 
+-    memset_s(&thread_param, sizeof(oal_kthread_param_stru), 0, sizeof(oal_kthread_param_stru));
+-    thread_param.l_cpuid = 0;
++    oal_kthread_param_stru thread_param = {0};
+     thread_param.l_policy = OAL_SCHED_FIFO;
+     thread_param.l_prio = HCC_TASK_PRIO;
+     thread_param.ul_stacksize = HCC_TASK_SIZE;
+-
+     hcc_handler->hcc_transer_info.hcc_transfer_thread = oal_kthread_create(HCC_TASK_TX_NAME,
+         hcc_task_tx_thread, hcc_handler, &thread_param);
+     hcc_handler->hcc_transer_info.hcc_rx_thread = oal_kthread_create(HCC_TASK_RX_NAME,

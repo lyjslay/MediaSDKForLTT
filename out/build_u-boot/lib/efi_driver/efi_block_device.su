@@ -1,0 +1,3 @@
+efi_block_device.c:88:14:efi_bl_write	48	static
+efi_block_device.c:59:14:efi_bl_read	48	static
+efi_block_device.c:135:12:efi_bl_bind	80	static

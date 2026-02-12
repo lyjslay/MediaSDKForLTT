@@ -1,0 +1,3 @@
+spl_nor.c:33:14:spl_nor_load_read	32	static
+spl_nor.c:44:22:spl_nor_get_uboot_base	0	static
+spl_nor.c:49:12:spl_nor_load_image	80	static

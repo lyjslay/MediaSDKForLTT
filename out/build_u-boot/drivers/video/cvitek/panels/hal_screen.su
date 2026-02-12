@@ -1,0 +1,13 @@
+hal_screen.c:122:16:HAL_SCREEN_GetAttr	0	static
+hal_screen.c:147:16:HAL_SCREEN_GetDisplayState	0	static
+hal_screen.c:153:16:HAL_SCREEN_SetDisplayState	0	static
+hal_screen.c:159:22:HAL_SCREEN_GetLuma	16	static
+hal_screen.c:171:16:HAL_SCREEN_SetLuma	16	static
+hal_screen.c:249:16:HAL_SCREEN_Deinit	0	static
+hal_screen.c:200:16:HAL_SCREEN_SetContrast	16	static
+hal_screen.c:194:16:HAL_SCREEN_GetContrast	16	static
+hal_screen.c:188:16:HAL_SCREEN_SetSatuature	16	static
+hal_screen.c:182:16:HAL_SCREEN_GetSatuature	16	static
+hal_screen.c:242:16:HAL_SCREEN_GetBackLightState	16	static
+hal_screen.c:206:16:HAL_SCREEN_SetBackLightState	32	static
+hal_screen.c:86:16:HAL_SCREEN_Init	64	static

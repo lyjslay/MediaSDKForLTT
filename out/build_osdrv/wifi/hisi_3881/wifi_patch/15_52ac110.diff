@@ -1,0 +1,68 @@
+From 52ac1100b151c332f2f0c2763e7a3cc6effc20b2 Mon Sep 17 00:00:00 2001
+From: l00499173 <dongyang.liu@hisilicon.com>
+Date: Sat, 30 Jan 2021 14:31:44 +0800
+Subject: [PATCH] Description: [host] portable for 64bit of dmac_tx_ctl_stru
+
+TicketNo: DTS202101130I6FF7P1100
+Issue: keep 20B of dmac_tx_ctl_stru in 64bitOS
+Team: HISI_SWP_DTV
+Feature or Bugfix: Bugfix
+Test Result: OK
+Related Commit: No
+Controlled Dir: No
+PrivateCode(Yes/No): No
+Release Verify: NA
+Binary Source:  NA
+AR/Design/TestCase Update: NA
+
+Change-Id: Ie75cc102bbb74104ec224fd744b832fa6d608a75
+Signed-off-by: y00303705 <liangliang.yang@hisilicon.com>
+Signed-off-by: c00421846 <chenjiaxing8@hisilicon.com>
+Signed-off-by: c00330246 <chenshuhong@hisilicon.com>
+Signed-off-by: h00378055 <huangjunqiang2@hisilicon.com>
+Signed-off-by: j00501148 <jiaolizhi@hisilicon.com>
+Signed-off-by: k00452952 <mike.kong@hisilicon.com>
+Signed-off-by: l00325895 <liushanping@hisilicon.com>
+Signed-off-by: m00272131 <mashubin@hisilicon.com>
+Signed-off-by: q00429317 <kevin.qian@hisilicon.com>
+Signed-off-by: s00481801 <shichongfu@hisilicon.com>
+Signed-off-by: w00292991 <wanqingbo1@huawei.com>
+Signed-off-by: y00335365 <yukexiong@hisilicon.com>
+Signed-off-by: z00427537 <zhengbolu@hisilicon.com>
+Signed-off-by: z00321807 <andrew.zhouliang@hisilicon.com>
+Signed-off-by: l00499173 <dongyang.liu@hisilicon.com>
+---
+
+diff --git a/driver/mac/hmac/dmac_ext_if.h b/driver/mac/hmac/dmac_ext_if.h
+index 19735fe..17cd475 100755
+--- a/driver/mac/hmac/dmac_ext_if.h
++++ b/driver/mac/hmac/dmac_ext_if.h
+@@ -649,6 +649,11 @@
+ 
+ typedef dmac_config_syn_stru hmac_config_syn_stru;
+ 
++typedef struct {
++    hi_u32 tv_sec;
++    hi_u32 tv_usec;
++} dmac_timestamp_stru;
++
+ /* tx cb字段 当前已用19字节，只有20字节可用 不允许再增加字节! */
+ struct dmac_tx_ctl {
+     /* ampdu中包含的MPDU个数,实际描述符填写的值为此值-1 */
+@@ -688,7 +693,7 @@
+ 
+     hi_u8                               alg_pktno;                     /* 算法用到的字段，唯一标示该报文 */
+ 
+-    struct timeval                      timestamp_us;                  /* 维测使用入TID队列时的时间戳 */
++    dmac_timestamp_stru                 timestamp_us;                  /* 维测使用入TID队列时的时间戳 */
+ 
+     hi_u8                               tid                     : 4;
+     hi_u8                               tx_user_idx_bak         : 4;
+@@ -1023,7 +1028,6 @@
+     hi_u8                               rsv[4];          /* 替换hal_tx_dscr_stru resv 4 byte */
+     hi_u16                              us_eapol_ts;     /* eapol帧时间戳 */
+     hi_u16                              us_mpdu_bytes;   /* mpdu字节数，维测用，不包括头尾，不包括snap，不包括padding */
+-    struct timeval                      timestamp_us;    /* 维测使用入TID队列时的时间戳 */
+ 
+     hi_u32                              alg_pktno;       /* 算法用到的字段，唯一标示该报文 */
+     hi_u16                              us_seqnum;       /* 记录软件分配的seqnum */

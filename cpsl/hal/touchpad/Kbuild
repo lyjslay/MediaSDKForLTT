@@ -1,0 +1,7 @@
+#
+# Kbuild for touchpad
+#
+
+ifeq (${CONFIG_TOUCHPAD}, y)
+    KBUILD_DEFINES += -DCONFIG_TOUCHPAD_ON
+endif

@@ -1,0 +1,6 @@
+# ADC Enable
+
+config ADC
+	bool "Enable ADC"
+	help
+	  Say Y if you want to enable ADC.

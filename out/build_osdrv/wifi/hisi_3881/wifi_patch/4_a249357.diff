@@ -1,0 +1,88 @@
+From a24935707db7d9d35a564d78afa3c25c0be549d4 Mon Sep 17 00:00:00 2001
+From: l00499173 <dongyang.liu@hisilicon.com>
+Date: Wed, 13 Jan 2021 17:33:57 +0800
+Subject: [PATCH] Description: [host] portable for 64bit of firmware_parse_cmd
+
+TicketNo: DTS202101130I6FF7P1100
+Issue: cast from pointer to integer of different size
+Team: HISI_SWP_DTV
+Feature or Bugfix: Bugfix
+Test Result: OK
+Related Commit: No
+Controlled Dir: No
+PrivateCode(Yes/No): No
+Release Verify: NA
+Binary Source:  NA
+AR/Design/TestCase Update: NA
+
+Change-Id: I7c530655d21a13874e9677efaf864410bbd7e38f
+Signed-off-by: y00303705 <liangliang.yang@hisilicon.com>
+Signed-off-by: c00421846 <chenjiaxing8@hisilicon.com>
+Signed-off-by: c00330246 <chenshuhong@hisilicon.com>
+Signed-off-by: h00378055 <huangjunqiang2@hisilicon.com>
+Signed-off-by: j00501148 <jiaolizhi@hisilicon.com>
+Signed-off-by: k00452952 <mike.kong@hisilicon.com>
+Signed-off-by: l00325895 <liushanping@hisilicon.com>
+Signed-off-by: m00272131 <mashubin@hisilicon.com>
+Signed-off-by: q00429317 <kevin.qian@hisilicon.com>
+Signed-off-by: s00481801 <shichongfu@hisilicon.com>
+Signed-off-by: w00292991 <wanqingbo1@huawei.com>
+Signed-off-by: y00335365 <yukexiong@hisilicon.com>
+Signed-off-by: z00427537 <zhengbolu@hisilicon.com>
+Signed-off-by: z00321807 <andrew.zhouliang@hisilicon.com>
+Signed-off-by: l00499173 <dongyang.liu@hisilicon.com>
+---
+
+diff --git a/driver/oal/plat_firmware.c b/driver/oal/plat_firmware.c
+index ddebcad..aae04b7 100755
+--- a/driver/oal/plat_firmware.c
++++ b/driver/oal/plat_firmware.c
+@@ -1367,7 +1367,7 @@
+  返 回 值  : 返回命令的类型
+ *****************************************************************************/
+ static hi_s32 firmware_parse_cmd(hi_u8 *puc_cfg_buffer, hi_u8 *puc_cmd_name, hi_u8 cmd_len,
+-    hi_u8 *puc_cmd_para, hi_u32 *val_begin)
++    hi_u8 *puc_cmd_para, uintptr_t *val_begin)
+ {
+     hi_s32       l_ret;
+     hi_s32       l_cmdlen;
+@@ -1388,7 +1388,7 @@
+         return l_ret;
+     }
+ 
+-    *val_begin = (hi_u32)(link + 1);
++    *val_begin = (uintptr_t)(link + 1);
+ 
+     l_cmdlen = link - begin;
+ 
+@@ -1443,7 +1443,7 @@
+     hi_u8           cmd_name[DOWNLOAD_CMD_LEN];
+     hi_u8           cmd_para[DOWNLOAD_CMD_PARA_LEN];
+     hi_u32          cmd_para_len = 0;
+-    hi_u32          val_offset = 0;
++    uintptr_t       val_offset = 0;
+     if (puc_cfg_info_buf == HI_NULL) {
+         oam_error_log0(0, 0, "firmware_parse_cfg:: puc_cfg_info_buf is HI_NULL");
+         return -OAL_EFAIL;
+@@ -1491,7 +1491,7 @@
+             memcpy_s(g_cus_cfg_cmd[cfg_idx].cmd_para, DOWNLOAD_CMD_PARA_LEN, cmd_para, DOWNLOAD_CMD_PARA_LEN);
+             g_cus_cfg_cmd[cfg_idx].cmd_name[DOWNLOAD_CMD_LEN - 1] = '\0';
+             g_cus_cfg_cmd[cfg_idx].cmd_para[DOWNLOAD_CMD_PARA_LEN - 1] = '\0';
+-            g_cus_cfg_cmd[cfg_idx].val_offset = val_offset - (hi_u32)puc_cfg_info_buf;
++            g_cus_cfg_cmd[cfg_idx].val_offset = val_offset - (uintptr_t)puc_cfg_info_buf;
+             g_cus_cfg_cmd[cfg_idx].val_len = (hi_u16)((uintptr_t)end - val_offset + 1);
+ #ifdef CUSTOM_DBG
+             oam_info_log0(0, 0, "firmware_parse_cfg:: cmd type=[%d],cmd_name=[%s],cmd_para=[%s], line len %d",
+diff --git a/driver/oal/plat_firmware.h b/driver/oal/plat_firmware.h
+index 6a97be5..801d9b5 100644
+--- a/driver/oal/plat_firmware.h
++++ b/driver/oal/plat_firmware.h
+@@ -148,7 +148,7 @@
+     hi_u8      cmd_name[DOWNLOAD_CMD_LEN];
+     hi_u8      cmd_para[DOWNLOAD_CMD_PARA_LEN];
+     hi_u16       val_len;
+-    hi_u32       val_offset;
++    uintptr_t val_offset;
+ } cfg_cmd_struct;
+ 
+ typedef struct firmware_globals_st {

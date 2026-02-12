@@ -1,0 +1,49 @@
+From ab7f604b51d53bae8a42045178199d37cbef4279 Mon Sep 17 00:00:00 2001
+From: l00499173 <dongyang.liu@hisilicon.com>
+Date: Sat, 30 Jan 2021 11:46:31 +0800
+Subject: [PATCH] Description: [host] portable for 64bit of hmac_ap_prepare_asoc_rsp
+
+TicketNo: DTS202101130I6FF7P1100
+Issue: DstSize:sizeof(hmac_tx_ctl_stru) < SrcSize:sizeof(sk_buff->cb),
+memset_s(dst, sizeof(hmac_tx_ctl_stru), src, sizeof(sk_buff->cb)) failed
+Team: HISI_SWP_DTV
+Feature or Bugfix: Bugfix
+Test Result: OK
+Related Commit: No
+Controlled Dir: No
+PrivateCode(Yes/No): No
+Release Verify: NA
+Binary Source:  NA
+AR/Design/TestCase Update: NA
+
+Change-Id: I97d1ce12f999d169a5096372f094263eac5ee67c
+Signed-off-by: y00303705 <liangliang.yang@hisilicon.com>
+Signed-off-by: c00421846 <chenjiaxing8@hisilicon.com>
+Signed-off-by: c00330246 <chenshuhong@hisilicon.com>
+Signed-off-by: h00378055 <huangjunqiang2@hisilicon.com>
+Signed-off-by: j00501148 <jiaolizhi@hisilicon.com>
+Signed-off-by: k00452952 <mike.kong@hisilicon.com>
+Signed-off-by: l00325895 <liushanping@hisilicon.com>
+Signed-off-by: m00272131 <mashubin@hisilicon.com>
+Signed-off-by: q00429317 <kevin.qian@hisilicon.com>
+Signed-off-by: s00481801 <shichongfu@hisilicon.com>
+Signed-off-by: w00292991 <wanqingbo1@huawei.com>
+Signed-off-by: y00335365 <yukexiong@hisilicon.com>
+Signed-off-by: z00427537 <zhengbolu@hisilicon.com>
+Signed-off-by: z00321807 <andrew.zhouliang@hisilicon.com>
+Signed-off-by: l00499173 <dongyang.liu@hisilicon.com>
+---
+
+diff --git a/driver/mac/hmac/hmac_mgmt_ap.c b/driver/mac/hmac/hmac_mgmt_ap.c
+index a445cc3..908e48a 100755
+--- a/driver/mac/hmac/hmac_mgmt_ap.c
++++ b/driver/mac/hmac/hmac_mgmt_ap.c
+@@ -1441,7 +1441,7 @@
+         return HI_ERR_CODE_ALLOC_MEM_FAIL;
+     }
+     tx_ctl = (hmac_tx_ctl_stru *)oal_netbuf_cb(*asoc_rsp);
+-    if (memset_s(tx_ctl, sizeof(hmac_tx_ctl_stru), 0, oal_netbuf_cb_size()) != EOK) {
++    if (memset_s(tx_ctl, oal_netbuf_cb_size(), 0, sizeof(hmac_tx_ctl_stru)) != EOK) {
+         oal_netbuf_free(*asoc_rsp);
+         return HI_FAIL;
+     }

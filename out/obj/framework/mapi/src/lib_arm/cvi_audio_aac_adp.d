@@ -1,0 +1,24 @@
+/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/obj/framework/mapi/src/lib_arm/cvi_audio_aac_adp.o: \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/mapi/src/cvi_audio_aac_adp.c \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/mapi/src/aac/cvi_audio_aac_adp.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_comm_aio.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_common.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_type.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_defines.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_cv181x_defines.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_errno.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/mapi/src/aac/cvi_aacenc.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/mapi/src/aac/cvi_audio_dl_adp.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/mapi/src/aac/cvi_aacdec.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/mapi/src/aac/cvi_aacenc.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/mapi/include/cvi_mapi_aenc.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/mapi/include/cvi_mapi_define.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/mapi/include/cvi_mapi_acap.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_comm_adec.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_common.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_comm_aio.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_comm_aenc.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/osal/include/cvi_osal.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_audio.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_comm_aenc.h \
+ /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/cpsl/mmf/include/cvi_comm_adec.h

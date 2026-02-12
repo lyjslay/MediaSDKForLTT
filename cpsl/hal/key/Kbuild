@@ -1,0 +1,7 @@
+#
+# Kbuild for key
+#
+
+ifeq (${CONFIG_KEY}, y)
+    KBUILD_DEFINES += -DCONFIG_KEY_ON
+endif
