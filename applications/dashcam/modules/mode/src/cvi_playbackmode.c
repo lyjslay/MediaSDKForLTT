@@ -34,8 +34,35 @@ static int32_t CVI_MODEMNG_PlayBackModeScanFile(void)
     return s32Ret;
 }
 
+static bool check_jpg_file_complete(const char*filename)
+{
+    FILE *fp = fopen(filename, "rb");
+    if (NULL == fp) {
+        CVI_LOGF("fail to open file %s\n", filename);
+        return false;
+    }
+    unsigned char read_temp_buf[8] = {0};
+    uint32_t seek_loc = 0;
+    fseek(fp, 0, SEEK_SET);
+    fread(read_temp_buf, sizeof(read_temp_buf), 1, fp);
+    seek_loc = (((read_temp_buf[4] << 8) | read_temp_buf[5]) + 4);
+    fseek(fp, seek_loc, SEEK_SET);
+    fread(read_temp_buf, sizeof(read_temp_buf), 1, fp);
+    seek_loc = (read_temp_buf[4]<<24 | read_temp_buf[5]<<16 | read_temp_buf[6]<<8 | read_temp_buf[7]<<0) + seek_loc + 4;
+    fseek(fp, seek_loc, SEEK_SET);
+    fread(read_temp_buf, sizeof(read_temp_buf), 1, fp);
+    if ((read_temp_buf[0] == 0xFF) && (read_temp_buf[1] == 0xD9) && (read_temp_buf[2] == 0xFF) && (read_temp_buf[3] == 0xD9)) {
+        fclose(fp);
+        return true;
+    } else {
+        fclose(fp);
+        return false;
+    }
 
-int32_t CVI_MODEMNG_PlayFile(char* filename) {
+    return true;
+}
+
+int32_t CVI_MODEMNG_PlayFile(char* filename, int type) {
     int32_t  s32Ret = 0;
     //char filename[MAX_PATH];
     CVI_MEDIA_PARAM_INIT_S *MediaParams = CVI_MEDIA_GetCtx();
@@ -57,25 +84,23 @@ int32_t CVI_MODEMNG_PlayFile(char* filename) {
     }
     printf("### Playback file info: w(%d) h(%d) video_codec=%s, audio_codec=%s ###\n", info.width, info.height, info.video_codec, info.audio_codec);
 
-    // if (s_curdirtype == DTCF_DIR_PHOTO_FRONT || s_curdirtype == DTCF_DIR_PHOTO_REAR) {
-    //     bool jpg_flag = check_jpg_file_complete(filename, s_curdirtype);
-    //     if (false == jpg_flag) {
-    //         remove(filename);
-    //         continue_play_file(PLAY_SELETE_NEXT_FILE);
-    //         s32Ret = -1;
-    //         return s32Ret;
-    //     }
-    // }
+    if (type == 1) {
+        bool jpg_flag = check_jpg_file_complete(filename);
+        if (false == jpg_flag) {
+            CVI_LOGE("error: jpg file %s is not complete, play failed!!!\n", filename);
+            return -1;
+        }
+    }
 
     #ifdef SERVICES_Player_Subvideo_ON
     CVI_PLAYER_SERVICE_SetPlaySubStreamFlag(ps_handle, true);
     #endif
 
-    if (strcmp(info.video_codec, "h264") == 0) {
+    if (strcmp(info.video_codec, "h264") == 0 || strcmp(info.video_codec, "mjpeg") == 0) {
         CVI_PLAYER_SERVICE_Play(ps_handle);
     } else {
         CVI_LOGE("video can't play because codec %s is not supported\n", info.video_codec);
-        return -1;
+        return -2;
     }
 
     return s32Ret;
@@ -112,6 +137,18 @@ int32_t CVI_MODEMNG_PlayContinue(int switch_file_flag) {
 int32_t CVI_MODEMNG_PlayStop(void) {
     CVI_PLAYER_SERVICE_HANDLE_T ps_handle = CVI_MEDIA_GetCtx()->SysServices.PsHdl;
     CVI_PLAYER_SERVICE_Stop(ps_handle);
+    return 0;
+}
+
+int32_t CVI_MODEMNG_PlayForward(int speed) {
+    CVI_PLAYER_SERVICE_HANDLE_T ps_handle = CVI_MEDIA_GetCtx()->SysServices.PsHdl;
+    CVI_PLAYER_SERVICE_PlayerSeep(ps_handle, speed);
+    return 0;
+}
+
+int32_t CVI_MODEMNG_PlayBackward(int speed) {
+    CVI_PLAYER_SERVICE_HANDLE_T ps_handle = CVI_MEDIA_GetCtx()->SysServices.PsHdl;
+    CVI_PLAYER_SERVICE_PlayerSeepBack(ps_handle, speed);
     return 0;
 }
 
@@ -215,9 +252,14 @@ int32_t CVI_MODEMNG_PlaybackModeMsgProc(CVI_MESSAGE_S* pstMsg, void* pvArg, uint
         // transplant from ui
         case CVI_EVENT_MODEMNG_PLAYBACK_PLAY:
         {
+            int ret = 0;
             if(pstMsg->aszPayload[0]){
-                printf("### playmode play file %s ###\n", pstMsg->aszPayload);
-                CVI_MODEMNG_PlayFile((char*)pstMsg->aszPayload);
+                printf("### playmode play file %s, file type:%d ###\n", pstMsg->aszPayload, pstMsg->arg1);
+                ret = CVI_MODEMNG_PlayFile((char*)pstMsg->aszPayload, pstMsg->arg1);
+                if (ret != 0) {
+                    printf("play fail, ret:%d, write to msg result\n", ret);
+                    pstMsg->s32Result = ret;
+                }
                 return CVI_PROCESS_MSG_RESULTE_OK;
             }
             return CVI_PROCESS_MSG_UNHANDLER;
@@ -240,6 +282,19 @@ int32_t CVI_MODEMNG_PlaybackModeMsgProc(CVI_MESSAGE_S* pstMsg, void* pvArg, uint
             CVI_MODEMNG_PlayStop();
             return CVI_PROCESS_MSG_RESULTE_OK;
         }
+        case CVI_EVENT_MODEMNG_PLAYBACK_FORWARD:
+        {
+            printf("### playmode forward speed: %d ###\n", pstMsg->arg1);
+            CVI_MODEMNG_PlayForward(pstMsg->arg1);
+            return CVI_PROCESS_MSG_RESULTE_OK;
+        }
+        case CVI_EVENT_MODEMNG_PLAYBACK_BACKWARD:
+        {
+            printf("### playmode backward speed: %d ###\n", pstMsg->arg1);
+            CVI_MODEMNG_PlayBackward(pstMsg->arg1);
+            return CVI_PROCESS_MSG_RESULTE_OK;
+        }
+
         case CVI_EVENT_PLAYBACKMNG_PLAY:
         {
             CVI_MODEMNG_MonitorStatusNotify(pstMsg);

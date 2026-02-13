@@ -1199,7 +1199,7 @@ int32_t CVI_MODEMNG_OpenMovieMode(void)
 
 #ifdef CONFIG_SCREEN_ON
     // screen init if not screen not init
-    s32Ret = CVI_MEDIA_DispInit(true);
+    s32Ret = CVI_MEDIA_DispInit(false);
     MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINVAL,"Disp init");
 
     s32Ret = CVI_MEDIA_LiveViewSerInit();
