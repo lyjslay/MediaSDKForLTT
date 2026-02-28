@@ -601,13 +601,17 @@ system.$(STORAGE_TYPE): ramdisk middleware osdrv
 	cp -a $(BUILD_MW_DIR)/ko $(BUILD_SYSTEM_DIR)/system
 	find $(KERNEL_MODULE_DIR) -name '*.ko' \
 		-exec cp {} $(BUILD_SYSTEM_DIR)/system/ko/ \;
+	# !!! this is lyj add to reduce flash /mnt/system for more lib*.so spcae
+	# rm -f $(BUILD_SYSTEM_DIR)/system/ko/cv181x_ive.ko
 
 	# copy osdrv
 	mkdir -p $(BUILD_SYSTEM_DIR)/system/ko/3rd
 	find $(OSDRV_MODULE_DIR) -name '*.ko' \
 		-exec cp {} $(BUILD_SYSTEM_DIR)/system/ko/3rd/ \;
-
+	# !!! aic8800 in out/install/bin is no use, and ko can also delete
 	cp -rdf $(MEDIASDK_DIR)/out/install/bin $(BUILD_SYSTEM_DIR)/system
+	rm -rf $(BUILD_SYSTEM_DIR)/system/bin/aic8800
+	rm -f $(BUILD_SYSTEM_DIR)/system/ko/3rd/aic8800_*.ko
 
 ifeq ($(CONFIG_STATIC), y)
 

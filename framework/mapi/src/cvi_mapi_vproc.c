@@ -106,7 +106,7 @@ int find_valid_vpss_grp(bool ExtChnEn)
         (stVIVPSSMode.aenMode[0] == VI_ONLINE_VPSS_ONLINE) ||
         (ExtChnEn == true))
         i = MAX_CAMERA_INSTANCES;
-
+    printf("###### finding available vpss grp id, start from:%d\n", i);
     for (; i < MAX_VPSS_GRP_NUM; i++) {
         if (!g_grp_used[i]) {
             break;
@@ -119,6 +119,7 @@ int find_valid_vpss_grp(bool ExtChnEn)
     } else {
         grp_id = i;
     }
+    printf("###### found available vpss grp id:%d\n", grp_id);
 
     // g_grp_used[grp_id] = true;
     pthread_mutex_unlock(&vproc_mutex);

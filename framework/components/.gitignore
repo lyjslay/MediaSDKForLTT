@@ -1,0 +1,13 @@
+player/build
+player/install
+player/lib
+demuxer/build
+demuxer/install
+demuxer/lib
+thumbnail_extractor/build
+thumbnail_extractor/install
+thumbnail_extractor/lib
+file_recover/build
+file_recover/install
+file_recover/lib
+rtsp/include

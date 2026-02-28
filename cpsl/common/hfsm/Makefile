@@ -1,17 +1,26 @@
 include $(SRCTREE)/build/base.mk
 
-.PHONY : clean all install
-all:
+TARGET_DIR	:= $(CURDIR)/$(CVILIB_DIR)
+TARGET_A	:= $(TARGET_DIR)/libcvi_hfsm.a
+TARGET_SO	:= $(TARGET_DIR)/libcvi_hfsm.so
 
-clean:
+############################################
+# Dependencies
+############################################
+LOG_DIR		:= $(SRCTREE)/cpsl/common/log
+INCS		+= -I$(LOG_DIR)/include
 
-install:
-ifeq ($(INSTALL_PATH),)
-	echo "please specify INSTALL_PATH"
-	exit 1
-endif
-	mkdir -p $(INSTALL_PATH)
-	mkdir -p $(INSTALL_PATH)/include/
-	mkdir -p $(INSTALL_PATH)/lib/
-	cp -a $(CURDIR)/include/* $(INSTALL_PATH)/include/
-	cp -a $(CURDIR)/$(CVILIB_DIR)/* $(INSTALL_PATH)/lib/
+EVENTHUB_DIR:= $(SRCTREE)/cpsl/common/eventhub
+INCS		+= -I$(EVENTHUB_DIR)/include
+
+OSAL_DIR	:= $(SRCTREE)/cpsl/osal
+INCS		+= -I$(OSAL_DIR)/include
+# CFLAGS 		+= -g -O0
+############################################
+# End of Dependencies
+############################################
+INCS		+= -I$(CURDIR)/include
+
+SEXT		:= c
+SDIR		:= $(CURDIR)/src
+include $(SRCTREE)/build/common_lib.mk

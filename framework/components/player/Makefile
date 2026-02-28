@@ -1,17 +1,26 @@
+SRCTREE ?= ../../../
+PROJECT_NAME := cvi_player
+
 include $(SRCTREE)/build/base.mk
 
 .PHONY : clean all install
+
 all:
+	cmake $(CURDIR) -G Ninja -Bbuild/$(CVILIB_DIR) \
+	-DCMAKE_C_COMPILER=$(CROSS_COMPILE)gcc \
+	-DCMAKE_CXX_COMPILER=$(CROSS_COMPILE)g++ \
+	-D$(PROJECT_NAME)_BUILD_STATIC_LIB=on
+	ninja -C $(CURDIR)/build/$(CVILIB_DIR)
+	ninja -C $(CURDIR)/build/$(CVILIB_DIR) install
+	mkdir -p $(CURDIR)/$(CVILIB_DIR)
+	cp -a $(CURDIR)/install/lib/lib$(PROJECT_NAME)* $(CURDIR)/$(CVILIB_DIR)/
 
 clean:
+	rm $(CURDIR)/build -rf
+	rm $(CURDIR)/install -rf
 
-install:
-ifeq ($(INSTALL_PATH),)
-	echo "please specify INSTALL_PATH"
-	exit 1
-endif
-	mkdir -p $(INSTALL_PATH)
-	mkdir -p $(INSTALL_PATH)/include/
-	mkdir -p $(INSTALL_PATH)/lib/
-	cp -a $(CURDIR)/include/* $(INSTALL_PATH)/include/
-	cp -a $(CURDIR)/$(CVILIB_DIR)/* $(INSTALL_PATH)/lib/
+$(INSTALL_PATH)/lib:
+	mkdir -p $@
+
+install: | $(INSTALL_PATH)/lib
+	cp -a $(CURDIR)/$(CVILIB_DIR)/lib$(PROJECT_NAME)* $(INSTALL_PATH)/lib/

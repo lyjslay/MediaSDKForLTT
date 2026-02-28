@@ -5,7 +5,7 @@
 #include "cvi_modeinner.h"
 
 //PLAYBACK MODE
-static int32_t CVI_MODEMNG_PlayBackModeScanFile(void)
+int32_t CVI_MODEMNG_PlayBackModeScanFile(void)
 {
     int32_t s32Ret = 0;
     uint32_t u32Index = 0;
@@ -82,8 +82,6 @@ int32_t CVI_MODEMNG_PlayFile(char* filename, int type) {
         CVI_LOGE("Player Get MediaInfo %s failed", filename);
         return s32Ret;
     }
-    printf("### Playback file info: w(%d) h(%d) video_codec=%s, audio_codec=%s ###\n", info.width, info.height, info.video_codec, info.audio_codec);
-
     if (type == 1) {
         bool jpg_flag = check_jpg_file_complete(filename);
         if (false == jpg_flag) {
@@ -294,7 +292,7 @@ int32_t CVI_MODEMNG_PlaybackModeMsgProc(CVI_MESSAGE_S* pstMsg, void* pvArg, uint
             CVI_MODEMNG_PlayBackward(pstMsg->arg1);
             return CVI_PROCESS_MSG_RESULTE_OK;
         }
-
+        // >>>>>>>>>>>>>>> Behind is new add.
         case CVI_EVENT_PLAYBACKMNG_PLAY:
         {
             CVI_MODEMNG_MonitorStatusNotify(pstMsg);

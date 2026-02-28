@@ -1,8 +1,0 @@
-/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/build/lib_arm/CMakeFiles/install/strip.dir
-/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/build/lib_arm/CMakeFiles/install/local.dir
-/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/build/lib_arm/CMakeFiles/edit_cache.dir
-/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/build/lib_arm/CMakeFiles/cvi_image_viewer_static.dir
-/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/build/lib_arm/CMakeFiles/install.dir
-/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/build/lib_arm/CMakeFiles/list_install_components.dir
-/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/build/lib_arm/CMakeFiles/rebuild_cache.dir
-/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/framework/services/image_viewer/build/lib_arm/CMakeFiles/cvi_image_viewer.dir

@@ -1,17 +1,11 @@
 include $(SRCTREE)/build/base.mk
 
-.PHONY : clean all install
-all:
+TARGET_DIR	:= $(CURDIR)/$(CVILIB_DIR)
+TARGET_A	:= $(TARGET_DIR)/libcvi_log.a
+TARGET_SO	:= $(TARGET_DIR)/libcvi_log.so
 
-clean:
+INCS		+= -I$(CURDIR)/include
 
-install:
-ifeq ($(INSTALL_PATH),)
-	echo "please specify INSTALL_PATH"
-	exit 1
-endif
-	mkdir -p $(INSTALL_PATH)
-	mkdir -p $(INSTALL_PATH)/include/
-	mkdir -p $(INSTALL_PATH)/lib/
-	cp -a $(CURDIR)/include/* $(INSTALL_PATH)/include/
-	cp -a $(CURDIR)/$(CVILIB_DIR)/* $(INSTALL_PATH)/lib/
+SEXT		:= c
+SDIR		:= $(CURDIR)/src
+include $(SRCTREE)/build/common_lib.mk

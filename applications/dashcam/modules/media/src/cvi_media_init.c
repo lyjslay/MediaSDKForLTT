@@ -815,6 +815,47 @@ int32_t CVI_MEDIA_VbInitPlayBack(void)
     return 0;
 }
 
+int32_t CVI_MEDIA_VbInitRecAndPlay(void) {
+    CVI_MAPI_MEDIA_SYS_ATTR_T sys_attr = {0};
+    CVI_PARAM_DISP_ATTR_S  disp_attr;
+    int32_t s32Ret = 0;
+    int32_t record_vb_num = 0;
+
+    // vb configure from ini
+    CVI_PARAM_GetVbParam(&sys_attr);
+    CVI_PARAM_GetVoParam(&disp_attr);
+    record_vb_num = sys_attr.vb_pool_num;
+
+    // set vb attr for playback
+    sys_attr.vb_pool_num  = record_vb_num + 1;
+    if (disp_attr.Rotate == 0) {
+        sys_attr.vb_pool[record_vb_num].vb_blk_size.frame.width = disp_attr.Width;
+        sys_attr.vb_pool[record_vb_num].vb_blk_size.frame.height = disp_attr.Height;
+    } else {
+        sys_attr.vb_pool[record_vb_num].vb_blk_size.frame.width = disp_attr.Height;
+        sys_attr.vb_pool[record_vb_num].vb_blk_size.frame.height = disp_attr.Width;
+    }
+    sys_attr.vb_pool[record_vb_num].is_frame = true;
+    sys_attr.vb_pool[record_vb_num].vb_blk_size.frame.fmt = 13;
+    sys_attr.vb_pool[record_vb_num].vb_blk_num = 5;
+    //set vpss offline
+    for (uint32_t i = 0; i < MAX_CAMERA_INSTANCES; i++) {
+    #ifdef RESET_MODE_AHD_HOTPLUG_ON
+        if (CVI_MEDIA_Is_CameraEnabled(i) == false) {
+            continue;
+        }
+    #endif
+        //sys_attr.stVIVPSSMode.aenMode[i] = VI_OFFLINE_VPSS_OFFLINE; // still remain online
+    }
+    sys_attr.stVPSSMode.aenInput[0] = VPSS_INPUT_MEM; // vpss dev0(1 in 1 out) from ddr
+    sys_attr.stVPSSMode.aenInput[1] = VPSS_INPUT_ISP; // vpss dev1(1 in 3 out) online with isp
+
+    s32Ret = CVI_MAPI_Media_Init(&sys_attr);
+    MEDIA_CHECK_RET(s32Ret, CVI_MEDIA_EINVAL, "CVI_MAPI_Media_Init fail");
+
+    return 0;
+}
+
 int32_t CVI_MEDIA_VbDeInit(void)
 {
     int32_t s32Ret = 0;
@@ -1878,11 +1919,11 @@ int32_t CVI_MEDIA_RecordSerInit(void)
                             }
                         }
 
-                        printf("###### ------ ******en %d vencid %d pivbindid %d\n", recattr->Enable, params.VencAttr.VencChnAttr[j].VencId, pivattr->BindVencId);
+                        //printf("###### ------ ******en %d vencid %d pivbindid %d\n", recattr->Enable, params.VencAttr.VencChnAttr[j].VencId, pivattr->BindVencId);
                         if (recattr->Enable == true && params.VencAttr.VencChnAttr[j].VencId == pivattr->BindVencId) {
                             param->piv_venc_hdl = MediaParams->SysHandle.venchdl[n][j];
                             param->piv_bufsize = params.VencAttr.VencChnAttr[j].MapiVencAttr.bufSize;
-                            printf("###### ------ ******get piv_bufsize %d from params.VencChnAttr[%d]\n", param->piv_bufsize, j);
+                            //printf("###### ------ ******get piv_bufsize %d from params.VencChnAttr[%d]\n", param->piv_bufsize, j);
                         }
                     }
                 }

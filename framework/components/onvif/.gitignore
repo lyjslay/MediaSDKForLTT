@@ -1,0 +1,12 @@
+*.o
+*.d
+
+*.zip
+*.tar.gz
+
+lib/
+obj/
+tools/gsoap-2.8/
+tools/openssl-1.1.0i/
+tools/tmp/
+tools/autogen/

@@ -680,12 +680,11 @@ static void  rs_snap_task_entry(void *arg) {
         CVI_LOGI("Currently may support photo taking mode %d", rs->id);
         return;
     }
-    printf("------------------ rs entry, is_shutdown %d -----------------------\n", rs->shutdown);
+
     while (!rs->shutdown) {
         cvi_osal_task_sleep(50 * 1000);
         pthread_mutex_lock(&rs->piv_mutex);
         rs->piv_shared = 1;
-        printf("------------------set piv 1, rs wait cond -----------------------\n");
         pthread_cond_wait(&rs->piv_cond, &rs->piv_mutex);
         if (rs->shutdown == 1) {
             rs->piv_finish = 1;
@@ -1783,7 +1782,7 @@ static int32_t cvi_master_start_task(rs_context_handle_t rs) {
         CVI_LOGE("rs_snap task create failed, %d", rc);
         return RS_ERR_FAILURE;
     }
-    printf("--------------SNAP ON, Start PIV task %s-----------------\n", piv_name);
+
 #endif
     cvi_osal_task_attr_t thumb_ta;
     static char thumb_name[16] = {0};
@@ -1821,7 +1820,6 @@ void *cvi_master_create(int32_t id, CVI_REC_ATTR_T *attr) {
         CVI_LOGD("recorder thumbnail size %u", g_rec_thumbnail_buf[id].size);
     }
 #ifdef ENABLE_SNAP_ON
-    printf("--------------SNAP ON, Create Recorder %d, thumbnail buf size %d, piv_bufsize %d, thumbnail_bufsize %d-----------------\n", id, g_snap_thumbnail_buf[id].size, attr->handles.piv_bufsize, attr->handles.thumbnail_bufsize);
     if (g_snap_thumbnail_buf[id].size == 0 && attr->handles.piv_bufsize != 0 && attr->handles.thumbnail_bufsize != 0) {
         g_snap_thumbnail_buf[id].buf = malloc(attr->handles.thumbnail_bufsize);
         if (g_snap_thumbnail_buf[id].buf == NULL) {
@@ -2109,11 +2107,9 @@ int32_t cvi_master_snap(int32_t id, char *file_name) {
     }
     rs_context_handle_t handle = &gstRecMasterCtx[id];
 
-    printf("cvi_master_snap %d %s, piv_shared = %d\n", id, file_name, handle->piv_shared);
     while (0 == handle->piv_shared) {
         cvi_osal_task_sleep(10 * 1000);
     }
-    printf("successfullly wait piv_shared = %d\n", handle->piv_shared);
 
     pthread_mutex_lock(&handle->piv_mutex);
     handle->piv_shared = 0;

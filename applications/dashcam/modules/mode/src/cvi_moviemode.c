@@ -1,3 +1,6 @@
+// done: 2026/02/14备份，单独的moviemode和playbackmode已经在ltt硬件上验证ok
+// todo: 现在要把playbackmode融合进moviemode，因为客户需要在录制的同事也能播放
+// step: 请不要再修改该文件
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

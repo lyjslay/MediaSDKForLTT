@@ -803,6 +803,7 @@ static int32_t init_vproc(CVI_PLAYER_SERVICE_HANDLE_T handle,
     vproc_attr.attr_chn[0].stAspectRatio.bEnableBgColor = CVI_TRUE;
     vproc_attr.attr_chn[0].stAspectRatio.u32BgColor = 0x0;
     vproc_attr.attr_inp.u8VpssDev = 1;
+    //vproc_attr.attr_inp.u8VpssDev = 0; // note: previous val is 1, for rec+play, use dev0 for vdec-vpss-vo, dev1 for sensor
     if (CVI_MAPI_VPROC_Init(&ps->vproc, -1, &vproc_attr) != 0) {
         CVI_LOGE("MAPI vproc init failed");
         return CVI_FAILURE;
@@ -1274,6 +1275,8 @@ int32_t CVI_PLAYER_SERVICE_Play(CVI_PLAYER_SERVICE_HANDLE_T handle)
             }, (void *)ps);
     }
 
+    printf("### fileinfo.width = %d, fileinfo.height = %d, cust = %d\n", fileinfo.width, fileinfo.height, VideoCustom);
+
     if (videostreamflage) {
         if (!VideoCustom) {
             fileinfo.width = CVI_ALIGN_UP(fileinfo.width, 64);
@@ -1292,7 +1295,7 @@ int32_t CVI_PLAYER_SERVICE_Play(CVI_PLAYER_SERVICE_HANDLE_T handle)
         if (is_jpeg(ps->codec_type)) {
             CVI_MAPI_VDEC_SetVBMode(VB_SOURCE_COMMON, 1);
         } else {
-            CVI_MAPI_VDEC_SetVBMode(VB_SOURCE_COMMON, 2);
+            CVI_MAPI_VDEC_SetVBMode(VB_SOURCE_COMMON, 5);
         }
         // init hardware
         if (init_vdec(ps, fileinfo.width, fileinfo.height) != 0) {
