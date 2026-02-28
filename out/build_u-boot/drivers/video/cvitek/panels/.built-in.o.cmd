@@ -1,1 +1,0 @@
-cmd_drivers/video/cvitek/panels/built-in.o :=  rm -f drivers/video/cvitek/panels/built-in.o; aarch64-linux-gnu-ar cDPrsT drivers/video/cvitek/panels/built-in.o drivers/video/cvitek/panels/cvi_hal_screen.o drivers/video/cvitek/panels/screen_mipidsi.o drivers/video/cvitek/panels/cvi_hal_gpio.o drivers/video/cvitek/panels/cvi_hal_pwm.o drivers/video/cvitek/panels/hal_screen.o

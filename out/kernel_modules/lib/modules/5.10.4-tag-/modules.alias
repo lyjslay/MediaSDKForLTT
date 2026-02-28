@@ -1,6 +1,0 @@
-# Aliases extracted from modules themselves.
-alias usbfunc:rndis usb_f_rndis
-alias usbfunc:mass_storage usb_f_mass_storage
-alias usbfunc:ffs usb_f_fs
-alias fs-functionfs usb_f_fs
-alias usbfunc:uvc usb_f_uvc

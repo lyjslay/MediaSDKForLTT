@@ -1,1 +1,0 @@
-cmd_drivers/mtd/spi/spi-nor.o := rm -f drivers/mtd/spi/spi-nor.o; aarch64-linux-gnu-ar cDPrsT drivers/mtd/spi/spi-nor.o drivers/mtd/spi/sf_probe.o drivers/mtd/spi/spi-nor-ids.o drivers/mtd/spi/spi-nor-core.o

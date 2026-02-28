@@ -1,6 +1,0 @@
-cvi_vo.c:167:12:do_startvo	352	static
-cvi_vo.c:230:12:do_stopvo	48	static
-cvi_vo.c:253:12:do_startvl	176	static
-cvi_vo.c:368:12:do_stopvl	48	static
-cvi_vo.c:398:12:do_setvobg	48	static
-cvi_vo.c:34:5:i80_init	64	static

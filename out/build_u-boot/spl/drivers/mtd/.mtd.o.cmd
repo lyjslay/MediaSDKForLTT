@@ -1,1 +1,0 @@
-cmd_spl/drivers/mtd/mtd.o := rm -f spl/drivers/mtd/mtd.o; aarch64-linux-gnu-ar cDPrsT spl/drivers/mtd/mtd.o spl/drivers/mtd/mtdcore.o spl/drivers/mtd/mtd_uboot.o spl/drivers/mtd/mtdpart.o spl/drivers/mtd/cfi_mtd.o

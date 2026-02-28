@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <dirent.h>
 #include <errno.h>
 #include <pthread.h>
@@ -48,7 +49,7 @@ extern "C" {
 #define CVI_FILE_SUFFIX_LEN_MAX       (8)
 
 #define CVI_DTCF_TIME_STR_LEN         (20)
-#define CVI_FILE_NAME_LEN_MIN         (4) //e.g. .mp4
+#define CVI_FILE_NAME_LEN_MIN         (5) //e.g. .mp4
 
 
 #define CVI_DTCF_SCAN_FILE_AMOUNT_MAX (10 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2) //10240
@@ -234,7 +235,19 @@ static char g_szFileTypeSuffix[CVI_DTCF_FILE_TYPE_BUTT][CVI_FILE_SUFFIX_LEN_MAX]
     "MP4",
     "JPG",
     "TS",
-    "MOV"
+    "MOV",
+    "MKV",
+    "WMV",
+    "AVI",
+    "RMVB",
+    "FLV",
+    "3GP",
+    "MPG",
+    "MXF",
+    "WMA",
+    "WAV",
+    "MP3",
+    "AAC"
 };
 
 static char g_szFileNameSuffix[DTCF_DIR_BUTT][CVI_FILE_SUFFIX_LEN_MAX] =
@@ -280,13 +293,33 @@ static void dtcf_FreeScanNameList()
     memset(&s_stDtcfScanFileList.enScanDirs, 0x0, sizeof(CVI_DTCF_DIR_E) * DTCF_DIR_BUTT);
 }
 
+/** case-insensitive compare, return 0 if equal */
+static int DTCF_StrncmpIgnoreCase(const char *a, const char *b, size_t n)
+{
+    size_t i;
+    for (i = 0; i < n && a[i] && b[i]; i++) {
+        int ca = tolower((unsigned char)a[i]);
+        int cb = tolower((unsigned char)b[i]);
+        if (ca != cb)
+            return ca - cb;
+    }
+    if (i < n && (a[i] != b[i]))
+        return (unsigned char)a[i] - (unsigned char)b[i];
+    return 0;
+}
+
 static bool DTCF_FileNameRuleCheckFileTypeSuffix(const char *pFileTypeSuffix)
 {
-    uint32_t suffexLen,i;
+    uint32_t suffexLen, i;
+    size_t inputLen = strlen(pFileTypeSuffix);
     for (i = 0; i < CVI_DTCF_FILE_TYPE_BUTT; i++)
     {
         suffexLen = strlen(g_szFileTypeSuffix[i]);
-        if (0 == strncmp(g_szFileTypeSuffix[i], pFileTypeSuffix, suffexLen))
+        // if (0 == strncmp(g_szFileTypeSuffix[i], pFileTypeSuffix, suffexLen))
+        // {
+        //     return true;
+        // }
+        if (inputLen == suffexLen && 0 == DTCF_StrncmpIgnoreCase(g_szFileTypeSuffix[i], pFileTypeSuffix, suffexLen))
         {
             return true;
         }
@@ -456,7 +489,9 @@ static int32_t DTCF_checkFilePath(const char *pazSrcFilePath, CVI_DTCF_TEMP_DIR_
 
     for(j = CVI_DTCF_FILE_TYPE_MP4; j < CVI_DTCF_FILE_TYPE_BUTT; j ++)
     {
-        if(0 == strncmp(g_szFileTypeSuffix[j], s + 1, strlen(g_szFileTypeSuffix[j])))
+        //if(0 == strncmp(g_szFileTypeSuffix[j], s + 1, strlen(g_szFileTypeSuffix[j])))
+        size_t suffixLen = strlen(g_szFileTypeSuffix[j]);
+        if (strlen(s + 1) == suffixLen && 0 == DTCF_StrncmpIgnoreCase(g_szFileTypeSuffix[j], s + 1, suffixLen))
         {
             pstSrcTmpDir->enType = (CVI_DTCF_FILE_TYPE_E)j;
             break;

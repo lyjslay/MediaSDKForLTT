@@ -1,8 +1,0 @@
-hashtable.c:738:12:drop_var_from_set.part.2	64	static
-hashtable.c:104:5:hcreate_r	32	static
-hashtable.c:148:6:hdestroy_r	48	static
-hashtable.c:210:5:hmatch_r	64	static
-hashtable.c:291:5:hsearch_r	112	static
-hashtable.c:463:5:hdelete_r	112	static
-hashtable.c:800:5:himport_r	192	dynamic
-hashtable.c:1001:5:hwalk_r	48	static

@@ -1,6 +1,0 @@
-cvi_update.c:63:13:update_bootlogo	304	static
-cvi_update.c:338:12:_usb_update	544	static
-cvi_update.c:99:5:_prgImage	320	static
-cvi_update.c:234:12:_storage_update.constprop	672	static
-cvi_update.c:395:5:uart_download	336	static
-cvi_update.c:516:12:do_cvi_update	304	static

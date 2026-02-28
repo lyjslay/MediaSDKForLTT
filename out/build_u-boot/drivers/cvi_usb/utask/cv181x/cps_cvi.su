@@ -1,6 +1,0 @@
-cps_cvi.c:7:10:cvi_uncached_read32	0	static
-cps_cvi.c:13:6:cvi_uncached_write32	0	static
-cps_cvi.c:19:6:cvi_buffer_copy	0	static
-cps_cvi.c:26:6:cvi_cache_invalidate	0	static
-cps_cvi.c:35:6:cvi_cache_flush	0	static
-cps_cvi.c:44:6:cvi_delay_ns	0	static

@@ -1,0 +1,190 @@
+menu "Platform options"
+menu "Rootfs package"
+config ROOTFS_WITH_APP
+		bool "Enable rootfs with"
+		default y
+		help
+			Say Y if you want to enable rootfs with app.
+
+source "platform/ramdisk/rootfs/public/adbd/Kconfig"
+source "platform/ramdisk/rootfs/public/ap6201bm/Kconfig"
+source "platform/ramdisk/rootfs/public/bluetooth/Kconfig"
+source "platform/ramdisk/rootfs/public/cvitracer/Kconfig"
+source "platform/ramdisk/rootfs/public/dropbear/Kconfig"
+source "platform/ramdisk/rootfs/public/gdbserver/Kconfig"
+source "platform/ramdisk/rootfs/public/libbtrace/Kconfig"
+source "platform/ramdisk/rootfs/public/libcrypto/Kconfig"
+source "platform/ramdisk/rootfs/public/libcurl/Kconfig"
+source "platform/ramdisk/rootfs/public/libevent/Kconfig"
+source "platform/ramdisk/rootfs/public/libiperf/Kconfig"
+source "platform/ramdisk/rootfs/public/libiw/Kconfig"
+source "platform/ramdisk/rootfs/public/libprotobuf/Kconfig"
+source "platform/ramdisk/rootfs/public/libz/Kconfig"
+source "platform/ramdisk/rootfs/public/mtd-utils/Kconfig"
+source "platform/ramdisk/rootfs/public/nanomsg/Kconfig"
+source "platform/ramdisk/rootfs/public/openssl/Kconfig"
+source "platform/ramdisk/rootfs/public/otaserver/Kconfig"
+source "platform/ramdisk/rootfs/public/parted/Kconfig"
+source "platform/ramdisk/rootfs/public/procrank/Kconfig"
+source "platform/ramdisk/rootfs/public/procps/Kconfig"
+source "platform/ramdisk/rootfs/public/python3.7/Kconfig"
+source "platform/ramdisk/rootfs/public/rsyslog/Kconfig"
+source "platform/ramdisk/rootfs/public/secure_image/Kconfig"
+source "platform/ramdisk/rootfs/public/wifi/Kconfig"
+source "platform/ramdisk/rootfs/public/busybox-syslogd/Kconfig"
+source "platform/ramdisk/rootfs/public/mt7603u/Kconfig"
+source "platform/ramdisk/rootfs/public/libtirpc/Kconfig"
+source "platform/ramdisk/rootfs/public/libnfs/Kconfig"
+source "platform/ramdisk/rootfs/public/bash/Kconfig"
+source "platform/ramdisk/rootfs/public/crontabs/Kconfig"
+source "platform/ramdisk/rootfs/public/iperf3-3.1.7/Kconfig"
+source "platform/ramdisk/rootfs/public/e2fsprogs/Kconfig"
+source "platform/ramdisk/rootfs/public/gatord/Kconfig"
+source "platform/ramdisk/rootfs/public/stress-ng/Kconfig"
+source "platform/ramdisk/rootfs/public/htop/Kconfig"
+source "platform/ramdisk/rootfs/public/ntp/Kconfig"
+source "platform/ramdisk/rootfs/public/i2c_tool/Kconfig"
+source "platform/ramdisk/rootfs/public/pinmux/Kconfig"
+source "platform/ramdisk/rootfs/public/envtools/Kconfig"
+endmenu
+
+menu "kernel config"
+config KERNEL_ENTRY_HACK_ADDR
+		hex "kernel entry addr"
+		default 0x80200000
+		help
+			you want to set kernel entry addr.
+
+choice
+		prompt "Kernel Image compress algorithm"
+		default KERNEL_LZMA
+
+config KERNEL_GZIP
+	bool "Gzip"
+	help
+		The old and tried gzip compression. It provides a good balance
+		between compression ratio and decompression speed.
+
+config KERNEL_LZMA
+	bool "LZMA"
+	help
+		This compression algorithm ratio is best.  Decompression speedis between gzip and bzip2.  Compression is slowest.
+		The kernel size is about 33% smaller with LZMA in comparison to gzip.
+
+config KERNEL_LZ4
+	bool "LZ4"
+	help
+		LZ4 is an LZ77-type compressor with a fixed, byte-oriented encoding.
+		A preliminary version of LZ4 de/compression tool is available at
+		<https://code.google.com/p/lz4/>.
+
+		Its compression ratio is worse than LZO. The size of the kernel
+		is about 8% bigger than LZO. But the decompression speed is
+		faster than LZO.
+
+config KERNEL_UNCOMPRESSED
+	bool "None"
+	help
+		Produce uncompressed kernel image. This option is usually not what
+		you want. It is useful for debugging the kernel in slow simulation
+		environments, where decompressing and moving the kernel is awfully
+		slow. This option allows early boot code to skip the decompressor
+		and jump right at uncompressed kernel image.
+endchoice
+
+config KERNEL_COMPRESS
+	string
+	default "gzip" if KERNEL_GZIP
+	default "lzma" if KERNEL_LZMA
+	default "lz4" if KERNEL_LZ4
+	default "none" if KERNEL_UNCOMPRESSED
+	help
+		Set kernel source code.
+endmenu
+
+menu "Uboot config"
+config UBOOT_BOOTLOGO
+		bool "Enable boot logo"
+		default n
+		help
+			Say Y if you want to enable boot logo.
+config UBOOT_BOOTDELAY
+		int "Uboot delay start"
+		default 1
+		help
+		  set uboot delay start time.
+config UBOOT_BOOTAHD
+		bool "Uboot cmd ahd start"
+		default y
+		help
+		  Say Y if you want to enable boot ahd.
+config UBOOT_SPL_CUSTOM
+		bool "Generate the fip_spl.bin contain u-boot-spl"
+		default y
+		help
+		  Set fip_spl.bin contain u-boot-spl or u-boot.
+endmenu
+
+menu "RTOS options"
+
+config ENABLE_ALIOS
+	bool "Enable ALIOS"
+	help
+		Say Y if you want to enable ALIOS.
+
+if ENABLE_ALIOS
+config ALIOS_SOLUTION
+	string "Set alios solution"
+	default "helloworld"
+	help
+	  slect alios solution
+
+config FAST_BOOT_MODE
+	  bool "DualOS fastboot Mode"
+	  default y
+	  depends on ENABLE_ALIOS
+	  help
+		set fast boot mode in dual os.
+
+config COMPRESS_RTOS_BIN
+	  bool "Compress rtos bin"
+	  default y if !FAST_BOOT_MODE
+	  depends on !FAST_BOOT_MODE
+	  help
+		compress rtos bin by lzma
+
+config ENABLE_UART_TOOL
+        bool "Enable UART Tool"
+        help
+            Say Y if you want to enable UART Tool.
+if ENABLE_UART_TOOL
+        config UART_INDEX
+            int "uart index"
+        config UART_BAUD
+            int "uart baud"
+endif
+
+menu "CViTek alios tools cmd"
+	config ENABLE_I2C_TOOL
+		bool "Enable I2C Tool"
+		help
+			Say Y if you want to enable I2C Tool.
+	config ENABLE_PINMUX_TOOL
+		bool "Enable PINMUX Tool"
+		help
+			Say Y if you want to enable PINMUX Tool.
+	config ENABLE_GPIO_TOOL
+		bool "Enable GPIO Tool"
+		help
+			Say Y if you want to enable GPIO Tool.
+	config ENABLE_ALIOS_TOOL
+		bool
+		default y if (ENABLE_I2C_TOOL || ENABLE_PINMUX_TOOL || ENABLE_GPIO_TOOL)
+
+endmenu
+
+endif
+
+endmenu
+
+endmenu

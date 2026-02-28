@@ -1,8 +1,0 @@
-sdhci-cv181x.c:449:13:cvi_general_reset	0	static
-sdhci-cv181x.c:520:5:cvi_get_cd	0	static
-sdhci-cv181x.c:504:13:cvi_sd_voltage_switch	0	static
-sdhci-cv181x.c:170:12:cvi_ofdata_to_platdata	48	static
-sdhci-cv181x.c:207:12:cvi_sdhci_bind	32	static
-sdhci-cv181x.c:216:13:cvi_mmc_set_tap.isra.1	0	static
-sdhci-cv181x.c:264:5:cvi_general_execute_tuning	144	static
-sdhci-cv181x.c:594:12:cvi_sdhci_probe	64	static

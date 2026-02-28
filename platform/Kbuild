@@ -1,0 +1,47 @@
+include $(SRCTREE)/platform/ramdisk/rootfs/public/adbd/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/ap6201bm/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/bluetooth/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/cvitracer/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/dropbear/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/gdbserver/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/libbtrace/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/libcrypto/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/libcurl/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/libevent/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/libiperf/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/libiw/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/libprotobuf/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/libz/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/mtd-utils/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/nanomsg/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/openssl/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/otaserver/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/parted/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/procrank/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/procps/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/python3.7/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/rsyslog/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/secure_image/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/wifi/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/busybox-syslogd/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/mt7603u/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/libtirpc/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/libnfs/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/bash/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/crontabs/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/iperf3-3.1.7/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/e2fsprogs/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/gatord/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/stress-ng/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/htop/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/ntp/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/i2c_tool/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/pinmux/target.mk
+include $(SRCTREE)/platform/ramdisk/rootfs/public/envtools/target.mk
+
+ifeq (${CONFIG_ENABLE_UART_TOOL}, y)
+    KBUILD_DEFINES += -DENABLE_UART_DEBUG_ON -DUART_INDEX=$(CONFIG_UART_INDEX) -DUART_BAUD=$(CONFIG_UART_BAUD)
+endif
+
+
+

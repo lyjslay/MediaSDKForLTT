@@ -1,4 +1,0 @@
-cvitek_pwm.c:136:12:cvitek_pwm_set_invert	32	static
-cvitek_pwm.c:114:12:cvitek_pwm_set_enable	32	static
-cvitek_pwm.c:66:12:cvitek_pwm_set_config	48	static
-cvitek_pwm.c:160:12:cvitek_pwm_probe	32	static

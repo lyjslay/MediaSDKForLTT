@@ -704,7 +704,7 @@ int32_t FFmpegDemuxer::openInputts()
         tspspsparse(&streaminfo);
 
         av_context->probesize = (av_context->probesize / 50);
-        //err = avformat_find_stream_info(av_context, NULL);
+        err = avformat_find_stream_info(av_context, NULL);
         av_context->flags = AVFMT_FLAG_NOBUFFER;
         av_context->duration = streaminfo.duration;
         av_context->bit_rate = 3289924;
@@ -728,12 +728,14 @@ int32_t FFmpegDemuxer::openInputts()
                 av_context->streams[index]->codecpar->sample_aspect_ratio.den = 1;
                 av_context->streams[index]->codecpar->video_delay = 0;
                 av_context->streams[index]->duration = streaminfo.duration * 0.9;
-                av_context->streams[index]->r_frame_rate.num = streaminfo.videonum;
-                av_context->streams[index]->r_frame_rate.den = streaminfo.videoden;
-                av_context->streams[index]->avg_frame_rate.num = streaminfo.videonum;
-                av_context->streams[index]->avg_frame_rate.den = streaminfo.videoden;
-                av_context->streams[index]->codecpar->width = streaminfo.videowidth;
-                av_context->streams[index]->codecpar->height = streaminfo.videoheight;
+                if (streaminfo.videonum > 0 && streaminfo.videoden > 0) {
+                    av_context->streams[index]->r_frame_rate.num = streaminfo.videonum;
+                    av_context->streams[index]->r_frame_rate.den = streaminfo.videoden;
+                    av_context->streams[index]->avg_frame_rate.num = streaminfo.videonum;
+                    av_context->streams[index]->avg_frame_rate.den = streaminfo.videoden;
+                    av_context->streams[index]->codecpar->width = streaminfo.videowidth;
+                    av_context->streams[index]->codecpar->height = streaminfo.videoheight;
+                }
                 av_context->streams[index]->codecpar->codec_id = AV_CODEC_ID_H264;
                 av_context->streams[index]->index = index;
             } else if (index == 1) {
@@ -759,8 +761,10 @@ int32_t FFmpegDemuxer::openInputts()
                 av_context->streams[index]->r_frame_rate.num = 0;
                 av_context->streams[index]->r_frame_rate.den = 0;
             } else {
-                av_context->streams[index]->codecpar->width = streaminfo.videowidth;
-                av_context->streams[index]->codecpar->height = streaminfo.videoheight;
+                if (streaminfo.videowidth > 0 && streaminfo.videoheight > 0) {
+                    av_context->streams[index]->codecpar->width = streaminfo.videowidth;
+                    av_context->streams[index]->codecpar->height = streaminfo.videoheight;
+                }
             }
         }
 

@@ -1,1 +1,0 @@
-cmd_drivers/serial/built-in.o :=  rm -f drivers/serial/built-in.o; aarch64-linux-gnu-ar cDPrsT drivers/serial/built-in.o drivers/serial/serial.o drivers/serial/serial_ns16550.o drivers/serial/ns16550.o

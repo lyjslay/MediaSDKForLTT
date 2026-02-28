@@ -127,6 +127,29 @@ static void CVI_MEM_AddVbPoolMapping(void *vir_addr, uint64_t u64PhyAddr, VB_POO
     return;
 }
 
+static int CVI_MEM_IsVbAddressLocked(void *vir_addr)
+{
+    VbPoolMapping_T *cur = g_vb_info;
+    while (cur != NULL) {
+        if (cur->vir_addr == vir_addr) {
+            return 1;
+        }
+        cur = cur->next;
+    }
+    return 0;
+}
+
+int CVI_MEM_IsVbAddress(void *vir_addr)
+{
+    if (!vir_addr) {
+        return 0;
+    }
+    pthread_mutex_lock(&vb_mutex);
+    int ret = CVI_MEM_IsVbAddressLocked(vir_addr);
+    pthread_mutex_unlock(&vb_mutex);
+    return ret;
+}
+
 static VbPoolMapping_T CVI_MEM_FindVbPoolByMapp(void *vir_addr)
 {
     VbPoolMapping_T VbPoolMapping = {0};

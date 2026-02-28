@@ -42,7 +42,9 @@ AudioStream::~AudioStream()
     }
 
     if (out_buffer) {
-        CVI_MEM_VbFree(out_buffer);
+        if (CVI_MEM_IsVbAddress(out_buffer)) {
+            CVI_MEM_VbFree(out_buffer);
+        }
         out_buffer = nullptr;
     }
 }
@@ -165,8 +167,9 @@ void AudioStream::destroyFrameBuffer()
     std::lock_guard<std::mutex> lock(buffer_mutex);
     if (frame_buffer.data != nullptr) {
         for (int32_t i = 0; i < AUDIO_FRAME_PLANAR_SIZE; ++i) {
-            // CVI_MEM_Free(frame_buffer.data[i]);
-            CVI_MEM_VbFree(frame_buffer.data[i]);
+            if (frame_buffer.data[i] && CVI_MEM_IsVbAddress(frame_buffer.data[i])) {
+                CVI_MEM_VbFree(frame_buffer.data[i]);
+            }
             frame_buffer.data[i] = nullptr;
         }
         delete[] frame_buffer.data;

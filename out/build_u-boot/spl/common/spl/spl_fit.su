@@ -1,8 +1,0 @@
-spl_fit.c:86:12:spl_fit_get_image_name	64	static
-spl_fit.c:165:12:spl_fit_get_image_node	48	static
-spl_fit.c:239:12:spl_load_fit_image	128	static
-spl_fit.c:471:12:spl_fit_append_fdt.isra.4	128	static
-spl_fit.c:42:13:board_spl_fit_post_load	0	static
-spl_fit.c:46:14:board_spl_fit_size_align	0	static
-spl_fit.c:656:13:spl_load_simple_fit_skip_processing	0	static
-spl_fit.c:780:5:spl_load_simple_fit	288	static

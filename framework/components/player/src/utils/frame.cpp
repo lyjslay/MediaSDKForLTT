@@ -45,8 +45,11 @@ void releaseFrameData(AVFrame *frame) {
     if (frame->format == AV_PIX_FMT_YUV420P) {
         for (int32_t i = 0; i < FRAME_PLANAR_NUM; ++i) {
             // CVI_MEM_Free(frame->data[i]);
-            CVI_MEM_VbFree(frame->data[i]);
-            frame->data[i] = nullptr;
+            if (frame->data[i] && CVI_MEM_IsVbAddress(frame->data[i])) {
+                CVI_MEM_VbFree(frame->data[i]);
+                frame->data[i] = nullptr;
+            }
+            /* else: software-decode, buffer from FFmpeg, leave to av_frame_free */
         }
     }
 }

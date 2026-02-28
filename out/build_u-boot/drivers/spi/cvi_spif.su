@@ -1,7 +1,0 @@
-cvi_spif.c:51:13:cvitek_set_sf_clk	0	static
-cvi_spif.c:371:12:cvitek_spi_set_mode	32	static
-cvi_spif.c:349:12:cvitek_spi_set_speed	16	static
-cvi_spif.c:406:12:cvitek_spi_exec_op	48	static
-cvi_spif.c:22:12:cvitek_spi_probe	32	static
-cvi_spif.c:296:12:cvitek_spi_xfer	112	static
-cvi_spif.c:259:6:dump_mem	80	static

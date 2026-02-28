@@ -1,1 +1,0 @@
-cmd_drivers/cvi_usb/built-in.o :=  rm -f drivers/cvi_usb/built-in.o; aarch64-linux-gnu-ar cDPrsT drivers/cvi_usb/built-in.o drivers/cvi_usb/utask/cv181x/cvi_usb.o drivers/cvi_usb/utask/cv181x/cps_cvi.o drivers/cvi_usb/utask/cv181x/cvi_udc_otg.o drivers/cvi_usb/utask/cv181x/cvi_udc_otg_xfer_dma.o drivers/cvi_usb/utask/cv181x/usb_tty.o

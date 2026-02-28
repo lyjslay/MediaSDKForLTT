@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project Name="cardv" Version="1">
+  <Description>yoc cardv</Description>
+  <MonitorProgress>
+    <FlashOperate>230</FlashOperate>
+    <DebugLaunch>118</DebugLaunch>
+  </MonitorProgress>
+  <Chips>
+    <Chip ID="chip_cv181x" Version="develop" IsBasic="false"/>
+  </Chips>
+  <Boards>
+    <Board ID="cv181xc_evb" Version="v0.0.1" IsBasic="false"/>
+  </Boards>
+  <Packages>
+    <Package ID="cvi_mmf_sdk" Version="develop" IsBasic="false"/>
+    <Package ID="rhino" Version="develop" IsBasic="false"/>
+    <Package ID="rhino_arch" Version="develop" IsBasic="false"/>
+    <Package ID="aos" Version="develop" IsBasic="false"/>
+    <Package ID="cli" Version="develop" IsBasic="false"/>
+    <Package ID="kv" Version="develop" IsBasic="false"/>
+    <Package ID="ulog" Version="develop" IsBasic="false"/>
+    <Package ID="csi" Version="develop" IsBasic="false"/>
+    <Package ID="debug" Version="develop" IsBasic="false"/>
+    <Package ID="aoshal" Version="develop" IsBasic="false"/>
+    <Package ID="libc_stub" Version="develop" IsBasic="false"/>
+    <Package ID="uservice" Version="develop" IsBasic="false"/>
+    <Package ID="partition" Version="develop" IsBasic="false"/>
+    <Package ID="key_mgr" Version="develop" IsBasic="false"/>
+    <Package ID="sec_crypto" Version="develop" IsBasic="false"/>
+    <Package ID="posix" Version="develop" IsBasic="false"/>
+    <Package ID="vfs" Version="develop" IsBasic="false"/>
+    <Package ID="cv181xc_evb" Version="v0.0.1" IsBasic="false"/>
+    <Package ID="chip_cv181x" Version="develop" IsBasic="false"/>
+    <Package ID="minialsa" Version="v7.4.y" IsBasic="false"/>
+    <Package ID="drv_snd_cv181x" Version="v7.5.1" IsBasic="false"/>
+    <Package ID="cvi_sensor" Version="develop" IsBasic="false"/>
+  </Packages>
+  <MergedToYaml>yes</MergedToYaml>
+  <DebugSessions>
+    <watchExpressions/>
+    <memoryExpressions>;;;</memoryExpressions>
+    <statistics>;;MHZ;</statistics>
+    <peripheralTabs/>
+    <WatchDisplayFormat>0</WatchDisplayFormat>
+    <LocalDisplayFormat>0</LocalDisplayFormat>
+    <debugLayout/>
+    <memoryTabColSizeExpressions>100:8;100:8;100:8;100:8;</memoryTabColSizeExpressions>
+  </DebugSessions>
+  <BuildConfigs>
+    <BuildConfig Name="BuildSet">
+      <Target>
+        <ROMBank Selected="1">
+          <ROM1>
+            <InUse>yes</InUse>
+            <Start>0x20000000</Start>
+            <Size>0x1000</Size>
+          </ROM1>
+          <ROM2>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM2>
+          <ROM3>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM3>
+          <ROM4>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM4>
+          <ROM5>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM5>
+        </ROMBank>
+        <RAMBank>
+          <RAM1>
+            <InUse>no</InUse>
+            <Start>0x20001000</Start>
+            <Size>0x1000</Size>
+            <Init>yes</Init>
+          </RAM1>
+          <RAM2>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM2>
+          <RAM3>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM3>
+          <RAM4>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM4>
+          <RAM5>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM5>
+        </RAMBank>
+        <CPU>c906fd</CPU>
+        <UseMiniLib>yes</UseMiniLib>
+        <Endian>little</Endian>
+        <UseEnhancedLRW>no</UseEnhancedLRW>
+        <UseContinueBuild>no</UseContinueBuild>
+        <UseSemiHost>no</UseSemiHost>
+      </Target>
+      <Output>
+        <OutputName>$(ProjectName)</OutputName>
+        <Type>Executable</Type>
+        <CreateHexFile>yes</CreateHexFile>
+        <CreateBinFile>no</CreateBinFile>
+        <Preprocessor>no</Preprocessor>
+        <Disassmeble>yes</Disassmeble>
+        <CallGraph>no</CallGraph>
+        <Map>yes</Map>
+      </Output>
+      <User>
+        <BeforeCompile>
+          <RunUserProg>no</RunUserProg>
+          <UserProgName/>
+        </BeforeCompile>
+        <BeforeMake>
+          <RunUserProg>yes</RunUserProg>
+          <UserProgName>"$(ProjectPath)/script/pre_build.sh"</UserProgName>
+        </BeforeMake>
+        <AfterMake>
+          <RunUserProg>yes</RunUserProg>
+          <UserProgName>"$(ProjectPath)/script/aft_build.sh"</UserProgName>
+        </AfterMake>
+      </User>
+      <Compiler>
+        <Define>CONFIG_KERNEL_RHINO=1;CONFIG_OPT_FOOTPRINT_LEVEL=0;CONFIG_INIT_TASK_STACK_SIZE=8192;AOS_COMP_CLI=1;CLI_INBUF_SIZE=256;CLI_OUTBUF_SIZE=512;CLI_MAX_COMMANDS=128;CLI_MAX_ARG_NUM=16;CLI_MAX_ONCECMD_NUM=4;CLI_TASK_PRIORITY=60;CLI_CONFIG_STACK_SIZE=8192;CLI_TELNET_ENABLE=0;CLI_UAGENT_ENABLE=0;CLI_SEPRATED_CONSOLE=0;CLI_IOBOX_ENABLE=0;CONFIG_KV_ENABLE_CACHE=1;CONFIG_KV_START_OPT=1;CONFIG_KV_HASH_BUCKET=16;AOS_COMP_ULOG="y";ULOG_CONFIG_POP_FS_PATH="/fatfs/";AOS_COMP_DEBUG=1;DEBUG_PANIC_PRT_INT=1;DEBUG_CPUUSAGE_RECODE_TO_FILE_ENABLE=0;DEBUG_CPUUSAGE_MAX_TASK=80;DEBUG_CPUUSAGE_FILE_NAME="/data/cpuusage";DEBUG_LAST_WORD_ENABLE=0;DEBUG_LOG_FILE_NUM=10;DEBUG_LASTWORD_RAM_ADDR=0;DEBUG_LASTWORD_REGION_LEN=16384;DEBUG_LOG_DIR_NAME="/data/crash_reports";DEBUG_CONFIG_LOG_FILE_NAME="/data/crash_reports/crash_report";DEBUG_CONFIG_LOG_FILE_INDEX="/data/crash_reports/log_file_index";DEBUG_ULOG_FLUSH=0;DEBUG_TEST_CMDS_ENABLE=0;CONFIG_USERVICE_EVENT_TASK_STACK_SIZE=8192;CONFIG_TB_KP=1;CONFIG_KEY_FROM_OTP=0;CONFIG_KEY_FROM_APP=1;AOS_COMP_POSIX="y";AOS_COMP_VFS=1;VFS_CONFIG_DEBUG=1;VFS_CONFIG_ROOTFS=1;CONFIG_USE_MINIALSA=1;CONFIG_VIC_TSPDR=1946157056;CONFIG_LOG_DEFAULT_LEVEL=2;HAVE_INIT_ARRAY_LD="y";CONFIG_NON_ADDRESS_FLASH="y";CONFIG_CSI_V2=1;CONFIG_CSI="csi2";CONFIG_CPU_C906="y";CONFIG_ARCH_INTERRUPTSTACK=4096;CVI_SOC_NAME="cv181x";CVI_SOC_CV181XC=1;CONFIG_BOARD_CV181XC=1;CONFIG_BOARD_CV181XH=0;CONFIG_SYSTEM_SECURE="y";CONFIG_SEC_BASE64_SW="y";CONFIG_SEC_CRYPTO_RSA_SW="y";CONFIG_KEY_MGR_KP_PROTECT=1;CONFIG_KEY_MGR_KP_PROTECT_OPT=1;CONFIG_SYSTICK_HZ=250;STDIO_UART=0;WITH_LWIP=1;CONFIG_KERNEL_WORKQUEUE=1;CONFIG_LFS_BLOCK_CYCLES=500;CONFIG_LFS_MOUNTPOINT="/";CONFIG_AEFXER_SONA=0;CONFIG_KERNEL_LWIP_HOOK=1;CONFIG_USING_TLS=1;RHINO_CONFIG_MM_BLK=0;RHINO_CONFIG_MM_TLF_BLK_SIZE=4194304;POSIX_DEVICE_IO_NEED=1;CONFIG_CHIP_D1=1;FD_SETSIZE=128;SYSINFO_DEVICE_NAME="cv181xc_evb";OSAL_RHINO=1;ARCH_MARS=1;__CV181X__=1;CONFIG_DEBUG=1;CONFIG_DEBUG_MM=1;CONFIG_APP_DEBUG_JTAG=0;CONFIG_APP_TEST=0;CONFIG_EFUSE_TEST=0;CONFIG_SUPPORT_TPU=0;CONFIG_APP_CX_CLOUD_SUPPORT=0;CONFIG_APP_VENC_SUPPORT=1;CONFIG_APP_GUI_SUPPORT=0;CONFIG_APP_SENSOR_IR_USE=0;CONFIG_DEBUG_HOSTMCU_EMU_SUPPORT=0;CONFIG_APP_AI_SUPPORT=0;CONFIG_SD_FATFS_MOUNTPOINT="/mnt/sd";ULOG_CONFIG_ASYNC=1;ULOG_CONFIG_SYNC_LOG_DETAILS=1;ULOG_CONFIG_ASYNC_BUF_SIZE=8192;ULOG_CONFIG_LOG_SIZE=512;USE_4K_ERASE_SECTION=1;CONFIG_SIMPLE_FONTMOD=1;CONFIG_SENSOR_GCORE_GC2053=1;CONFIG_SENSOR_GCORE_GC2053_1L=1;CONFIG_SENSOR_GCORE_GC2093=1;CONFIG_SENSOR_GCORE_GC4653=1;CONFIG_SENSOR_PIXELPLUS_PR2020=1;CONFIG_SENSOR_SONY_IMX307=1;CONFIG_SENSOR_SONY_IMX327=1;CONFIG_SUPPORT_NORFLASH=1;CONFIG_SNS0_TYPE=11;CONFIG_SNS1_TYPE=13;CONFIG_PANEL_HX8394=0;CONFIG_PANEL_ILI9488=0;CONFIG_VENC_TEST_CHN=2;CONFIG_PQTOOL_SUPPORT=0;CONFIG_PQBIN_USE_JSON=0;CONFIG_ISP_SUPPORT_PROC=0;CONFIG_ENABLE_FASTBOOT=0;CONFIG_TEST_MODE=0;__AOST_AOS_COMP_CLI__=1;__AOST_CLI_INBUF_SIZE__=256;__AOST_CLI_OUTBUF_SIZE__=512;__AOST_CLI_MAX_COMMANDS__=128;__AOST_CLI_MAX_ARG_NUM__=16;__AOST_CLI_MAX_ONCECMD_NUM__=4;__AOST_CLI_TASK_PRIORITY__=60;__AOST_CLI_CONFIG_STACK_SIZE__=8192;__AOST_CLI_TELNET_ENABLE__=0;__AOST_CLI_UAGENT_ENABLE__=0;__AOST_CLI_SEPRATED_CONSOLE__=0;__AOST_CLI_IOBOX_ENABLE__=0;__AOST_AOS_COMP_ULOG__="y";__AOST_ULOG_CONFIG_POP_FS_PATH__="/fatfs/";__AOST_AOS_COMP_DEBUG__=1;__AOST_DEBUG_PANIC_PRT_INT__=1;__AOST_DEBUG_CPUUSAGE_RECODE_TO_FILE_ENABLE__=0;__AOST_DEBUG_CPUUSAGE_MAX_TASK__=80;__AOST_DEBUG_CPUUSAGE_FILE_NAME__="/data/cpuusage";__AOST_DEBUG_LAST_WORD_ENABLE__=0;__AOST_DEBUG_LOG_FILE_NUM__=10;__AOST_DEBUG_LASTWORD_RAM_ADDR__=0;__AOST_DEBUG_LASTWORD_REGION_LEN__=16384;__AOST_DEBUG_LOG_DIR_NAME__="/data/crash_reports";__AOST_DEBUG_CONFIG_LOG_FILE_NAME__="/data/crash_reports/crash_report";__AOST_DEBUG_CONFIG_LOG_FILE_INDEX__="/data/crash_reports/log_file_index";__AOST_DEBUG_ULOG_FLUSH__=0;__AOST_DEBUG_TEST_CMDS_ENABLE__=0;__AOST_AOS_COMP_POSIX__="y";__AOST_AOS_COMP_VFS__=1;__AOST_VFS_CONFIG_DEBUG__=1;__AOST_VFS_CONFIG_ROOTFS__=1;__AOST_HAVE_INIT_ARRAY_LD__="y";__AOST_CVI_SOC_NAME__="cv181x";__AOST_CVI_SOC_CV181XC__=1;__AOST_STDIO_UART__=0;__AOST_WITH_LWIP__=1;__AOST_RHINO_CONFIG_MM_BLK__=0;__AOST_RHINO_CONFIG_MM_TLF_BLK_SIZE__=4194304;__AOST_POSIX_DEVICE_IO_NEED__=1;__AOST_FD_SETSIZE__=128;__AOST_SYSINFO_DEVICE_NAME__="cv181xc_evb";__AOST_OSAL_RHINO__=1;__AOST_ARCH_MARS__=1;__AOST___CV181X____=1;__AOST_ULOG_CONFIG_ASYNC__=1;__AOST_ULOG_CONFIG_SYNC_LOG_DETAILS__=1;__AOST_ULOG_CONFIG_ASYNC_BUF_SIZE__=8192;__AOST_ULOG_CONFIG_LOG_SIZE__=512;__AOST_USE_4K_ERASE_SECTION__=1;__AOST_CPU__="C906FD";__AOST_ARCH__="riscv";__ARCH_RISCV__=1;__CPU_C906FD__=1;__AOST_CPU0__=True;__AOST_VENDOR__="CVITEK";__AOST_CHIP__="CHIP_CV181X";__AOST_BOARD__="CV181XC_EVB";__AOST_ALGORITHMS_PATH__="/data/zhenhui/work/cardv/sophapp/platform/alios/components/chip_cv181x/flash.elf";__AOST_CHIP_PATH__="/data/zhenhui/work/cardv/sophapp/platform/alios/components/chip_cv181x";__AOST_BOARD_PATH__="/data/zhenhui/work/cardv/sophapp/platform/alios/boards/cv181xc_evb";__AOST_SOLUTION_PATH__="/data/zhenhui/work/cardv/sophapp/platform/alios/solutions/cardv";</Define>
+        <Undefine/>
+        <Optim>Optimize (-Os)</Optim>
+        <DebugLevel>Default (-g)</DebugLevel>
+        <IncludePath>$(ProjectPath)/src;$(ProjectPath)/include</IncludePath>
+        <OtherFlags>-c -g -Os -ffunction-sections -fdata-sections -Wall -Werror</OtherFlags>
+        <Verbose>no</Verbose>
+        <Ansi>no</Ansi>
+        <Syntax>no</Syntax>
+        <Pedantic>no</Pedantic>
+        <PedanticErr>no</PedanticErr>
+        <InhibitWarn>no</InhibitWarn>
+        <AllWarn>yes</AllWarn>
+        <WarnErr>no</WarnErr>
+        <OneElfS>no</OneElfS>
+        <Fstrict>no</Fstrict>
+      </Compiler>
+      <Asm>
+        <Define>CONFIG_KERNEL_RHINO=1;CONFIG_OPT_FOOTPRINT_LEVEL=0;CONFIG_INIT_TASK_STACK_SIZE=8192;AOS_COMP_CLI=1;CLI_INBUF_SIZE=256;CLI_OUTBUF_SIZE=512;CLI_MAX_COMMANDS=128;CLI_MAX_ARG_NUM=16;CLI_MAX_ONCECMD_NUM=4;CLI_TASK_PRIORITY=60;CLI_CONFIG_STACK_SIZE=8192;CLI_TELNET_ENABLE=0;CLI_UAGENT_ENABLE=0;CLI_SEPRATED_CONSOLE=0;CLI_IOBOX_ENABLE=0;CONFIG_KV_ENABLE_CACHE=1;CONFIG_KV_START_OPT=1;CONFIG_KV_HASH_BUCKET=16;AOS_COMP_ULOG="y";ULOG_CONFIG_POP_FS_PATH="/fatfs/";AOS_COMP_DEBUG=1;DEBUG_PANIC_PRT_INT=1;DEBUG_CPUUSAGE_RECODE_TO_FILE_ENABLE=0;DEBUG_CPUUSAGE_MAX_TASK=80;DEBUG_CPUUSAGE_FILE_NAME="/data/cpuusage";DEBUG_LAST_WORD_ENABLE=0;DEBUG_LOG_FILE_NUM=10;DEBUG_LASTWORD_RAM_ADDR=0;DEBUG_LASTWORD_REGION_LEN=16384;DEBUG_LOG_DIR_NAME="/data/crash_reports";DEBUG_CONFIG_LOG_FILE_NAME="/data/crash_reports/crash_report";DEBUG_CONFIG_LOG_FILE_INDEX="/data/crash_reports/log_file_index";DEBUG_ULOG_FLUSH=0;DEBUG_TEST_CMDS_ENABLE=0;CONFIG_USERVICE_EVENT_TASK_STACK_SIZE=8192;CONFIG_TB_KP=1;CONFIG_KEY_FROM_OTP=0;CONFIG_KEY_FROM_APP=1;AOS_COMP_POSIX="y";AOS_COMP_VFS=1;VFS_CONFIG_DEBUG=1;VFS_CONFIG_ROOTFS=1;CONFIG_USE_MINIALSA=1;CONFIG_VIC_TSPDR=1946157056;CONFIG_LOG_DEFAULT_LEVEL=2;HAVE_INIT_ARRAY_LD="y";CONFIG_NON_ADDRESS_FLASH="y";CONFIG_CSI_V2=1;CONFIG_CSI="csi2";CONFIG_CPU_C906="y";CONFIG_ARCH_INTERRUPTSTACK=4096;CVI_SOC_NAME="cv181x";CVI_SOC_CV181XC=1;CONFIG_BOARD_CV181XC=1;CONFIG_BOARD_CV181XH=0;CONFIG_SYSTEM_SECURE="y";CONFIG_SEC_BASE64_SW="y";CONFIG_SEC_CRYPTO_RSA_SW="y";CONFIG_KEY_MGR_KP_PROTECT=1;CONFIG_KEY_MGR_KP_PROTECT_OPT=1;CONFIG_SYSTICK_HZ=250;STDIO_UART=0;WITH_LWIP=1;CONFIG_KERNEL_WORKQUEUE=1;CONFIG_LFS_BLOCK_CYCLES=500;CONFIG_LFS_MOUNTPOINT="/";CONFIG_AEFXER_SONA=0;CONFIG_KERNEL_LWIP_HOOK=1;CONFIG_USING_TLS=1;RHINO_CONFIG_MM_BLK=0;RHINO_CONFIG_MM_TLF_BLK_SIZE=4194304;POSIX_DEVICE_IO_NEED=1;CONFIG_CHIP_D1=1;FD_SETSIZE=128;SYSINFO_DEVICE_NAME="cv181xc_evb";OSAL_RHINO=1;ARCH_MARS=1;__CV181X__=1;CONFIG_DEBUG=1;CONFIG_DEBUG_MM=1;CONFIG_APP_DEBUG_JTAG=0;CONFIG_APP_TEST=0;CONFIG_EFUSE_TEST=0;CONFIG_SUPPORT_TPU=0;CONFIG_APP_CX_CLOUD_SUPPORT=0;CONFIG_APP_VENC_SUPPORT=1;CONFIG_APP_GUI_SUPPORT=0;CONFIG_APP_SENSOR_IR_USE=0;CONFIG_DEBUG_HOSTMCU_EMU_SUPPORT=0;CONFIG_APP_AI_SUPPORT=0;CONFIG_SD_FATFS_MOUNTPOINT="/mnt/sd";ULOG_CONFIG_ASYNC=1;ULOG_CONFIG_SYNC_LOG_DETAILS=1;ULOG_CONFIG_ASYNC_BUF_SIZE=8192;ULOG_CONFIG_LOG_SIZE=512;USE_4K_ERASE_SECTION=1;CONFIG_SIMPLE_FONTMOD=1;CONFIG_SENSOR_GCORE_GC2053=1;CONFIG_SENSOR_GCORE_GC2053_1L=1;CONFIG_SENSOR_GCORE_GC2093=1;CONFIG_SENSOR_GCORE_GC4653=1;CONFIG_SENSOR_PIXELPLUS_PR2020=1;CONFIG_SENSOR_SONY_IMX307=1;CONFIG_SENSOR_SONY_IMX327=1;CONFIG_SUPPORT_NORFLASH=1;CONFIG_SNS0_TYPE=11;CONFIG_SNS1_TYPE=13;CONFIG_PANEL_HX8394=0;CONFIG_PANEL_ILI9488=0;CONFIG_VENC_TEST_CHN=2;CONFIG_PQTOOL_SUPPORT=0;CONFIG_PQBIN_USE_JSON=0;CONFIG_ISP_SUPPORT_PROC=0;CONFIG_ENABLE_FASTBOOT=0;CONFIG_TEST_MODE=0;__AOST_AOS_COMP_CLI__=1;__AOST_CLI_INBUF_SIZE__=256;__AOST_CLI_OUTBUF_SIZE__=512;__AOST_CLI_MAX_COMMANDS__=128;__AOST_CLI_MAX_ARG_NUM__=16;__AOST_CLI_MAX_ONCECMD_NUM__=4;__AOST_CLI_TASK_PRIORITY__=60;__AOST_CLI_CONFIG_STACK_SIZE__=8192;__AOST_CLI_TELNET_ENABLE__=0;__AOST_CLI_UAGENT_ENABLE__=0;__AOST_CLI_SEPRATED_CONSOLE__=0;__AOST_CLI_IOBOX_ENABLE__=0;__AOST_AOS_COMP_ULOG__="y";__AOST_ULOG_CONFIG_POP_FS_PATH__="/fatfs/";__AOST_AOS_COMP_DEBUG__=1;__AOST_DEBUG_PANIC_PRT_INT__=1;__AOST_DEBUG_CPUUSAGE_RECODE_TO_FILE_ENABLE__=0;__AOST_DEBUG_CPUUSAGE_MAX_TASK__=80;__AOST_DEBUG_CPUUSAGE_FILE_NAME__="/data/cpuusage";__AOST_DEBUG_LAST_WORD_ENABLE__=0;__AOST_DEBUG_LOG_FILE_NUM__=10;__AOST_DEBUG_LASTWORD_RAM_ADDR__=0;__AOST_DEBUG_LASTWORD_REGION_LEN__=16384;__AOST_DEBUG_LOG_DIR_NAME__="/data/crash_reports";__AOST_DEBUG_CONFIG_LOG_FILE_NAME__="/data/crash_reports/crash_report";__AOST_DEBUG_CONFIG_LOG_FILE_INDEX__="/data/crash_reports/log_file_index";__AOST_DEBUG_ULOG_FLUSH__=0;__AOST_DEBUG_TEST_CMDS_ENABLE__=0;__AOST_AOS_COMP_POSIX__="y";__AOST_AOS_COMP_VFS__=1;__AOST_VFS_CONFIG_DEBUG__=1;__AOST_VFS_CONFIG_ROOTFS__=1;__AOST_HAVE_INIT_ARRAY_LD__="y";__AOST_CVI_SOC_NAME__="cv181x";__AOST_CVI_SOC_CV181XC__=1;__AOST_STDIO_UART__=0;__AOST_WITH_LWIP__=1;__AOST_RHINO_CONFIG_MM_BLK__=0;__AOST_RHINO_CONFIG_MM_TLF_BLK_SIZE__=4194304;__AOST_POSIX_DEVICE_IO_NEED__=1;__AOST_FD_SETSIZE__=128;__AOST_SYSINFO_DEVICE_NAME__="cv181xc_evb";__AOST_OSAL_RHINO__=1;__AOST_ARCH_MARS__=1;__AOST___CV181X____=1;__AOST_ULOG_CONFIG_ASYNC__=1;__AOST_ULOG_CONFIG_SYNC_LOG_DETAILS__=1;__AOST_ULOG_CONFIG_ASYNC_BUF_SIZE__=8192;__AOST_ULOG_CONFIG_LOG_SIZE__=512;__AOST_USE_4K_ERASE_SECTION__=1;__AOST_CPU__="C906FD";__AOST_ARCH__="riscv";__ARCH_RISCV__=1;__CPU_C906FD__=1;__AOST_CPU0__=True;__AOST_VENDOR__="CVITEK";__AOST_CHIP__="CHIP_CV181X";__AOST_BOARD__="CV181XC_EVB";__AOST_ALGORITHMS_PATH__="/data/zhenhui/work/cardv/sophapp/platform/alios/components/chip_cv181x/flash.elf";__AOST_CHIP_PATH__="/data/zhenhui/work/cardv/sophapp/platform/alios/components/chip_cv181x";__AOST_BOARD_PATH__="/data/zhenhui/work/cardv/sophapp/platform/alios/boards/cv181xc_evb";__AOST_SOLUTION_PATH__="/data/zhenhui/work/cardv/sophapp/platform/alios/solutions/cardv";</Define>
+        <Undefine/>
+        <IncludePath>$(ProjectPath)/src;$(ProjectPath)/include</IncludePath>
+        <OtherFlags/>
+        <DebugLevel>gdwarf2</DebugLevel>
+      </Asm>
+      <Linker>
+        <Garbage>yes</Garbage>
+        <LDFile>$(ProjectPath)/gcc_eflash.ld</LDFile>
+        <LibName/>
+        <LibPath/>
+        <OtherFlags>-Wl,--gc-sections -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys -nostartfiles --specs=nosys.specs -Wl,-Map="yoc.map"</OtherFlags>
+        <AutoLDFile>no</AutoLDFile>
+        <LinkType/>
+      </Linker>
+      <Debug>
+        <LoadApplicationAtStartup>yes</LoadApplicationAtStartup>
+        <Connector>ICE</Connector>
+        <StopAt>yes</StopAt>
+        <StopAtText>main</StopAtText>
+        <InitFile>$(ProjectPath)/script/gdbinit</InitFile>
+        <AutoRun>yes</AutoRun>
+        <ResetType>Hard Reset</ResetType>
+        <SoftResetVal/>
+        <ResetAfterLoad>no</ResetAfterLoad>
+        <Dumpcore>no</Dumpcore>
+        <DumpcoreText>$(ProjectPath)/$(ProjectName).cdkcore</DumpcoreText>
+        <ConfigICE>
+          <IP>localhost</IP>
+          <PORT>1025</PORT>
+          <CPUNumber>0</CPUNumber>
+          <Clock>12000</Clock>
+          <Delay>10</Delay>
+          <WaitReset>500</WaitReset>
+          <DDC>yes</DDC>
+          <TRST>no</TRST>
+          <DebugPrint>no</DebugPrint>
+          <Connect>Normal</Connect>
+          <ResetType>Soft Reset</ResetType>
+          <SoftResetVal>0</SoftResetVal>
+          <RTOSType>Bare Metal</RTOSType>
+          <DownloadToFlash>yes</DownloadToFlash>
+          <ResetAfterConnect>no</ResetAfterConnect>
+          <GDBName/>
+          <GDBServerType>Local</GDBServerType>
+          <OtherFlags/>
+        </ConfigICE>
+        <ConfigSIM>
+          <SIMTarget>soccfg/cskyv2/rhea802.xml</SIMTarget>
+          <OtherFlags/>
+          <NoGraphic>yes</NoGraphic>
+          <Log>no</Log>
+          <SimTrace>no</SimTrace>
+        </ConfigSIM>
+      </Debug>
+      <Flash>
+        <InitFile>$(ProjectPath)/script/flash.init</InitFile>
+        <Erase>Erase Sectors</Erase>
+        <Algorithms Path="">/data/zhenhui/work/cardv/sophapp/platform/alios/components/chip_cv181x/flash.elf</Algorithms>
+        <Program>yes</Program>
+        <Verify>yes</Verify>
+        <ResetAndRun>no</ResetAndRun>
+        <ResetType>Soft Reset</ResetType>
+        <SoftResetVal/>
+        <External>no</External>
+        <Command/>
+        <Arguments/>
+      </Flash>
+    </BuildConfig>
+  </BuildConfigs>
+  <Dependencies Name="BuildSet"/>
+  <PackPathes>$(ProjectPath)/../../components|$(ProjectPath)/../../boards|$(ProjectPath)/Boards|$(ProjectPath)/Chips|$(ProjectPath)/Packages</PackPathes>
+</Project>

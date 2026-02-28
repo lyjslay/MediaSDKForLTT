@@ -1,3 +1,0 @@
-jpurun.c:36:5:copy_to_dest_addr	80	static
-jpurun.c:122:5:jpeg_decode_helper	6624	static
-jpurun.c:701:5:get_jpeg_size	0	static

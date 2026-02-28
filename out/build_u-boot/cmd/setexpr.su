@@ -1,6 +1,0 @@
-setexpr.c:37:12:get_arg	48	static
-setexpr.c:146:14:substitute	96	static
-setexpr.c:184:5:setexpr_regex_sub	720	dynamic
-setexpr.c:317:12:regex_sub_var.part.1	20544	static
-setexpr.c:317:12:regex_sub_var	608	static
-setexpr.c:368:12:do_setexpr	64	static

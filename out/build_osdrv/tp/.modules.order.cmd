@@ -1,1 +1,0 @@
-cmd_/media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_osdrv/tp/modules.order := {   echo /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_osdrv/tp/gt9xx.ko; :; } | awk '!x[$$0]++' - > /media/cvitek/yijun.liu01/car/mars/litiantai/pnd-ltt/MediaSDK/out/build_osdrv/tp/modules.order

@@ -26,21 +26,37 @@ $SCRIPT_DIR/ffmpeg/configure \
     --enable-muxer=mp4 \
     --enable-muxer=mov \
     --enable-muxer=mpegts \
+    --enable-demuxer=matroska \
+    --enable-demuxer=avi \
+    --enable-demuxer=mpegps \
+    --enable-demuxer=mxf \
+    --enable-demuxer=asf \
+    --enable-demuxer=rm \
     --enable-demuxer=mov \
     --enable-demuxer=mpegts \
     --enable-demuxer=image2 \
     --enable-demuxer=mjpeg \
     --enable-demuxer=pcm_s16le \
     --enable-demuxer=aac \
+    --enable-demuxer=mp3 \
+    --enable-demuxer=wav \
     --enable-decoder=mjpeg \
     --enable-decoder=hevc \
     --enable-decoder=h264 \
+    --enable-decoder=mpeg4 \
+    --enable-decoder=mp3 \
+    --enable-decoder=wmv3 \
+    --enable-decoder=wmav2 \
+    --enable-decoder=rv40 \
+    --enable-decoder=cook \
     --enable-decoder=pcm_s16le \
     --enable-decoder=aac \
     --enable-protocol=file \
 	--enable-muxer=aac \
 	--enable-encoder=aac \
     --enable-parser=aac \
+    --enable-parser=h264 \
+    --enable-parser=hevc \
     $CONFIG_OTHER \
     --prefix=$INSTALL_DIR
 ## extra flags

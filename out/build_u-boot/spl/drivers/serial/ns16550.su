@@ -1,6 +1,0 @@
-ns16550.c:209:5:ns16550_calc_divisor	0	static
-ns16550.c:230:6:ns16550_init	0	static
-ns16550.c:279:6:ns16550_reinit	0	static
-ns16550.c:289:6:ns16550_putc	0	static
-ns16550.c:306:6:ns16550_getc	0	static
-ns16550.c:318:5:ns16550_tstc	0	static
