@@ -594,6 +594,7 @@ system.$(STORAGE_TYPE): ramdisk middleware osdrv
 	rm -rf $(BUILD_SYSTEM_DIR)/system/*
 	mkdir -p $(BUILD_SYSTEM_DIR)/system/bin/App
 	cp $(MEDIASDK_DIR)/../App $(BUILD_SYSTEM_DIR)/system/bin -rf
+	chmod -R 777 $(BUILD_SYSTEM_DIR)/system/bin/App
 	if [ -d $(RAMDISK_DIR)/rootfs/overlay/$(OVERLAY_PATH) ]; then \
 		cp -r $(RAMDISK_DIR)/rootfs/overlay/$(OVERLAY_PATH)/system $(BUILD_SYSTEM_DIR)/; \
 	fi

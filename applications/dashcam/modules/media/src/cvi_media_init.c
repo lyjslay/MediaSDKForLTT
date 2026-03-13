@@ -63,7 +63,7 @@ CVI_MEDIA_PARAM_INIT_S* CVI_MEDIA_GetCtx(void)
     return &SysMediaParams;
 }
 
-static int32_t CVI_MEDIA_InitVproc(CVI_PARAM_MEDIA_VPROC_ATTR_S *mediaVprocAttr, CVI_MAPI_VPROC_ATTR_T *mapiVprocAttr)
+static int32_t CVI_MEDIA_SetVprocAttr(CVI_PARAM_MEDIA_VPROC_ATTR_S *mediaVprocAttr, CVI_MAPI_VPROC_ATTR_T *mapiVprocAttr)
 {
     int32_t i = 0;
     memcpy(&mapiVprocAttr->attr_inp, &(mediaVprocAttr->VpssGrpAttr), sizeof(VPSS_GRP_ATTR_S));
@@ -158,7 +158,8 @@ static int32_t CVI_MEDIA_SensorSetRes(int32_t snsid, int32_t mode)
 
 static int32_t CVI_MEDIA_SensorPlugCallback(int32_t snsid, int32_t mode)
 {
-    CVI_LOGI("Sensor %d mode :%d\n", snsid, mode);
+    //CVI_LOGI("Sensor %d mode :%d\n", snsid, mode);
+    printf("####################  detect Sensor %d plugin, mode :%d ##########################\n", snsid, mode);
     CVI_EVENT_S stEvent;
     stEvent.aszPayload[0] = mode;
     stEvent.aszPayload[1] = snsid;
@@ -170,7 +171,8 @@ static int32_t CVI_MEDIA_SensorPlugCallback(int32_t snsid, int32_t mode)
     }
     stEvent.topic = CVI_EVENT_SENSOR_PLUG_STATUS;
     stEvent.arg2 = 1;
-    CVI_EVENTHUB_Publish(&stEvent);
+    CVI_MODEMNG_SendMessage(&stEvent);
+    //CVI_EVENTHUB_Publish(&stEvent);
     return 0;
 }
 
@@ -365,7 +367,7 @@ static int32_t CVI_MEDIA_VprocInit(void)
         CVI_MAPI_VPROC_ATTR_T vproc_attr;
         memset((void*)&vproc_attr, 0, sizeof(vproc_attr));
 
-        s32Ret = CVI_MEDIA_InitVproc(&params.VprocAttr, &vproc_attr);
+        s32Ret = CVI_MEDIA_SetVprocAttr(&params.VprocAttr, &vproc_attr);
         MEDIA_CHECK_RET(s32Ret, CVI_MEDIA_EINVAL, "CVI_MAPI_VCAP_SetDumpRawAttr fail");
         if (Vpssmode.stVIVPSSMode.aenMode[i] == VI_OFFLINE_VPSS_OFFLINE) {
             for(int32_t j = 0; j < VPSS_IP_NUM; j++) {
@@ -815,38 +817,48 @@ int32_t CVI_MEDIA_VbInitPlayBack(void)
     return 0;
 }
 
-int32_t CVI_MEDIA_VbInitRecAndPlay(void) {
+int32_t CVI_MEDIA_VbInitRecPlusPlay(void) {
     CVI_MAPI_MEDIA_SYS_ATTR_T sys_attr = {0};
     CVI_PARAM_DISP_ATTR_S  disp_attr;
     int32_t s32Ret = 0;
-    int32_t record_vb_num = 0;
+    int32_t vb_pool_num = 0;
 
     // vb configure from ini
     CVI_PARAM_GetVbParam(&sys_attr);
     CVI_PARAM_GetVoParam(&disp_attr);
-    record_vb_num = sys_attr.vb_pool_num;
+    vb_pool_num = sys_attr.vb_pool_num;
 
-    // set vb attr for playback
-    sys_attr.vb_pool_num  = record_vb_num + 1;
-    if (disp_attr.Rotate == 0) {
-        sys_attr.vb_pool[record_vb_num].vb_blk_size.frame.width = disp_attr.Width;
-        sys_attr.vb_pool[record_vb_num].vb_blk_size.frame.height = disp_attr.Height;
-    } else {
-        sys_attr.vb_pool[record_vb_num].vb_blk_size.frame.width = disp_attr.Height;
-        sys_attr.vb_pool[record_vb_num].vb_blk_size.frame.height = disp_attr.Width;
+    for (int32_t i = 0; i < vb_pool_num; i++) {
+        if (disp_attr.Rotate == 0) {
+            if (sys_attr.vb_pool[i].vb_blk_size.frame.width == disp_attr.Width &&
+                sys_attr.vb_pool[i].vb_blk_size.frame.height == disp_attr.Height) {
+                sys_attr.vb_pool[i].is_frame = true;
+                //sys_attr.vb_pool[i].vb_blk_size.frame.fmt = 13;
+                sys_attr.vb_pool[i].vb_blk_num += 5;
+                break;
+            }
+        } else {
+            if (sys_attr.vb_pool[i].vb_blk_size.frame.width == disp_attr.Height &&
+                sys_attr.vb_pool[i].vb_blk_size.frame.height == disp_attr.Width) {
+                sys_attr.vb_pool[i].is_frame = true;
+                //sys_attr.vb_pool[i].vb_blk_size.frame.fmt = 13;
+                sys_attr.vb_pool[i].vb_blk_num += 5;
+                break;
+            }
+        }
     }
-    sys_attr.vb_pool[record_vb_num].is_frame = true;
-    sys_attr.vb_pool[record_vb_num].vb_blk_size.frame.fmt = 13;
-    sys_attr.vb_pool[record_vb_num].vb_blk_num = 5;
-    //set vpss offline
+
+    //in rec+play pipeline, no need for set vi vpss offline
     for (uint32_t i = 0; i < MAX_CAMERA_INSTANCES; i++) {
     #ifdef RESET_MODE_AHD_HOTPLUG_ON
         if (CVI_MEDIA_Is_CameraEnabled(i) == false) {
             continue;
         }
     #endif
-        //sys_attr.stVIVPSSMode.aenMode[i] = VI_OFFLINE_VPSS_OFFLINE; // still remain online
+        sys_attr.stVIVPSSMode.aenMode[i] = VI_OFFLINE_VPSS_ONLINE; // still remain online
     }
+    // note: VpssMode is not set in ini, see PARAM_LoadMediaComm, so here we need manually set stVIVPSSMode and stVPSSMode
+    sys_attr.stVPSSMode.enMode = VPSS_MODE_DUAL;
     sys_attr.stVPSSMode.aenInput[0] = VPSS_INPUT_MEM; // vpss dev0(1 in 1 out) from ddr
     sys_attr.stVPSSMode.aenInput[1] = VPSS_INPUT_ISP; // vpss dev1(1 in 3 out) online with isp
 
@@ -899,7 +911,6 @@ int32_t CVI_MEDIA_DispInit(bool windowMode)
         }
         CVI_HAL_SCREEN_SetBackLightState(CVI_HAL_SCREEN_IDX_0, CVI_HAL_SCREEN_STATE_ON);
 
-        CVI_LOGD("init panel app ======================");
         // CHECK_RET(CVI_HAL_SCREEN_Init(CVI_HAL_SCREEN_IDX_0));
         CVI_HAL_SCREEN_ATTR_S screenAttr = {0};
         CVI_HAL_SCREEN_GetAttr(CVI_HAL_SCREEN_IDX_0, &screenAttr);

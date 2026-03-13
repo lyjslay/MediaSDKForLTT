@@ -282,9 +282,8 @@ int32_t CVI_MODEMNG_StartPiv(void)
         s32Ret = CVI_FILEMNG_GeneratePhotoName(CVI_DTCF_FILE_TYPE_JPG, dir_type, true, filename);
         if(0 == s32Ret){
             s32Ret = CVI_RECORD_SERVICE_PivCapture(rs_hdl, filename);
-            CVI_LOGI("[### PIV ###] PivCapture done, ret %d, waiting for finish\n",s32Ret);
             CVI_RECORD_SERVICE_WaitPivFinish(rs_hdl);
-            CVI_LOGI("[### PIV ###] PivCapture finish, ret %d\n",s32Ret);
+            printf("############ PivCapture finish, ret %d\n",s32Ret);
         }
     }
     // for(i = 0; i < MAX_CAMERA_INSTANCES; i++) {
@@ -299,6 +298,24 @@ int32_t CVI_MODEMNG_StartPiv(void)
     return s32Ret;
 }
 
+
+int32_t CVI_MODEMNG_LiveViewStart(void)
+{
+    int32_t s32Ret = 0;
+    s32Ret = CVI_MEDIA_LiveViewSerInit();
+    MODEMNG_CHECK_RET(s32Ret, CVI_MODE_EINVAL, "CVI_MEDIA_LiveViewSerStart fail");
+
+    return s32Ret;
+}
+
+int32_t CVI_MODEMNG_LiveViewStop(void)
+{
+    int32_t s32Ret = 0;
+    s32Ret = CVI_MEDIA_LiveViewSerDeInit();
+    MODEMNG_CHECK_RET(s32Ret, CVI_MODE_EINVAL, "CVI_MEDIA_LiveViewSerDeinit fail");
+
+    return s32Ret;
+}
 
 static int32_t CVI_MODEMNG_LiveViewAdjustFocus(uint32_t wndid , char* ratio)
 {
@@ -1086,6 +1103,7 @@ int32_t CVI_MODEMNG_MovieModeMsgProc(CVI_MESSAGE_S* pstMsg, void* pvArg, uint32_
                 }
                 Param.CamCfg[snsid].CamEnable = true;
                 Param.MediaComm.Window.Wnds[snsid].WndEnable = true;
+                //Param.MediaComm.Window.Wnds[0].WndEnable = false; // !!! test force disable sensor 0 liveview
                 if(lastmode != Param.WorkModeCfg.RecordMode.CamMediaInfo[snsid].CurMediaMode){
                     CVI_MAPI_VCAP_SetAhdMode(snsid, mode);
                 #ifndef RESET_MODE_AHD_HOTPLUG_ON
@@ -1102,6 +1120,7 @@ int32_t CVI_MODEMNG_MovieModeMsgProc(CVI_MESSAGE_S* pstMsg, void* pvArg, uint32_
         #endif
             CVI_PARAM_SetParam(&Param);
             CVI_MODEMNG_MonitorStatusNotify(pstMsg);
+            CVI_MODEMNG_StartRec(); //!!! after reset auto start rec again
 #endif
             return CVI_PROCESS_MSG_RESULTE_OK;
         }
@@ -1111,9 +1130,32 @@ int32_t CVI_MODEMNG_MovieModeMsgProc(CVI_MESSAGE_S* pstMsg, void* pvArg, uint32_
                 CVI_MODEMNG_SetEmrState(false);
                 return CVI_PROCESS_MSG_UNHANDLER;
             }
+        case CVI_EVENT_LIVEVIEW_MODE_CHANGE: // !!! change liveview snesor 1 or 2 or 1+2
+            {
+        #ifdef SERVICES_LIVEVIEW_ON
+                //int mode = pstMsg->arg1;
+
+
+        #endif
+                return CVI_PROCESS_MSG_RESULTE_OK;
+            }
+        case CVI_EVENT_MODEMNG_START_LIVEVIEW:
+            {
+                CVI_MODEMNG_LiveViewStart();
+                return CVI_PROCESS_MSG_UNHANDLER;
+            }
+        case CVI_EVENT_MODEMNG_STOP_LIVEVIEW:
+            {
+                CVI_MODEMNG_LiveViewStop();
+                return CVI_PROCESS_MSG_UNHANDLER;
+            }
         case CVI_EVENT_MODEMNG_START_REC:
             {
-                CVI_MODEMNG_StartRec();
+                int32_t s32Ret = 0;
+                s32Ret = CVI_MODEMNG_StartRec();
+                if (s32Ret != 0) {
+                    CVI_LOGE("Record start failed, ret=%d\n", s32Ret);
+                }
                 return CVI_PROCESS_MSG_RESULTE_OK;
             }
         case CVI_EVENT_MODEMNG_STOP_REC:
@@ -1186,7 +1228,7 @@ int32_t CVI_MODEMNG_MovieModeMsgProc(CVI_MESSAGE_S* pstMsg, void* pvArg, uint32_
 int32_t CVI_MODEMNG_OpenMovieMode(void)
 {
     int32_t s32Ret = 0;
-    CVI_LOGD("#########################CVI_MODEMNG_OpenMovieMode#############################\n");
+    printf("#########################CVI_MODEMNG_OpenMovieMode begin#############################\n");
 
     CVI_MODEMNG_S* pstModeMngCtx = CVI_MODEMNG_GetModeCtx();
     pstModeMngCtx->CurWorkMode = CVI_WORK_MODE_MOVIE;
@@ -1207,13 +1249,7 @@ int32_t CVI_MODEMNG_OpenMovieMode(void)
 
     s32Ret = CVI_MEDIA_LiveViewSerInit();
     MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINVAL,"Liveview init");
-
-    /*s32Ret = CVI_UIAPP_Start();
-    MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINVAL,"CVI_UIAPP_Start");*/
 #endif
-
-    // s32Ret = CVI_UIAPP_Start();
-    // MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINVAL,"CVI_UIAPP_Start");
 
     s32Ret = CVI_MEDIA_VencInit();
     MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINVAL,"Venc init");
@@ -1275,7 +1311,7 @@ int32_t CVI_MODEMNG_OpenMovieMode(void)
     CVI_MEDIA_QRCodeInit();
 #endif
     // isMovieModeOpen = true;
-    CVI_LOGD("############################# CVI_MODEMNG_OpenMovieMode done! #############################\n");
+    printf("############################# CVI_MODEMNG_OpenMovieMode done! #############################\n");
 
     return s32Ret;
 }
@@ -1283,7 +1319,7 @@ int32_t CVI_MODEMNG_OpenMovieMode(void)
 int32_t CVI_MODEMNG_CloseMovieMode(void)
 {
     int32_t s32Ret = 0;
-    CVI_LOGD("#########################CVI_MODEMNG_CloseMovieMode#############################\n");
+    printf("#########################CVI_MODEMNG_CloseMovieMode begin#############################\n");
     // isMovieModeOpen = false;
 
     CVI_MODEMNG_S* pstModeMngCtx = CVI_MODEMNG_GetModeCtx();
@@ -1359,6 +1395,7 @@ int32_t CVI_MODEMNG_CloseMovieMode(void)
     s32Ret = CVI_EVENTHUB_Publish(&stEvent);
     MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINVAL,"Publish");
 
+    printf("############################# CVI_MODEMNG_CloseMovieMode done! #############################\n");
 
     return s32Ret;
 }

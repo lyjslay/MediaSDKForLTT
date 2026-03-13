@@ -62,19 +62,34 @@ static bool check_jpg_file_complete(const char*filename)
     return true;
 }
 
-int32_t CVI_MODEMNG_PlayFile(char* filename, int type) {
-    int32_t  s32Ret = 0;
-    //char filename[MAX_PATH];
+int32_t CVI_MODEMNG_SetPlayFile(char* filename){
+    int32_t s32Ret = 0;
     CVI_MEDIA_PARAM_INIT_S *MediaParams = CVI_MEDIA_GetCtx();
     CVI_PLAYER_SERVICE_HANDLE_T ps_handle = MediaParams->SysServices.PsHdl;
-    CVI_PLAYER_MEDIA_INFO_S info = {};
-
-    CVI_LOGE("filename = %s\n", filename);
 
     s32Ret = CVI_PLAYER_SERVICE_SetInput(ps_handle, filename);
     if (s32Ret != 0) {
         CVI_LOGE("Player set input %s failed", filename);
         return s32Ret;
+    }
+    return s32Ret;
+}
+
+int32_t CVI_MODEMNG_PlayFile(char* filename, int type) {
+    int32_t  s32Ret = 0;
+    CVI_MEDIA_PARAM_INIT_S *MediaParams = CVI_MEDIA_GetCtx();
+    CVI_PLAYER_SERVICE_HANDLE_T ps_handle = MediaParams->SysServices.PsHdl;
+    CVI_PLAYER_MEDIA_INFO_S info = {};
+
+    if (filename){
+        s32Ret = CVI_PLAYER_SERVICE_SetInput(ps_handle, filename);
+        if (s32Ret != 0) {
+            CVI_LOGE("Player set input %s failed", filename);
+            return s32Ret;
+        }
+    } else {
+        CVI_LOGE("filename is NULL");
+        return -1;
     }
 
     s32Ret = CVI_PLAYER_SERVICE_GetMediaInfo(ps_handle, &info);
@@ -94,15 +109,14 @@ int32_t CVI_MODEMNG_PlayFile(char* filename, int type) {
     CVI_PLAYER_SERVICE_SetPlaySubStreamFlag(ps_handle, true);
     #endif
 
-    if (strcmp(info.video_codec, "h264") == 0 || strcmp(info.video_codec, "mjpeg") == 0) {
+    if (strcmp(info.video_codec, "h264") == 0 || strcmp(info.video_codec, "mjpeg") == 0 || strcmp(info.video_codec, "mpeg4") == 0) {
         CVI_PLAYER_SERVICE_Play(ps_handle);
     } else {
-        CVI_LOGE("video can't play because codec %s is not supported\n", info.video_codec);
+        CVI_LOGE("video can't play because codec %s is not supported!!!\n", info.video_codec);
         return -2;
     }
 
     return s32Ret;
-
 }
 
 int32_t CVI_MODEMNG_PlayPause(void) {
@@ -150,9 +164,104 @@ int32_t CVI_MODEMNG_PlayBackward(int speed) {
     return 0;
 }
 
+// >>> following APIs are for MediaInterface
+int32_t CVI_MODEMNG_PlayBackForMIFOpen(char* filename, CVI_PLAYER_MEDIA_INFO_S* info){
+    int32_t s32Ret = 0;
+    CVI_PLAYER_SERVICE_HANDLE_T ps_handle = CVI_MEDIA_GetCtx()->SysServices.PsHdl;
+
+    // s32Ret = CVI_PLAYER_SERVICE_Stop(ps_handle);
+    // if (s32Ret != 0) {
+    //     CVI_LOGE("Player stop failed, ret %d", s32Ret);
+    //     return s32Ret;
+    // }
+
+    s32Ret = CVI_PLAYER_SERVICE_SetInput(ps_handle, filename);
+    if (s32Ret != 0) {
+        CVI_LOGE("Player set input %s failed", filename);
+        return s32Ret;
+    }
+
+    s32Ret = CVI_PLAYER_SERVICE_GetMediaInfo(ps_handle, info);
+    if (s32Ret != 0) {
+        CVI_LOGE("Player Get MediaInfo of %s failed", filename);
+        return s32Ret;
+    }
+
+    printf("###[debug] CVI_MODEMNG_PlayBackForMIFOpen filename %s, info prt %p, video_codec %s, audio_codec %s, duration %f, width %d, height %d\n", filename, info, info->video_codec, info->audio_codec, info->duration_sec, info->width, info->height);
+
+    return s32Ret;
+}
+
+int32_t CVI_MODEMNG_PlayBackForMIFPlay(void)
+{
+    int32_t s32Ret = 0;
+    CVI_PLAYER_SERVICE_HANDLE_T ps_handle = CVI_MEDIA_GetCtx()->SysServices.PsHdl;
+
+    s32Ret = CVI_PLAYER_SERVICE_Play(ps_handle);
+    if (s32Ret != 0) {
+        CVI_LOGE("Player play failed, ret %d", s32Ret);
+        return s32Ret;
+    }
+
+    return 0;
+}
+
+int32_t CVI_MODEMNG_PlayBackSetBarPosition(int64_t time_ms)
+{
+    int32_t s32Ret = 0;
+    CVI_PLAYER_SERVICE_HANDLE_T ps_handle = CVI_MEDIA_GetCtx()->SysServices.PsHdl;
+
+    s32Ret = CVI_PLAYER_SERVICE_Seek(ps_handle, time_ms);
+    if (s32Ret != 0) {
+        CVI_LOGE("Player seek failed, ret %d", s32Ret);
+        return s32Ret;
+    }
+
+    return 0;
+}
+
+int32_t CVI_MODEMNG_PlayBackGetBarPosition(CVI_PLAYER_PLAY_INFO* info)
+{
+    int32_t s32Ret = 0;
+    CVI_PLAYER_SERVICE_HANDLE_T ps_handle = CVI_MEDIA_GetCtx()->SysServices.PsHdl;
+
+    s32Ret = CVI_PLAYER_SERVICE_GetPlayInfo(ps_handle, info);
+    if (s32Ret != 0) {
+        CVI_LOGE("Player Get PlayInfo failed, ret %d", s32Ret);
+        return s32Ret;
+    }
+
+    //printf("###[debug] CVI_MODEMNG_PlayBackGetCurrPosition time_s %f, info_ptr %p\n", info->duration_sec, info);
+
+    return 0;
+}
+
+int32_t CVI_MODEMNG_PlayBackSetVideoSizeAndPosition(int* pRect)
+{
+    int32_t s32Ret = 0;
+    CVI_PLAYER_SERVICE_HANDLE_T ps_handle = CVI_MEDIA_GetCtx()->SysServices.PsHdl;
+    printf("###[debug] set x=%d, y=%d, w=%d, h=%d\n", pRect[0], pRect[1], pRect[2], pRect[3]);
+    s32Ret = CVI_PLAYER_SERVICE_Resize(ps_handle, pRect[2], pRect[3]);
+    if (s32Ret != 0) {
+        CVI_LOGE("Player Resize VideoSize(%dx%d) failed, ret %d", pRect[2], pRect[3], s32Ret);
+        return s32Ret;
+    }
+
+    s32Ret = CVI_PLAYER_SERVICE_MoveTo(ps_handle, pRect[0], pRect[1]);
+    if (s32Ret != 0) {
+        CVI_LOGE("Player MoveTo (%d, %d) failed, ret %d", pRect[0], pRect[1], s32Ret);
+        return s32Ret;
+    }
+
+    return 0;
+}
+
+
+//>>> open close msgproc
 int32_t CVI_MODEMNG_OpenPlayBackMode(void)
 {
 #ifdef SERVICES_PLAYER_ON
+    printf("############################ CVI_MODEMNG_OpenPlayBackMode begin##########################\n");
     int32_t s32Ret = 0;
     CVI_MODEMNG_S* pstModeMngCtx = CVI_MODEMNG_GetModeCtx();
 
@@ -184,12 +293,14 @@ int32_t CVI_MODEMNG_OpenPlayBackMode(void)
     //set open amplifiler
     CVI_VOICEPLAY_SetAmplifier(false);
 #endif
+    printf("############################ CVI_MODEMNG_OpenPlayBackMode done##########################\n");
     return 0;
 }
 
 int32_t CVI_MODEMNG_ClosePlayBackMode(void)
 {
 #ifdef SERVICES_LIVEVIEW_ON
+    printf("############################ CVI_MODEMNG_ClosePlayBackMode begin##########################\n");
     int32_t s32Ret = 0;
 
     CVI_MODEMNG_S* pstModeMngCtx = CVI_MODEMNG_GetModeCtx();
@@ -222,6 +333,7 @@ int32_t CVI_MODEMNG_ClosePlayBackMode(void)
     //set close amplifiler
     //CVI_VOICEPLAY_SetAmplifier(true);
     CVI_VOICEPLAY_SetAmplifierFlage(true);
+    printf("############################ CVI_MODEMNG_ClosePlayBackMode done##########################\n");
 #endif
 
     return 0;
@@ -290,6 +402,36 @@ int32_t CVI_MODEMNG_PlaybackModeMsgProc(CVI_MESSAGE_S* pstMsg, void* pvArg, uint
         {
             printf("### playmode backward speed: %d ###\n", pstMsg->arg1);
             CVI_MODEMNG_PlayBackward(pstMsg->arg1);
+            return CVI_PROCESS_MSG_RESULTE_OK;
+        }
+        case CVI_EVENT_MODEMNG_PLAYBACK_SEEK:
+        {
+            int64_t time_s;
+            memcpy(&time_s, pstMsg->aszPayload, 4); // here, sizeof(DWORD) = 4
+            printf("### playmode seek time: %lld s ###\n", time_s);
+            CVI_MODEMNG_PlayBackSetBarPosition(time_s * 1000);
+            return CVI_PROCESS_MSG_RESULTE_OK;
+        }
+        case CVI_EVENT_MODEMNG_PLAYBACK_GETPOSITION:
+        {
+            CVI_MODEMNG_PlayBackGetBarPosition((CVI_PLAYER_PLAY_INFO *)(pstMsg->pResPayload));
+            return CVI_PROCESS_MSG_RESULTE_OK;
+        }
+        case CVI_EVENT_MODEMNG_PLAYBACK_MIFOPEN:
+        {
+            printf("### playmode mifopen set file %s ###\n", pstMsg->aszPayload);
+            CVI_MODEMNG_PlayBackForMIFOpen((char *)pstMsg->aszPayload, (CVI_PLAYER_MEDIA_INFO_S *)(pstMsg->pResPayload));
+            return CVI_PROCESS_MSG_RESULTE_OK;
+        }
+        case CVI_EVENT_MODEMNG_PLAYBACK_MIFPLAY:
+        {
+            printf("### playmode mifplay ###\n");
+            CVI_MODEMNG_PlayBackForMIFPlay();
+            return CVI_PROCESS_MSG_RESULTE_OK;
+        }
+        case CVI_EVENT_MODEMNG_PLAYBACK_RESIZE:
+        {
+            CVI_MODEMNG_PlayBackSetVideoSizeAndPosition((int*)pstMsg->pResPayload);
             return CVI_PROCESS_MSG_RESULTE_OK;
         }
         // >>>>>>>>>>>>>>> Behind is new add.

@@ -1262,11 +1262,11 @@ int32_t CVI_MODEMNG_OpenMovieMode(void)
     s32Ret = CVI_MODEMNG_SetCurModeMedia(CVI_WORK_MODE_MOVIE);
     MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINVAL,"Set Cur Mode Media");
 
-    s32Ret = CVI_MEDIA_VbInit();
-    MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINVAL,"Vb init");
-
-    // s32Ret = CVI_MEDIA_VbInitRecAndPlay();
+    // s32Ret = CVI_MEDIA_VbInit();
     // MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINVAL,"Vb init");
+
+    s32Ret = CVI_MEDIA_VbInitRecPlusPlay();
+    MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINVAL,"Rec + Play Vb init");
 
     s32Ret = CVI_MEDIA_VideoInit();
     MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINVAL,"Video init");

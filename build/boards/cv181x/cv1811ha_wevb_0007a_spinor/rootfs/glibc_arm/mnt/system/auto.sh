@@ -24,5 +24,6 @@ echo 10000 > /proc/sys/vm/vfs_cache_pressure
 insmod /mnt/system/ko/cvi_fb.ko
 insmod /mnt/system/ko/3rd/gt9xx.ko
 mount /dev/mmcblk0p1 /mnt/sd
+/mnt/system/bin/App/CarApp < /dev/null &
 
 exit $?

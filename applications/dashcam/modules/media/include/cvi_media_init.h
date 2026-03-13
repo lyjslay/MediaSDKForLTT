@@ -136,7 +136,7 @@ int32_t CVI_MEDIA_VcapInit(void);
 int32_t CVI_MEDIA_VcapDeInit(void);
 int32_t CVI_MEDIA_VbInit(void);
 int32_t CVI_MEDIA_VbInitPlayBack(void);
-int32_t CVI_MEDIA_VbInitRecAndPlay(void);
+int32_t CVI_MEDIA_VbInitRecPlusPlay(void);
 int32_t CVI_MEDIA_VbDeInit(void);
 int32_t CVI_MEDIA_DispInit(bool windowMode);
 int32_t CVI_MEDIA_DispDeInit(void);

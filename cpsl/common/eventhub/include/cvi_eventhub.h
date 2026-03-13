@@ -24,6 +24,7 @@ typedef struct ps_msg_s {
     int32_t s32Result;
     uint64_t u64CreateTime;
     uint8_t aszPayload[MSG_PAYLOAD_LEN];
+    void* pResPayload;
 } CVI_EVENT_S;
 
 typedef struct {
