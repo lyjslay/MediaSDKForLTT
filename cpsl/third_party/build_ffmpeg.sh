@@ -28,6 +28,7 @@ $SCRIPT_DIR/ffmpeg/configure \
     --enable-muxer=mpegts \
     --enable-demuxer=matroska \
     --enable-demuxer=avi \
+    --enable-demuxer=flv \
     --enable-demuxer=mpegps \
     --enable-demuxer=mxf \
     --enable-demuxer=asf \
