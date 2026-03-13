@@ -59,7 +59,7 @@ static int32_t vpss_attr_reset(void *arg, VIDEO_FRAME_INFO_S *video_frame)
         return s32Ret;
     }
 
-    CVI_LOGD("stVpssGrpAttr.enPixelFormat:%d, video_frame.stVFrame.enPixelFormat:%d", stVpssGrpAttr.enPixelFormat, video_frame->stVFrame.enPixelFormat);
+    // CVI_LOGD("stVpssGrpAttr.enPixelFormat:%d, video_frame.stVFrame.enPixelFormat:%d", stVpssGrpAttr.enPixelFormat, video_frame->stVFrame.enPixelFormat);
     if (stVpssGrpAttr.enPixelFormat != video_frame->stVFrame.enPixelFormat) {
         stVpssGrpAttr.enPixelFormat = video_frame->stVFrame.enPixelFormat;
         is_changed = true;
@@ -629,11 +629,12 @@ static int32_t init_vdec(CVI_PLAYER_SERVICE_HANDLE_T handle,
 {
     PS_CONTEXT_HANDLE ps = (PS_CONTEXT_HANDLE)handle;
     CVI_MAPI_VDEC_CHN_ATTR_T vdec_attr = {};
+    int32_t ret = 0;
     vdec_attr.codec = ps->codec_type;
     vdec_attr.max_width = video_width;
     vdec_attr.max_height = video_height;
-    if (CVI_MAPI_VDEC_InitChn(&ps->vdec, &vdec_attr) != 0) {
-        CVI_LOGE("MAPI vdec init failed");
+    if ((ret = CVI_MAPI_VDEC_InitChn(&ps->vdec, &vdec_attr)) != 0) {
+        CVI_LOGE("MAPI vdec init failed, ret = %d", ret);
         return CVI_FAILURE;
     }
 
@@ -802,8 +803,7 @@ static int32_t init_vproc(CVI_PLAYER_SERVICE_HANDLE_T handle,
         vproc_attr.attr_chn[0].stAspectRatio.stVideoRect.u32Height, ps->screen_height);
     vproc_attr.attr_chn[0].stAspectRatio.bEnableBgColor = CVI_TRUE;
     vproc_attr.attr_chn[0].stAspectRatio.u32BgColor = 0x0;
-    vproc_attr.attr_inp.u8VpssDev = 1;
-    //vproc_attr.attr_inp.u8VpssDev = 0; // note: previous val is 1, for rec+play, use dev0 for vdec-vpss-vo, dev1 for sensor
+    vproc_attr.attr_inp.u8VpssDev = 0; // note: previous val is 1, for rec+play, use dev0 for vdec-vpss-vo, dev1 for sensor online
     if (CVI_MAPI_VPROC_Init(&ps->vproc, -1, &vproc_attr) != 0) {
         CVI_LOGE("MAPI vproc init failed");
         return CVI_FAILURE;

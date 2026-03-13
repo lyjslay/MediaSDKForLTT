@@ -143,6 +143,7 @@ static int32_t CVI_MODEMNG_HfsmEventProc(CVI_HFSM_HANDLE pvHfsmHdl,
     if (CVI_MODEMNG_CheckPulishEvent(pstEventInfo->pstunHandlerMsg->topic)){
         CVI_MODEMNG_PublishEvent(pstEventInfo->pstunHandlerMsg, 0);
     }
+    //printf("############ HfsmEventProc done, bInProgress: %d ############\n", pstModeMngCtx->bInProgress);
     CVI_MUTEX_UNLOCK(pstModeMngCtx->Mutex);
 
     return 0;
@@ -334,13 +335,15 @@ int32_t CVI_MODEMNG_Init(CVI_MODEMNG_CONFIG_S *stModemngCfg)
     MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINTER,"subscribe events");
     CVI_MODEMNG_GetModeCtx()->bInited = true;
 
+    /** Storage service init here */
+    s32Ret = CVI_MODEMNG_InitStorage();
+    MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINTER,"Storage service init");
+
     /** activate HFSM */
     s32Ret = CVI_MODEMNG_ActivateHFSM(CVI_MODEMNG_GetModeCtx()->CurWorkMode);
     MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINTER,"HFSM set initial state");
 
-    /** Storage service init here */
-    s32Ret = CVI_MODEMNG_InitStorage();
-    MODEMNG_CHECK_RET(s32Ret,CVI_MODE_EINTER,"Storage service init");
+
 
     return s32Ret;
 }
@@ -400,6 +403,7 @@ int32_t CVI_MODEMNG_SendMessage(const CVI_MESSAGE_S *pstMsg)
 
     pstModeMngCtx->bInProgress = true;
     CVI_MUTEX_UNLOCK(pstModeMngCtx->Mutex);
+    //printf("############ send message to HFSM done, bInProgress: %d ############\n", pstModeMngCtx->bInProgress);
 
     return s32Ret;
 }

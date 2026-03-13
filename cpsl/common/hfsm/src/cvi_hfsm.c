@@ -81,9 +81,7 @@ static int32_t CVI_HFSM_StateClose(CVI_HFSM_S* hfsm)
 
 static int32_t System_ChangeMode(CVI_HFSM_S* hfsm, uint32_t mode_id)
 {
-    CVI_LOGD("Curr Mode: 0x%02x, Next Mode: 0x%02x\n", g_iSysCurState, mode_id);
     int32_t s32Ret = 0;
-
     //close current
     s32Ret = CVI_HFSM_StateClose(hfsm);
     if (s32Ret != 0) {
@@ -119,7 +117,6 @@ static void* Message_TaskQueue_Proc(void* pvParam)
             }
             CVI_MESSAGE_S msg = {0};
             s32Ret = HFSM_Queue_Pop(queue, &msg);
-
             if (0 != s32Ret) {
                 CVI_LOGE("Queue_Pop failed! \n");
                 continue;
@@ -133,7 +130,7 @@ static void* Message_TaskQueue_Proc(void* pvParam)
                 continue;
             }
             uint32_t stateID = state->stateID;
-            printf("### FSM ###recv message: StateID/Name: 0x%02x/%s, MsgID/Time: 0x%02x/%lld\n", stateID, state->name, msg.topic, msg.u64CreateTime);
+            //printf("### FSM ###recv message: StateID/Name: 0x%02x/%s\n", stateID, state->name);
             s32Ret = state->processMessage(&msg, state->argv, &stateID);
             if (s32Ret != 0) {
                 CVI_STATE_S *parent = hfsm_num->parent;
@@ -147,11 +144,14 @@ static void* Message_TaskQueue_Proc(void* pvParam)
                 }
             }
             if (stateID != state->stateID) {
+                printf("############ changing from %d to %d begin ############\n", state->stateID, stateID);
                 s32Ret = System_ChangeMode(hfsm, stateID);
                 if (s32Ret != 0) {
                     eventInfo.enEventCode = CVI_HFSM_EVENT_TRANSTION_ERROR;
                 }
+                printf("############ change mode done ############\n");
             }
+
             eventInfo.pstunHandlerMsg = &msg;
             hfsm->EventCallback(hfsm, &eventInfo);
         }

@@ -104,8 +104,10 @@ int CVI_MAPI_VDEC_InitChn(CVI_MAPI_VDEC_HANDLE_T *vdec_hdl, CVI_MAPI_VDEC_CHN_AT
 		return CVI_MAPI_ERR_INVALID;
     }
 
-	if (_CVI_MAPI_VDEC_GetValidChan(&vdecChn, attr->codec) != CVI_MAPI_SUCCESS)
+	if ((ret = _CVI_MAPI_VDEC_GetValidChan(&vdecChn, attr->codec)) != CVI_MAPI_SUCCESS) {
+		CVI_LOGE("VDEC GetValidChan failed, ret = %d", ret);
 		return CVI_MAPI_ERR_FAILURE;
+	}
 
 	vdecCtx = (CVI_MAPI_VDEC_CTX_T *)calloc(1, sizeof(CVI_MAPI_VDEC_CTX_T));
 	if (vdecCtx == NULL) {
